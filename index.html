@@ -76,6 +76,7 @@ footer{color:var(--muted);font-size:13px;margin-top:30px}
 <a class="btn primary" href="#demo">▶ Try the classifier</a>
 <a class="btn" href="https://github.com/KnigguKniggu-droid/onramp">GitHub kit &amp; install</a>
 <a class="btn" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Pitch deck (PDF)</a>
+<a class="btn" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CLAUDE_CORRECTIONS_2026-10-11.md">Corrections &amp; limitations</a>
 
 </div>
 </header>
@@ -107,7 +108,7 @@ footer{color:var(--muted);font-size:13px;margin-top:30px}
 <div class="cards" id="cards"></div>
 <div class="list" id="list" hidden></div>
 <p class="sub" style="margin-top:10px">Logs: <a href="fixtures/baseline_run.txt">baseline</a> · <a href="fixtures/full_run_after_fix.txt">full run</a> · <a href="fixtures/targeted_run.txt">targeted run</a> · <a href="classifier.js">classifier.js</a>. Local paths in the logs are replaced with &lt;repo&gt; and &lt;home&gt;.</p>
-
+<p class="sub">Checked against IBM Bob&#x27;s corrected Python classifier (kit commit 2a527f8) on these logs: identical results for the full run (29 inherited, 0 fixed, 0 regressions), the synthetic regression (1) and the crashed run (inconclusive). On the 1-test targeted run Bob&#x27;s parser reports INCONCLUSIVE, because it does not read the test&#x27;s docstring line; neither version reports anything as fixed. See the repository&#x27;s corrections file.</p>
 </section>
 
 <section id="baseline"><h2>1 · 29 failures, zero regressions</h2>
