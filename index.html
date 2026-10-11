@@ -1,71 +1,209 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OnRamp Evidence Explorer</title>
+<title>OnRamp · Know what's broken before you fix it</title>
+<meta name="description" content="OnRamp is an IBM Bob kit for joining an unfamiliar codebase: it separates inherited test failures from new regressions, reproduces bugs test-first and keeps evidence for every claim.">
+<meta property="og:title" content="OnRamp · an IBM Bob kit for joining an unfamiliar codebase">
+<meta property="og:description" content="Baseline-aware verification, a blind fix compared with the maintainer's, and a kit that runs unchanged on a second app.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230f62fe'/><path d='M8 22 L15 10 L18 15 L21 11 L25 22 Z' fill='white'/></svg>">
 <style>
-:root{--bg:#0f1117;--panel:#171a23;--line:#262b38;--text:#e7e9ee;--muted:#9aa3b5;--accent:#4589ff;--ok:#42be65;--bad:#fa4d56;--warn:#f1c21b}
-@media (prefers-color-scheme: light){:root{--bg:#f6f7f9;--panel:#fff;--line:#e2e5eb;--text:#161a22;--muted:#5b6475;--accent:#0f62fe;--ok:#198038;--bad:#da1e28;--warn:#b28600}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 "IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif}
-main{max-width:1080px;margin:0 auto;padding:40px 16px 80px}
-header .kicker{color:var(--accent);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px}
-h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:8px 0 12px}h2{font-size:22px;margin:0 0 6px}
-.lede{color:var(--muted);max-width:720px;font-size:17px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:28px 0}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
-.stat b{display:block;font-size:30px;line-height:1.1}.stat span{color:var(--muted);font-size:13px}
-section{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px;margin:18px 0}
-.sub{color:var(--muted);margin:0 0 16px}table{width:100%;border-collapse:collapse;font-size:14px}
+:root{--bg:#0f1117;--panel:#171a23;--panel2:#1d2130;--line:#2a3040;--text:#e7e9ee;--muted:#9aa3b5;--accent:#4589ff;--ok:#42be65;--bad:#fa4d56;--warn:#f1c21b;--info:#a56eff}
+@media (prefers-color-scheme: light){:root{--bg:#f6f7f9;--panel:#fff;--panel2:#f0f2f6;--line:#e0e4ea;--text:#161a22;--muted:#5b6475;--accent:#0f62fe;--ok:#198038;--bad:#da1e28;--warn:#8e6a00;--info:#8a3ffc}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+code{font-family:ui-monospace,Consolas,monospace;font-size:.9em;overflow-wrap:anywhere}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center;overflow-x:auto;white-space:nowrap}
+nav b{margin-right:auto;font-size:15px}nav a{color:var(--muted);font-size:14px}nav a:hover{color:var(--text)}
+main{max-width:1080px;margin:0 auto;padding:36px 16px 80px}
+.kicker{color:var(--accent);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px}
+h1{font-size:clamp(30px,6vw,52px);line-height:1.08;margin:10px 0 14px;letter-spacing:-.01em}
+h2{font-size:clamp(20px,3.2vw,24px);margin:0 0 6px}h3{margin:0 0 6px;font-size:16px}
+.lede{color:var(--muted);max-width:760px;font-size:clamp(16px,2.2vw,18px);margin:0}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 6px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-weight:600;font-size:14px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn:hover{text-decoration:none;filter:brightness(1.1)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px;margin:26px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat b{display:block;font-size:28px;line-height:1.1}.stat span{color:var(--muted);font-size:13px}
+section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,3vw,26px);margin:18px 0}
+.sub{color:var(--muted);margin:0 0 14px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
 th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-weight:600}
-.num{font-variant-numeric:tabular-nums;text-align:right}.pill{background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent);border-radius:99px;padding:2px 9px;font-size:12px;font-weight:600}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
-.diff{font:12.5px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto}
+.num{font-variant-numeric:tabular-nums;text-align:right}
+.pill{display:inline-block;border-radius:99px;padding:2px 9px;font-size:12px;font-weight:600;background:color-mix(in srgb,var(--accent) 15%,transparent);color:var(--accent)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
+.diff{font:12.5px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px;overflow-x:auto;min-width:0}
 .diff h3{font:600 13px system-ui;margin:0 0 8px;color:var(--muted)}.ln{white-space:pre}.add{color:var(--ok)}.del{color:var(--bad)}.hunk{color:var(--muted)}
 blockquote{margin:0;border-left:3px solid var(--accent);padding:6px 14px;color:var(--muted);white-space:pre-wrap}
-.timeline{list-style:none;margin:0;padding:0}.timeline li{display:grid;grid-template-columns:80px 52px 1fr;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
-.timeline time{color:var(--muted)}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}code{font-family:ui-monospace,Consolas,monospace;font-size:.92em}
+.strip{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.strip span{padding:6px 12px;border-radius:99px;font-size:13px;font-weight:600;border:1px solid var(--line)}
+.same{color:var(--ok)}.diffr{color:var(--warn)}
 .seal{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}.seal div{border:1px dashed var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
+.timeline{list-style:none;margin:0;padding:0}.timeline li{display:grid;grid-template-columns:72px 48px minmax(0,1fr);gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+.timeline time{color:var(--muted)}
+@media (max-width:560px){.timeline li{grid-template-columns:1fr;gap:2px}}
+details{margin-top:10px}summary{cursor:pointer;color:var(--accent);font-weight:600}
+.note{border-left:3px solid var(--warn);padding:8px 12px;background:color-mix(in srgb,var(--warn) 8%,transparent);border-radius:0 8px 8px 0;font-size:14px;margin:12px 0}
+/* demo */
+.demo-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.demo-controls label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);flex:1 1 220px}
+select,textarea{background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px;font:14px system-ui;width:100%}
+textarea{font:12px ui-monospace,Consolas,monospace;min-height:110px;resize:vertical}
+button.run{padding:10px 18px;border-radius:10px;border:0;background:var(--accent);color:#fff;font-weight:700;cursor:pointer}
+.verdict{margin:16px 0 8px;padding:12px 14px;border-radius:10px;font-weight:600}
+.v-ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.v-bad{background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad)}
+.v-warn{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:10px}
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left;color:var(--text);font:inherit}
+.card b{display:block;font-size:24px;line-height:1.1}.card span{font-size:12px;color:var(--muted)}
+.card[aria-pressed="true"]{outline:2px solid var(--accent)}
+.k-inh b{color:var(--warn)}.k-reg b{color:var(--bad)}.k-fix b{color:var(--ok)}.k-nr b{color:var(--info)}
+.list{max-height:240px;overflow:auto;margin-top:10px;font:12.5px/1.6 ui-monospace,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.list div{overflow-wrap:anywhere}
 footer{color:var(--muted);font-size:13px;margin-top:30px}
-</style></head><body><main>
-<header><div class="kicker">AngelHack × IBM · Building with IBM Bob · Theme 1</div>
-<h1>OnRamp Evidence Explorer</h1>
-<p class="lede">OnRamp is an IBM Bob kit (custom modes, skills, commands, a test hook and an evidence generator) that takes a newcomer from "never seen this repo" to a verified fix and feature. Every number below is read from the evidence Bob produced in <a href="https://github.com/KnigguKniggu-droid/onramp">the repository</a>.</p></header>
+</style></head><body>
+<nav aria-label="Sections"><div class="in"><b>OnRamp</b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
+<main>
+<header>
+<div class="kicker">AngelHack × IBM · Building with IBM Bob · Theme 1</div>
+<h1>Know what's broken before you fix it.</h1>
+<p class="lede">OnRamp gives IBM Bob a reusable, evidence-driven workflow for joining an unfamiliar codebase: understand it, reproduce a real defect test-first, verify the fix, and separate inherited failures from new regressions.</p>
+<div class="cta">
+<a class="btn primary" href="#demo">▶ Try the classifier</a>
+<a class="btn" href="https://github.com/KnigguKniggu-droid/onramp">GitHub kit &amp; install</a>
+<a class="btn" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Pitch deck (PDF)</a>
+
+</div>
+</header>
 
 <div class="stats">
 <div class="stat"><b>1,761</b><span>Healthchecks tests in the baseline</span></div>
-<div class="stat"><b>29</b><span>failures inherited before any change</span></div>
-<div class="stat"><b style="color:var(--ok)">0</b><span>regressions after the fix and the feature</span></div>
-<div class="stat"><b>21</b><span>commits by IBM Bob</span></div>
-<div class="stat"><b>3</b><span>portability runs on a Flask app</span></div>
-<div class="stat"><b style="color:var(--ok)">✓</b><span><a href="https://github.com/KnigguKniggu-droid/onramp/actions">GitHub Actions on Linux</a>: tests (4 databases × 3 Pythons), strict mypy, coverage all pass</span></div>
+<div class="stat"><b>29</b><span>failures inherited before any change (Windows-only)</span></div>
+<div class="stat"><b style="color:var(--ok)">0</b><span>regressions in Claude's independent full-suite runs after the fix and feature</span></div>
+<div class="stat"><b>23</b><span>commits by IBM Bob</span></div>
+<div class="stat"><b style="color:var(--ok)">✓</b><span><a href="https://github.com/KnigguKniggu-droid/onramp/actions">GitHub Actions on Linux</a>: tests, strict mypy, coverage</span></div>
 </div>
 
-<section><h2>1 · 29 failures, zero regressions</h2>
-<p class="sub">Before touching anything, OnRamp records the environment's failure fingerprint at <code>e10db36</code> (Windows, Python 3.13.2). Later runs are classified against it, so inherited red tests never pass for regressions.</p>
-<p class="sub">The original baseline was captured before the kit's parser fix (<code>8165552</code>) and recorded error types as "Unknown"; Bob re-classified a fresh run in <code>baseline_reclassified.json</code>. Its types match Claude's independent run exactly.</p>
-<table><tr><th>Error type</th><th class="num">Tests</th><th>Why it fails on this machine</th></tr><tr><td><span class="pill">AttributeError</span></td><td class="num">26</td><td>Signal integration tests need socket.AF_UNIX, which Windows lacks</td></tr><tr><td><span class="pill">ValueError</span></td><td class="num">2</td><td>A Linux-only strftime format (e.g. %-d)</td></tr><tr><td><span class="pill">AssertionError</span></td><td class="num">1</td><td>DST test needs time-zone switching, unavailable on Windows</td></tr></table></section>
+<section id="demo" aria-labelledby="demo-h">
+<h2 id="demo-h">Try it: inherited failure or regression?</h2>
+<p class="sub">This is OnRamp's classification model running in your browser on real Healthchecks test logs. It is not a live IBM Bob session; the full kit runs inside Bob IDE. A run is only judged if it is complete, and a test only counts as fixed if it actually ran and passed.</p>
+<div class="demo-controls">
+<label>Baseline run<select id="baseSel"><option value="baseline_run.txt">Healthchecks at the pinned upstream commit (1,761 tests)</option></select></label>
+<label>Later run<select id="curSel">
+<option value="full_run_after_fix.txt">Full suite after Bob's fix and feature (real)</option>
+<option value="targeted_run.txt">Only Bob's new webhook test (real, 1 test)</option>
+<option value="synthetic_new_failure.txt">One test broken on purpose (synthetic)</option>
+<option value="synthetic_crashed_run.txt">Run cut off mid-way (synthetic)</option>
+<option value="__paste">Paste your own verbose test output…</option>
+</select></label>
+<button class="run" id="runBtn" type="button">Classify</button>
+</div>
+<textarea id="paste" hidden aria-label="Paste a Django or unittest run with -v 2" placeholder="Paste the output of: python manage.py test -v 2  (or python -m unittest -v)"></textarea>
+<div id="verdict" class="verdict" role="status" aria-live="polite" hidden></div>
+<div class="cards" id="cards"></div>
+<div class="list" id="list" hidden></div>
+<p class="sub" style="margin-top:10px">Logs: <a href="fixtures/baseline_run.txt">baseline</a> · <a href="fixtures/full_run_after_fix.txt">full run</a> · <a href="fixtures/targeted_run.txt">targeted run</a> · <a href="classifier.js">classifier.js</a>. Local paths in the logs are replaced with &lt;repo&gt; and &lt;home&gt;.</p>
 
-<section><h2>2 · Bob vs the maintainer (blind)</h2>
-<p class="sub">Healthchecks was pinned at the commit before the maintainer fixed issue #1347. Bob got only the user-visible symptoms; the brief was hashed and sealed before Bob opened any code.</p>
+</section>
+
+<section id="baseline"><h2>1 · 29 failures, zero regressions</h2>
+<p class="sub">Before changing anything, OnRamp records the environment's failure fingerprint at <code>e10db36</code> (Windows, Python 3.13.2), so inherited red tests are never mistaken for regressions.</p>
+<p class="sub">The first baseline was captured before the kit's parser fix (<code>8165552</code>) and stored error types as "Unknown"; Bob re-classified a fresh run in <code>baseline_reclassified.json</code>. Its error types match Claude's independent run exactly.</p>
+<div class="scroll"><table><tr><th>Error type</th><th class="num">Tests</th><th>Why it fails on this machine</th></tr><tr><td><span class="pill">AttributeError</span></td><td class="num">26</td><td>Signal integration tests need socket.AF_UNIX, which Windows lacks</td></tr><tr><td><span class="pill">ValueError</span></td><td class="num">2</td><td>A Linux-only strftime format (e.g. %-d)</td></tr><tr><td><span class="pill">AssertionError</span></td><td class="num">1</td><td>DST test needs time-zone switching, unavailable on Windows</td></tr></table></div></section>
+
+<section id="blind"><h2>2 · Bob vs the maintainer (blind)</h2>
+<p class="sub">Healthchecks was pinned at the commit before the maintainer fixed issue #1347. Bob got only the user-visible symptoms. The brief was hashed and sealed before Bob began the issue-specific reproduction and repair; Bob had earlier mapped the general architecture.</p>
 <blockquote>While testing Healthchecks with a personal project, I set up a webhook integration whose endpoint answers with HTTP 205 (Reset Content). When a check changes state, my endpoint receives three identical requests, and the integration is marked as failed with &quot;Received status code 205&quot;.
 
 I reproduced it locally: the integration&#x27;s &quot;Test&quot; button also reports an error for the same endpoint, although it only sends one request.
 
 Expected: a 2xx response such as 205 means the notification was delivered; it should not be retried or reported as a failure.</blockquote>
 <div class="seal"><div>Sealed <b>21:05:38 UTC</b></div><div>Brief SHA-256 <code>12c482dc2578402a…</code></div><div>Bob's fix committed <b>21:10 UTC</b></div><div>Failing test first: <code>AssertionError: 3 != 1</code></div></div>
+<div class="strip"><span class="same">✓ same affected behaviour</span><span class="same">✓ same source line</span><span class="diffr">≠ different accepted-status policy</span></div>
 <div class="grid2"><div class="diff"><h3>IBM Bob · commit 5f16187</h3><div class="ln hunk">@@ -158,7 +158,7 @@ class HttpTransport(Transport):</div><div class="ln ">                 auth=auth,</div><div class="ln ">                 timeout=30,</div><div class="ln ">             )</div><div class="ln del">-            if r.status_code not in (200, 201, 202, 204):</div><div class="ln add">+            if r.status_code not in range(200, 300):</div><div class="ln ">                 cls.raise_for_response(r)</div><div class="ln ">         except curl.CurlError as e:</div><div class="ln ">             raise TransportError(e.message)</div></div>
 <div class="diff"><h3>Maintainer · upstream 0a9bff9 (revealed after Bob's commit)</h3><div class="ln hunk">@@ -158,7 +158,7 @@ class HttpTransport(Transport):</div><div class="ln ">                 auth=auth,</div><div class="ln ">                 timeout=30,</div><div class="ln ">             )</div><div class="ln del">-            if r.status_code not in (200, 201, 202, 204):</div><div class="ln add">+            if r.status_code not in (200, 201, 202, 204, 205):</div><div class="ln ">                 cls.raise_for_response(r)</div><div class="ln ">         except curl.CurlError as e:</div><div class="ln ">             raise TransportError(e.message)</div></div></div>
-<p class="sub" style="margin-top:12px">Same root cause, same line. Bob accepts every 2xx; the maintainer added only 205. In its own report Bob concludes the narrower upstream fix is safer, because <code>HttpTransport</code> is shared by about 25 integrations. <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/REPORT_webhook-205.md">Full evidence report</a></p></section>
+<p class="sub" style="margin-top:12px">Our brief said "a 2xx response such as 205" should succeed, and Bob chose to accept every 2xx; the maintainer added only 205. In its own report Bob concludes the narrower upstream fix is safer, because <code>HttpTransport</code> is shared by about 25 integrations. <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/REPORT_webhook-205.md">Evidence report</a></p>
+<div class="note">What the seal proves: the brief's exact text and time. Isolation was enforced separately: Bob worked in a single-commit snapshot with no remote and no upstream history, and a guard in Claude Code blocked mixing the upstream clone into Bob's workspace. The seal's "allowed / withheld" fields were left empty at the time and are kept as recorded.</div>
+</section>
 
-<section><h2>3 · Feature: pretty-printed JSON (#1090)</h2>
-<p class="sub">Webhook bodies that arrive as one long JSON line are shown indented in the ping details view; non-JSON and email bodies are untouched and Download Original still serves the exact bytes. A review found <code>json.dumps</code> escaping "café"; Bob added a test and fixed it (<code>e4032c2</code>).</p>
-<div class="diff"><div class="ln hunk">@@ -1,6 +1,7 @@</div><div class="ln "> from __future__ import annotations</div><div class="ln "> </div><div class="ln "> import email</div><div class="ln add">+import json</div><div class="ln "> import logging</div><div class="ln "> import os</div><div class="ln "> import re</div><div class="ln hunk">@@ -758,10 +759,18 @@ def ping_details(</div><div class="ln ">     except Ping.GetBodyError:</div><div class="ln ">         body_bytes = None</div><div class="ln "> </div><div class="ln add">+    body_str = body_bytes.decode(errors=&quot;replace&quot;) if body_bytes else None</div><div class="ln add">+    if body_str and ping.scheme != &quot;email&quot;:</div><div class="ln add">+        try:</div><div class="ln add">+            parsed_json = json.loads(body_str)</div><div class="ln add">+            body_str = json.dumps(parsed_json, indent=2)</div><div class="ln add">+        except ValueError:</div><div class="ln add">+            pass</div><div class="ln add">+</div><div class="ln ">     ctx = {</div><div class="ln ">         &quot;check&quot;: check,</div><div class="ln ">         &quot;ping&quot;: ping,</div><div class="ln del">-        &quot;body&quot;: body_bytes.decode(errors=&quot;replace&quot;) if body_bytes else None,</div><div class="ln add">+        &quot;body&quot;: body_str,</div><div class="ln ">         &quot;plain&quot;: None,</div><div class="ln ">         &quot;html&quot;: None,</div><div class="ln ">         &quot;active&quot;: None,</div></div></section>
+<section id="feature"><h2>3 · Feature: pretty-printed JSON (#1090)</h2>
+<p class="sub">Webhook bodies that arrive as one long JSON line are shown indented in the ping details view; non-JSON and email bodies are untouched, and Download Original still serves the exact bytes. An independent check found <code>json.dumps</code> escaping "café"; Bob added a test and fixed it (<code>e4032c2</code>).</p>
 
-<section><h2>4 · Not hardcoded for Healthchecks</h2>
+<details><summary>View the code change</summary><div class="diff" style="margin-top:10px"><div class="ln hunk">@@ -1,6 +1,7 @@</div><div class="ln "> from __future__ import annotations</div><div class="ln "> </div><div class="ln "> import email</div><div class="ln add">+import json</div><div class="ln "> import logging</div><div class="ln "> import os</div><div class="ln "> import re</div><div class="ln hunk">@@ -758,10 +759,18 @@ def ping_details(</div><div class="ln ">     except Ping.GetBodyError:</div><div class="ln ">         body_bytes = None</div><div class="ln "> </div><div class="ln add">+    body_str = body_bytes.decode(errors=&quot;replace&quot;) if body_bytes else None</div><div class="ln add">+    if body_str and ping.scheme != &quot;email&quot;:</div><div class="ln add">+        try:</div><div class="ln add">+            parsed_json = json.loads(body_str)</div><div class="ln add">+            body_str = json.dumps(parsed_json, indent=2)</div><div class="ln add">+        except ValueError:</div><div class="ln add">+            pass</div><div class="ln add">+</div><div class="ln ">     ctx = {</div><div class="ln ">         &quot;check&quot;: check,</div><div class="ln ">         &quot;ping&quot;: ping,</div><div class="ln del">-        &quot;body&quot;: body_bytes.decode(errors=&quot;replace&quot;) if body_bytes else None,</div><div class="ln add">+        &quot;body&quot;: body_str,</div><div class="ln ">         &quot;plain&quot;: None,</div><div class="ln ">         &quot;html&quot;: None,</div><div class="ln ">         &quot;active&quot;: None,</div></div></details>
+</section>
+
+<section id="portability"><h2>4 · Not hardcoded for Healthchecks</h2>
 <p class="sub">The kit was copied unchanged into a different app (TaskFlow, Flask + unittest) three times. Each run's gaps went back to Bob; the next run used the improved kit.</p>
-<table><tr><th>Run</th><th>Kit commit</th><th class="num">Tests</th><th>Inherited failure</th><th>What happened</th></tr><tr><td>Run 1</td><td><code>a3acbc3</code></td><td class="num">4</td><td>Unknown</td><td>Loaded unchanged; exposed 7 kinds of Django assumptions (hardcoded hc/, Django-only output parsing, baseline.txt vs baseline.json, Reproducer edit scope, Django-specific skill steps).</td></tr><tr><td>Run 2</td><td><code>e4032c2</code></td><td class="num">4</td><td>Unknown</td><td>After Bob made the kit profile-driven: worked, but recorded the unittest failure type as &quot;Unknown&quot;.</td></tr><tr><td>Run 3</td><td><code>8165552</code></td><td class="num">4</td><td>AssertionError</td><td>After Bob&#x27;s parser fix: profile, baseline and map produced, failure classified as AssertionError.</td></tr></table></section>
+<div class="scroll"><table><tr><th>Run</th><th>Kit commit</th><th class="num">Tests</th><th>Inherited failure</th><th>What happened</th></tr><tr><td>Run 1</td><td><code>a3acbc3</code></td><td class="num">4</td><td>Unknown</td><td>Loaded unchanged; exposed 7 kinds of Django assumptions (hardcoded hc/, Django-only output parsing, baseline.txt vs baseline.json, Reproducer edit scope, Django-specific skill steps).</td></tr><tr><td>Run 2</td><td><code>e4032c2</code></td><td class="num">4</td><td>Unknown</td><td>After Bob made the kit profile-driven: worked, but recorded the unittest failure type as &quot;Unknown&quot;.</td></tr><tr><td>Run 3</td><td><code>8165552</code></td><td class="num">4</td><td>AssertionError</td><td>After Bob&#x27;s parser fix: profile, baseline and map produced, failure classified as AssertionError.</td></tr></table></div></section>
 
-<section><h2>5 · Every commit by IBM Bob</h2>
-<p class="sub">Each commit message ends with <code>Generated-by: IBM Bob</code>. Times are UTC.</p>
-<ol class="timeline"><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/8d595cc6"><code>8d595cc6</code></a><time>17:30</time><span>ST-1: add explorer, reproducer, verifier custom modes</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/49414247"><code>49414247</code></a><time>17:31</time><span>ST-2: add four OnRamp skills</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/1a9e8dd0"><code>1a9e8dd0</code></a><time>17:32</time><span>ST-3: add /onramp and /evidence slash commands</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/b8f526eb"><code>b8f526eb</code></a><time>17:37</time><span>ST-4: add PostToolUse hook to run app tests on hc/ Python edits</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/e10db366"><code>e10db366</code></a><time>17:43</time><span>ST-4: enhance hook — profile-driven source roots, baseline classification</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/c3ae2e34"><code>c3ae2e34</code></a><time>20:51</time><span>ST-5: add gen_report.py, test suite, profile, and baseline</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/38c4ea29"><code>38c4ea29</code></a><time>20:54</time><span>ST-6: generate CODEBASE_MAP.md using map-codebase skill</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2f618b2a"><code>2f618b2a</code></a><time>20:57</time><span>fix: hook summary extraction picks up OK/FAILED before teardown line</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/a3acbc38"><code>a3acbc38</code></a><time>21:03</time><span>cleanup: consolidate generator tests, add PLAN.md, remove duplicate files</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2c7a8636"><code>2c7a8636</code></a><time>21:06</time><span>onramp: save bug report and seal benchmark for webhook-205</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/5f16187e"><code>5f16187e</code></a><time>21:10</time><span>fix: accept all 2xx HTTP status codes in HttpTransport</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/a0340d22"><code>a0340d22</code></a><time>21:12</time><span>onramp: add evidence artefacts and report for webhook-205</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/fa7aae56"><code>fa7aae56</code></a><time>21:15</time><span>onramp: attach upstream patch and add comparison to webhook-205 report</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/4facc4be"><code>4facc4be</code></a><time>21:18</time><span>onramp: support plain unittest output in gen_report; add tests</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/6be32359"><code>6be32359</code></a><time>21:19</time><span>onramp: make kit profile-driven for Flask / plain-unittest portability</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/786c0347"><code>786c0347</code></a><time>21:22</time><span>Pretty-print JSON request bodies in the ping details view</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/e4032c29"><code>e4032c29</code></a><time>21:24</time><span>fix: preserve non-ASCII chars in pretty-printed JSON ping body</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/81655522"><code>81655522</code></a><time>21:28</time><span>fix(onramp): capture error type for plain unittest -v FAIL headers; make map-codebase steps conditional on profile</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/c582176d"><code>c582176d</code></a><time>21:33</time><span>docs: add .github/README.md landing page for judges</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/cda917ad"><code>cda917ad</code></a><time>21:40</time><span>docs: correct README baseline counts, feature #1090 description, portability section, and quick-start instructions</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/703037e2"><code>703037e2</code></a><time>22:03</time><span>docs: add reclassified baseline and fix evidence.md baseline.txt refs</span></li></ol></section>
+<section id="provenance"><h2>5 · Provenance</h2>
+<p class="sub">IBM Bob made the kit and the Healthchecks changes; each of its commits ends with <code>Generated-by: IBM Bob</code>. Claude Code operated Bob at the participant's direction, verified results independently and built this page. Times are UTC.</p>
+<ol class="timeline"><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/8d595cc6"><code>8d595cc6</code></a><time>17:30</time><span>ST-1: add explorer, reproducer, verifier custom modes</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/e10db366"><code>e10db366</code></a><time>17:43</time><span>ST-4: enhance hook — profile-driven source roots, baseline classification</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/c3ae2e34"><code>c3ae2e34</code></a><time>20:51</time><span>ST-5: add gen_report.py, test suite, profile, and baseline</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2c7a8636"><code>2c7a8636</code></a><time>21:06</time><span>onramp: save bug report and seal benchmark for webhook-205</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/5f16187e"><code>5f16187e</code></a><time>21:10</time><span>fix: accept all 2xx HTTP status codes in HttpTransport</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/6be32359"><code>6be32359</code></a><time>21:19</time><span>onramp: make kit profile-driven for Flask / plain-unittest portability</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/786c0347"><code>786c0347</code></a><time>21:22</time><span>Pretty-print JSON request bodies in the ping details view</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/81655522"><code>81655522</code></a><time>21:28</time><span>fix(onramp): capture error type for plain unittest -v FAIL headers; make map-codebase steps conditional on profile</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/703037e2"><code>703037e2</code></a><time>22:03</time><span>docs: add reclassified baseline and fix evidence.md baseline.txt refs</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/5c0b878a"><code>5c0b878a</code></a><time>22:21</time><span>test: add failing tests for correct classify_run behaviour</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2a527f8e"><code>2a527f8e</code></a><time>22:24</time><span>fix: correct classify_run classifier and add robust file reading</span></li></ol>
+<details><summary>All 23 Bob commits</summary><ol class="timeline" style="margin-top:8px"><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/8d595cc6"><code>8d595cc6</code></a><time>17:30</time><span>ST-1: add explorer, reproducer, verifier custom modes</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/49414247"><code>49414247</code></a><time>17:31</time><span>ST-2: add four OnRamp skills</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/1a9e8dd0"><code>1a9e8dd0</code></a><time>17:32</time><span>ST-3: add /onramp and /evidence slash commands</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/b8f526eb"><code>b8f526eb</code></a><time>17:37</time><span>ST-4: add PostToolUse hook to run app tests on hc/ Python edits</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/e10db366"><code>e10db366</code></a><time>17:43</time><span>ST-4: enhance hook — profile-driven source roots, baseline classification</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/c3ae2e34"><code>c3ae2e34</code></a><time>20:51</time><span>ST-5: add gen_report.py, test suite, profile, and baseline</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/38c4ea29"><code>38c4ea29</code></a><time>20:54</time><span>ST-6: generate CODEBASE_MAP.md using map-codebase skill</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2f618b2a"><code>2f618b2a</code></a><time>20:57</time><span>fix: hook summary extraction picks up OK/FAILED before teardown line</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/a3acbc38"><code>a3acbc38</code></a><time>21:03</time><span>cleanup: consolidate generator tests, add PLAN.md, remove duplicate files</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2c7a8636"><code>2c7a8636</code></a><time>21:06</time><span>onramp: save bug report and seal benchmark for webhook-205</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/5f16187e"><code>5f16187e</code></a><time>21:10</time><span>fix: accept all 2xx HTTP status codes in HttpTransport</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/a0340d22"><code>a0340d22</code></a><time>21:12</time><span>onramp: add evidence artefacts and report for webhook-205</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/fa7aae56"><code>fa7aae56</code></a><time>21:15</time><span>onramp: attach upstream patch and add comparison to webhook-205 report</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/4facc4be"><code>4facc4be</code></a><time>21:18</time><span>onramp: support plain unittest output in gen_report; add tests</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/6be32359"><code>6be32359</code></a><time>21:19</time><span>onramp: make kit profile-driven for Flask / plain-unittest portability</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/786c0347"><code>786c0347</code></a><time>21:22</time><span>Pretty-print JSON request bodies in the ping details view</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/e4032c29"><code>e4032c29</code></a><time>21:24</time><span>fix: preserve non-ASCII chars in pretty-printed JSON ping body</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/81655522"><code>81655522</code></a><time>21:28</time><span>fix(onramp): capture error type for plain unittest -v FAIL headers; make map-codebase steps conditional on profile</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/c582176d"><code>c582176d</code></a><time>21:33</time><span>docs: add .github/README.md landing page for judges</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/cda917ad"><code>cda917ad</code></a><time>21:40</time><span>docs: correct README baseline counts, feature #1090 description, portability section, and quick-start instructions</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/703037e2"><code>703037e2</code></a><time>22:03</time><span>docs: add reclassified baseline and fix evidence.md baseline.txt refs</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/5c0b878a"><code>5c0b878a</code></a><time>22:21</time><span>test: add failing tests for correct classify_run behaviour</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2a527f8e"><code>2a527f8e</code></a><time>22:24</time><span>fix: correct classify_run classifier and add robust file reading</span></li></ol></details>
+</section>
 
-<footer>Built by Claude Code from the repository's evidence files (<code>build_site.py</code>). IBM Bob did the engineering; Claude Code operated Bob at the participant's direction and verified the results independently. Healthchecks is an independent BSD-3-Clause project and is not affiliated with this submission.</footer>
-</main></body></html>
+<footer>Built by Claude Code from the repository's evidence files. Healthchecks is an independent BSD-3-Clause project and is not affiliated with this submission.</footer>
+</main>
+<script src="classifier.js"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const cache = {};
+  const load = f => cache[f] ? Promise.resolve(cache[f]) : fetch('fixtures/' + f).then(r => { if (!r.ok) throw new Error('could not load ' + f); return r.text(); }).then(t => (cache[f] = t));
+  const KINDS = [
+    ['inherited', 'k-inh', 'inherited failures', 'failed in the baseline and still fail'],
+    ['regression', 'k-reg', 'regressions', 'passed in the baseline, fail now'],
+    ['newFailure', 'k-reg', 'new failing tests', 'not in the baseline, failing'],
+    ['fixed', 'k-fix', 'fixed', 'failed in the baseline, ran and passed now'],
+    ['notRun', 'k-nr', 'not run', 'in the baseline but absent from this run'],
+    ['unchangedPass', '', 'unchanged passes', 'passed before and now'],
+    ['newTest', '', 'new passing tests', 'not in the baseline, passing'],
+  ];
+  $('curSel').addEventListener('change', () => { $('paste').hidden = $('curSel').value !== '__paste'; });
+  function show(res) {
+    const v = $('verdict'); v.hidden = false;
+    if (!res.valid) {
+      v.className = 'verdict v-warn';
+      v.textContent = 'INCONCLUSIVE: no verdict. ' + res.problems.join('; ') + '. OnRamp refuses to report "fixed" or "0 regressions" from an incomplete run.';
+      $('cards').innerHTML = ''; $('list').hidden = true; return;
+    }
+    const regs = res.regression.length + res.newFailure.length;
+    v.className = 'verdict ' + (regs ? 'v-bad' : 'v-ok');
+    v.textContent = (regs ? regs + ' regression(s) found' : 'No regressions') + ' · ' + res.scope + ' run' +
+      (res.scope === 'TARGETED' ? ` (${res.notRun.length} baseline tests not run, so they are neither fixed nor passing)` : '') +
+      ` · ${res.inherited.length} inherited failures still failing`;
+    const cards = $('cards'); cards.innerHTML = '';
+    KINDS.forEach(([key, cls, label, help]) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'card ' + cls; b.setAttribute('aria-pressed', 'false'); b.title = help;
+      b.innerHTML = '<b>' + res[key].length.toLocaleString() + '</b><span>' + label + '</span>';
+      b.addEventListener('click', () => {
+        cards.querySelectorAll('.card').forEach(c => c.setAttribute('aria-pressed', 'false'));
+        b.setAttribute('aria-pressed', 'true');
+        const l = $('list'); l.hidden = false;
+        const ids = res[key].slice(0, 400);
+        l.innerHTML = ids.length ? ids.map(i => '<div></div>').join('') : '<div>none</div>';
+        [...l.children].forEach((d, n) => { if (ids[n]) d.textContent = ids[n]; });
+        if (res[key].length > 400) { const d = document.createElement('div'); d.textContent = '… and ' + (res[key].length - 400) + ' more'; l.appendChild(d); }
+      });
+      cards.appendChild(b);
+    });
+    $('list').hidden = true;
+  }
+  $('runBtn').addEventListener('click', async () => {
+    const btn = $('runBtn'); btn.disabled = true; btn.textContent = 'Classifying…';
+    try {
+      const base = await load($('baseSel').value);
+      const cur = $('curSel').value === '__paste' ? $('paste').value : await load($('curSel').value);
+      show(OnRampClassifier.classify(base, cur));
+    } catch (e) {
+      const v = $('verdict'); v.hidden = false; v.className = 'verdict v-warn'; v.textContent = e.message;
+    } finally { btn.disabled = false; btn.textContent = 'Classify'; }
+  });
+})();
+</script>
+</body></html>
