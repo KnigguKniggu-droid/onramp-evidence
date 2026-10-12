@@ -33,7 +33,7 @@ Observed issues:
 - `<main id="main">`.
 
 ## R6: AFTER (working tree before commit)
-Files: `screenshots/after-wip-*.png` and `after-wip-metrics.jsonl`.
+Files: `screenshots/after-final-*.png` and `after-final-metrics.jsonl` (re-captured after the contrast fix; identical metrics).
 
 | Width | Document overflow | Classifier verdict | Interactive elements under 24px |
 |---|---|---|---|
@@ -94,3 +94,12 @@ Test-method limit: simulated Tab key presses from the extension did not move foc
 - **Slow and offline network:** not tested.
 - **Demo video link:** none yet.
 - **#1090 before/after screenshots:** not taken.
+
+## Contrast (computed from the palette tokens, WCAG relative-luminance formula)
+- Before: dark-theme white text on the blue primary buttons was **3.35:1** (fails AA 4.5:1). Light-theme status/accent colours on the result-card background (#f0f2f6) were 4.45–4.48:1 (just under).
+- Fix: new `--btn` token (dark #2563eb, 5.17:1; light #0f62fe, 5.0:1) for primary buttons, Classify and the skip link; light `--panel2` #f7f8fa (all text colours ≥ 4.69:1).
+- After: every text/background pair in both themes is ≥ 4.5:1 (lowest: light status colours on cards, 4.69:1).
+- Not measured by a tool on rendered pixels; computed from the CSS values.
+
+## 200% zoom
+Not tested directly. At 200% zoom a 1440px window lays out at 720 CSS px; the 768 and 375px captures show no overflow, so reflow at that size is expected to hold. Recorded as approximate.
