@@ -174,7 +174,7 @@ Line 105:
 1. Open demo section
 2. Run each fixture combination:
    - Baseline vs Full run after fix → expect "0 regressions"
-   - Baseline vs Targeted run → expect "inconclusive" (1,760 not run)
+   - Baseline vs Targeted run → expect "TARGETED, 1,761 not run, 0 fixed" (corrected 2026-10-12; earlier text was wrong)
    - Baseline vs Synthetic new failure → expect "1 regression"
    - Baseline vs Synthetic crashed → expect "inconclusive"
 3. Compare results with `py/parity_check.py` expected output

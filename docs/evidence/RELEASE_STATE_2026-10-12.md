@@ -19,7 +19,7 @@
   - Remote: `https://github.com/KnigguKniggu-droid/onramp.git`
   - Working tree: 1 untracked file: `docs/onramp/evidence/suite_post_fix_full.txt`
   - Branch: main
-  - Status: **Post-Bob work complete** (23 commits, all attributed "Generated-by: IBM Bob")
+  - Status: **Post-Bob work complete**. Correction 2026-10-12: not all commits are Bob's; Claude-authored commits (pitch deck, CI trigger, corrections, onramp_normalize.py) say so in their messages.
 
 ### Published
 - **onramp-evidence Pages site:** https://kniggukniggu-droid.github.io/onramp-evidence/
