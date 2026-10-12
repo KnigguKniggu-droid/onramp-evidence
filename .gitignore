@@ -1,7 +1,9 @@
 ﻿build_site.py
 template.html
-tools/
 preview.png
 shots-src/
 PARITY.txt
 __pycache__/
+!tools/
+tools/*
+!tools/qa_capture.ps1
