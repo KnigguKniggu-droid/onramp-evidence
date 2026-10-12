@@ -1,0 +1,2 @@
+fixtures/*.txt -text
+data/*.json -text

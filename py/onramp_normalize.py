@@ -45,7 +45,7 @@ def read_text(path: Path) -> str:
 
 def normalize(text: str, source: str = "") -> dict[str, Any]:
     """Per-test outcomes from verbose runner output, with a fail-closed validity verdict."""
-    text = text.lstrip("﻿").replace("\x00", "")
+    text = text.lstrip("﻿").replace("\x00", "").replace("\r\n", "\n").replace("\r", "\n")
     end = _SEPARATOR.search(text)
     body = text[: end.start()] if end else text
     heads = [h for h in _HEADER.finditer(body) if _HEADER_CONT.match(body, h.start())]
