@@ -16,7 +16,7 @@ a:focus-visible,button:focus-visible,select:focus-visible,summary:focus-visible{
 code{font-family:ui-monospace,Consolas,monospace;font-size:.9em;overflow-wrap:anywhere}
 nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 nav .in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center;overflow-x:auto;white-space:nowrap}
-nav b{margin-right:auto;font-size:15px}nav a{color:var(--muted);font-size:14px}nav a:hover{color:var(--text)}
+nav b{margin-right:auto;font-size:15px}nav a{color:var(--muted);font-size:14px;display:inline-block;padding:6px 4px;min-height:32px}nav a:hover{color:var(--text)}
 main{max-width:1080px;margin:0 auto;padding:36px 16px 80px}
 .kicker{color:var(--accent);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:12px}
 h1{font-size:clamp(30px,6vw,52px);line-height:1.08;margin:10px 0 14px;letter-spacing:-.01em}
@@ -25,7 +25,7 @@ h2{font-size:clamp(20px,3.2vw,24px);margin:0 0 6px}h3{margin:0 0 6px;font-size:1
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 6px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-weight:600;font-size:14px}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn:hover{text-decoration:none;filter:brightness(1.1)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px;margin:26px 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,132px),1fr));gap:10px;margin:26px 0}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
 .stat b{display:block;font-size:28px;line-height:1.1}.stat span{color:var(--muted);font-size:13px}
 section{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,3vw,26px);margin:18px 0}
@@ -57,7 +57,7 @@ button.run{padding:10px 18px;border-radius:10px;border:0;background:var(--accent
 .v-ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
 .v-bad{background:color-mix(in srgb,var(--bad) 14%,transparent);color:var(--bad)}
 .v-warn{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,130px),1fr));gap:10px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,118px),1fr));gap:8px}
 .card{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left;color:var(--text);font:inherit}
 .card b{display:block;font-size:24px;line-height:1.1}.card span{font-size:12px;color:var(--muted)}
 .card[aria-pressed="true"]{outline:2px solid var(--accent)}
@@ -65,10 +65,14 @@ button.run{padding:10px 18px;border-radius:10px;border:0;background:var(--accent
 .list{max-height:240px;overflow:auto;margin-top:10px;font:12.5px/1.6 ui-monospace,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
 .list div{overflow-wrap:anywhere}
 footer{color:var(--muted);font-size:13px;margin-top:30px}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.skip{position:absolute;left:8px;top:-60px;z-index:10;background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;font-weight:600}.skip:focus{top:8px}
+select:focus-visible,button.card:focus-visible,button.run:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+summary{padding:6px 0}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 </style></head><body>
+<a class="skip" href="#demo">Skip to the classifier demo</a>
 <nav aria-label="Sections"><div class="in"><b>OnRamp</b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
-<main>
+<main id="main">
 <header>
 <div class="kicker">AngelHack × IBM · Building with IBM Bob · Theme 1</div>
 <h1>Know what's broken before you fix it.</h1>
