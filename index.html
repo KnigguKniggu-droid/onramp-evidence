@@ -91,24 +91,22 @@ footer{color:var(--muted);font-size:13px;margin-top:30px}
 
 <section id="demo" aria-labelledby="demo-h">
 <h2 id="demo-h">Try it: inherited failure or regression?</h2>
-<p class="sub">This is OnRamp's classification model running in your browser on real Healthchecks test logs. It is not a live IBM Bob session; the full kit runs inside Bob IDE. A run is only judged if it is complete, and a test only counts as fixed if it actually ran and passed.</p>
+<p class="sub">This is OnRamp's classifier running in your browser on real Healthchecks test runs, normalized to versioned JSON by the Python implementation (<a href="py/onramp_normalize.py">onramp_normalize.py</a>); CI checks that the browser and Python give identical results. It is not a live IBM Bob session; the full kit runs inside Bob IDE. A run is only judged if it is complete, and a test only counts as fixed if it actually ran and passed.</p>
 <div class="demo-controls">
-<label>Baseline run<select id="baseSel"><option value="baseline_run.txt">Healthchecks at the pinned upstream commit (1,761 tests)</option></select></label>
+<label>Baseline run<select id="baseSel"><option value="baseline_run.json">Healthchecks at the pinned upstream commit (1,761 tests)</option></select></label>
 <label>Later run<select id="curSel">
-<option value="full_run_after_fix.txt">Full suite after Bob's fix and feature (real)</option>
-<option value="targeted_run.txt">Only Bob's new webhook test (real, 1 test)</option>
-<option value="synthetic_new_failure.txt">One test broken on purpose (synthetic)</option>
-<option value="synthetic_crashed_run.txt">Run cut off mid-way (synthetic)</option>
-<option value="__paste">Paste your own verbose test output…</option>
+<option value="full_run_after_fix.json">Full suite after Bob's fix and feature (real)</option>
+<option value="targeted_run.json">Only Bob's new webhook test (real, 1 test)</option>
+<option value="synthetic_new_failure.json">One test broken on purpose (synthetic)</option>
+<option value="synthetic_crashed_run.json">Run cut off mid-way (synthetic)</option>
 </select></label>
 <button class="run" id="runBtn" type="button">Classify</button>
 </div>
-<textarea id="paste" hidden aria-label="Paste a Django or unittest run with -v 2" placeholder="Paste the output of: python manage.py test -v 2  (or python -m unittest -v)"></textarea>
 <div id="verdict" class="verdict" role="status" aria-live="polite" hidden></div>
 <div class="cards" id="cards"></div>
 <div class="list" id="list" hidden></div>
-<p class="sub" style="margin-top:10px">Logs: <a href="fixtures/baseline_run.txt">baseline</a> · <a href="fixtures/full_run_after_fix.txt">full run</a> · <a href="fixtures/targeted_run.txt">targeted run</a> · <a href="classifier.js">classifier.js</a>. Local paths in the logs are replaced with &lt;repo&gt; and &lt;home&gt;.</p>
-<p class="sub">Checked against IBM Bob&#x27;s corrected Python classifier (kit commit 2a527f8) on these logs: identical results for the full run (29 inherited, 0 fixed, 0 regressions), the synthetic regression (1) and the crashed run (inconclusive). On the 1-test targeted run Bob&#x27;s parser reports INCONCLUSIVE, because it does not read the test&#x27;s docstring line; neither version reports anything as fixed. See the repository&#x27;s corrections file.</p>
+<p class="sub" style="margin-top:10px">Raw logs: <a href="fixtures/baseline_run.txt">baseline</a> · <a href="fixtures/full_run_after_fix.txt">full run</a> · <a href="fixtures/targeted_run.txt">targeted run</a> · normalized <a href="data/full_run_after_fix.json">JSON</a> · <a href="classifier.js">classifier.js</a>. Local paths in the logs are replaced with &lt;repo&gt; and &lt;home&gt;.</p>
+<p class="sub">The browser classifier and the Python implementation (py/onramp_normalize.py) give identical results on every golden case, checked by CI on each push: full run (29 inherited, 0 fixed, 0 regressions), targeted run (1,761 not run, 0 fixed), synthetic regression (1), crashed run and unsupported schema (both inconclusive). IBM Bob&#x27;s own corrected classifier in the kit (gen_report.py, 2a527f8) agrees on the full, regression and crash cases; it reports the docstring-bearing targeted run as inconclusive, a known limitation listed in the corrections file.</p>
 </section>
 
 <section id="baseline"><h2>1 · 29 failures, zero regressions</h2>
@@ -154,17 +152,16 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 (function () {
   const $ = id => document.getElementById(id);
   const cache = {};
-  const load = f => cache[f] ? Promise.resolve(cache[f]) : fetch('fixtures/' + f).then(r => { if (!r.ok) throw new Error('could not load ' + f); return r.text(); }).then(t => (cache[f] = t));
+  const load = f => cache[f] ? Promise.resolve(cache[f]) : fetch('data/' + f).then(r => { if (!r.ok) throw new Error('could not load ' + f); return r.json(); }).then(t => (cache[f] = t));
   const KINDS = [
     ['inherited', 'k-inh', 'inherited failures', 'failed in the baseline and still fail'],
     ['regression', 'k-reg', 'regressions', 'passed in the baseline, fail now'],
-    ['newFailure', 'k-reg', 'new failing tests', 'not in the baseline, failing'],
+    ['new_failure', 'k-reg', 'new failing tests', 'not in the baseline, failing (kept separate from regressions)'],
     ['fixed', 'k-fix', 'fixed', 'failed in the baseline, ran and passed now'],
-    ['notRun', 'k-nr', 'not run', 'in the baseline but absent from this run'],
-    ['unchangedPass', '', 'unchanged passes', 'passed before and now'],
-    ['newTest', '', 'new passing tests', 'not in the baseline, passing'],
+    ['not_run', 'k-nr', 'not run', 'in the baseline but absent from this run'],
+    ['unchanged_pass', '', 'unchanged passes', 'passed before and now'],
+    ['new_test', '', 'new passing tests', 'not in the baseline, passing'],
   ];
-  $('curSel').addEventListener('change', () => { $('paste').hidden = $('curSel').value !== '__paste'; });
   function show(res) {
     const v = $('verdict'); v.hidden = false;
     if (!res.valid) {
@@ -172,10 +169,10 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
       v.textContent = 'INCONCLUSIVE: no verdict. ' + res.problems.join('; ') + '. OnRamp refuses to report "fixed" or "0 regressions" from an incomplete run.';
       $('cards').innerHTML = ''; $('list').hidden = true; return;
     }
-    const regs = res.regression.length + res.newFailure.length;
+    const regs = res.regression.length + res.new_failure.length;
     v.className = 'verdict ' + (regs ? 'v-bad' : 'v-ok');
-    v.textContent = (regs ? regs + ' regression(s) found' : 'No regressions') + ' · ' + res.scope + ' run' +
-      (res.scope === 'TARGETED' ? ` (${res.notRun.length} baseline tests not run, so they are neither fixed nor passing)` : '') +
+    v.textContent = (regs ? regs + ' new failure(s) found (' + res.regression.length + ' regression, ' + res.new_failure.length + ' new failing test)' : 'No regressions') + ' · ' + res.scope + ' run' +
+      (res.scope === 'TARGETED' ? ` (${res.not_run.length} baseline tests not run, so they are neither fixed nor passing)` : '') +
       ` · ${res.inherited.length} inherited failures still failing`;
     const cards = $('cards'); cards.innerHTML = '';
     KINDS.forEach(([key, cls, label, help]) => {
@@ -199,7 +196,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
     const btn = $('runBtn'); btn.disabled = true; btn.textContent = 'Classifying…';
     try {
       const base = await load($('baseSel').value);
-      const cur = $('curSel').value === '__paste' ? $('paste').value : await load($('curSel').value);
+      const cur = await load($('curSel').value);
       show(OnRampClassifier.classify(base, cur));
     } catch (e) {
       const v = $('verdict'); v.hidden = false; v.className = 'verdict v-warn'; v.textContent = e.message;
