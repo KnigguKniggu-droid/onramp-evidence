@@ -134,3 +134,26 @@
 **Record Status:** R0 reconciliation **COMPLETE**  
 **Blocked:** None at R0  
 **Proceed to:** R1–R3 P0 gate verification, then R5 design brief authoring
+
+---
+
+## Gate status update — 2026-10-12 ~00:20 local (Claude Code, Opus 5.5)
+
+Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
+
+| Gate | Status | Evidence |
+|---|---|---|
+| R1 normalizer/classifier | PASS | `py/test_onramp_normalize.py` 20/20 (full, targeted, regression, new failure, fixed, skipped, expected failure, empty/crash/timeout, count and terminal mismatch, mid-line warnings, docstrings, schema, CRLF, BOM/UTF-16 JSON) |
+| R2 fresh install | PASS | Untouched Django (0968fa2) and Flask (a380909) clones: copy `.bob/` → `init-profile --write` → verbose run → normalize → classify: valid FULL, 29/1 inherited, 0 regressions. Found and fixed a PowerShell BOM defect (kit 93c611d). |
+| R3 hook honesty | DOCUMENTED | Hook is runner feedback only; stated in `docs/evidence/CLAUDE_CORRECTIONS_2026-10-11.md` (kit repo). Bob's hook file unchanged (Bob out of budget; Claude did not edit Bob's files). |
+| Python/JS parity | PASS | CI `parity` green on every push since d35d3fc; 5/5 golden cases |
+| Deployed SHA | VERIFIED | Pages deployment and parity both succeeded for 39a3dcf, then b35b039 pushed (re-verify after deploy) |
+| R6 responsive | PASS (automated) | True-width iframes 320/375/768/1440: no document overflow, before (d35d3fc) and after screenshots in `docs/qa/screenshots/` |
+| R6 keyboard/focus/structure | PASS (programmatic) | 36 reachable controls all show focus; skip link; 1 h1, 6 h2; labelled selects; aria-live verdict |
+| R6 links/console/error state | PASS | 34 links 200; no console errors; missing-data error shown |
+| R6 screen reader, contrast measurement, 200% zoom, slow/offline | OPEN | not yet performed |
+| #1090 visual proof | PASS | real before/after screenshots from local dev servers |
+| Demo video | OPEN (human) | record and upload ≤3:00 |
+| Live-demo rule confirmation | OPEN (human) | email buildwithibm@angelhack.com |
+| Eligibility (18+, US resident) | OPEN (human) | confirm |
+| Form submission | OPEN (human) | must be submitted manually (ToS voids automated submissions) |
