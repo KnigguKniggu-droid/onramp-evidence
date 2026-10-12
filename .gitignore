@@ -4,3 +4,4 @@ tools/
 preview.png
 shots-src/
 PARITY.txt
+__pycache__/
