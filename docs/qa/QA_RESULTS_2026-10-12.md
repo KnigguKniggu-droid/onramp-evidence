@@ -71,10 +71,26 @@ Procedure: copy only `.bob/` into an untouched clone, run `init-profile --write`
 
 **Defect found and fixed:** the first R2 attempt failed. PowerShell's `>` writes JSON with a UTF-8 BOM, and `classify` could not read it. Kit commit 93c611d adds `load_run()` and a test for this.
 
+## Deployed AFTER: commit 39a3dcf (Pages deployment and parity CI both success for this SHA)
+Checked in Chrome through the Claude in Chrome extension against https://kniggukniggu-droid.github.io/onramp-evidence/, plus curl.
+
+| Check | Result |
+|---|---|
+| Links | 34 unique. The 6 same-site links return 200. All 28 GitHub links (repo, deck PDF, corrections, actions, commits) return 200 via `curl -L`. |
+| Console | No errors or exceptions after load and classification. |
+| Focus | 36 elements are reachable while all sections are collapsed, and every one shows a visible focus outline after `focus()`. 23 commit links inside the closed "All Bob commits" `<details>` are correctly unreachable until it is opened. |
+| Tab order | Skip link, then the 7 nav links, then the CTAs, then the demo controls (DOM order, no positive tabindex). |
+| Skip link | Visible on focus (top 8px). |
+| Structure | 1 h1, 6 h2. Both selects are wrapped in `<label>`. The verdict uses `role=status` with `aria-live=polite`. |
+| Error state | A missing data file shows the warning verdict "could not load missing_file.json", and the button re-enables. |
+| Classifier on the deployed site | Full: 0 regressions, 29 inherited. Targeted: 1,761 not run, 0 fixed. Synthetic: 1 regression. Crash: INCONCLUSIVE. |
+
+Test-method limit: simulated Tab key presses from the extension did not move focus, because the Chrome window lacked OS focus. Focus was therefore checked programmatically, not by a human pressing Tab.
+
 ## Still open
-- **Keyboard trace and screen reader:** not done.
-- **200% zoom and contrast measurement:** not done.
-- **Link and HTTP check on the deployed AFTER site:** not done.
-- **Console/network and slow/offline states:** not checked on the deployed AFTER site.
-- **Demo video link:** none exists yet.
-- **Deployed-SHA association:** must be checked after publishing.
+- **Screen-reader pass:** NVDA or Narrator, needs a human.
+- **Measured contrast ratios:** not taken.
+- **200% zoom:** not tested directly. The 375 and 768px reflow results are the proxy.
+- **Slow and offline network:** not tested.
+- **Demo video link:** none yet.
+- **#1090 before/after screenshots:** not taken.
