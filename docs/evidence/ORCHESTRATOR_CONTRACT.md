@@ -13,6 +13,19 @@ The 2026-10-13 directive proposed 8–10 parallel workers. Three things argued a
 
 So the R0–R9 work ran **sequentially in the single main Claude Code session, with no subagents**. `WORKER_RUN_LEDGER.jsonl` records only those real stages. No worker events were invented.
 
+## Revision, 2026-10-13 (evening)
+The participant then explicitly directed full use of the orchestration plan. The final audit therefore ran as **8 parallel read-only worker agents** in Claude Code workflow run `wf_d17b0a12-827`:
+- repo/release
+- evidence/classifier/parity
+- taste
+- responsive
+- accessibility and reduced motion
+- performance
+- SEO and links
+- security and claims
+
+Each worker had a fixed scope and no write permission. The coordinator (the main session) was the only writer. It fixed every P0/P1 finding, and every P2 finding except the robots.txt location note, which is recorded. All eight runs are in the ledger.
+
 ## Rules applied to every stage
 - Inspect before editing, make the smallest change, re-verify immediately, and give every file one writer.
 - Never edit IBM Bob's own files. A local guard blocks edits to Bob product files, and blocks mixing the upstream clone or private notes into Bob's workspace.

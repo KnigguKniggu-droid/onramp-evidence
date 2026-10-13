@@ -32,7 +32,7 @@ This matrix covers public claims on the Evidence Explorer, in the kit README (`.
 | 16 | Healthchecks is a "real 10k-star app" | GitHub API: 10,414 stars, BSD-3-Clause | 2026-10-13 | VERIFIED |
 | 17 | Bob's 180-Bobcoin allowance ran out | Bob IDE log `BudgetExceededError … allowance of 180 Bobcoins`, 2026-10-11 21:37:52 local | Local log; disclosed in `CLAUDE_CORRECTIONS_2026-10-11.md` | VERIFIED_PRIVATE_LOG |
 | 18 | The quick start was tested on untouched Django and Flask clones | `tooling/state/onramp/R2_fresh_install_2026-10-12.txt` (private workspace) | Run 2026-10-12: profile created, FULL, 0 regressions | VERIFIED_PRIVATE_LOG |
-| 19 | The normalizer/bootstrap module is Claude-authored (20 tests) | Kit commits dfb2e58, 93c611d ("Written by Claude Code") | Commit messages and README | VERIFIED |
+| 19 | The normalizer/bootstrap module is Claude-authored (23 tests) | Kit commits dfb2e58, 93c611d ("Written by Claude Code") | Commit messages and README | VERIFIED |
 | 20 | The hook is runner feedback only | `.bob/hooks/run-app-tests.mjs` always calls `process.exit(0)` and never reads the baseline | Source read 2026-10-13; README updated in 30bb017 | VERIFIED |
 | 21 | The demo is a browser classifier, not a live Bob session | Site copy under "How this demo works" | Page text | VERIFIED |
 | 22 | Demo video ≤ 3 min | — | — | NOT_DONE (human) |

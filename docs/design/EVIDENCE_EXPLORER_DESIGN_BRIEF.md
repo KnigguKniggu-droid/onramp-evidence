@@ -153,8 +153,22 @@ Colour always carries meaning, and every state also has a text label, so nothing
 | Run cards | Compare runs | 3 columns, then 1 | Static | Plain HTML | ~0.5 KB | TaskFlow baselines | Copy check (run 2 note) |
 | IBM Plex | Hierarchy, IBM context | — | — | system-ui | 2 requests; `display=optional` | IBM/plex (OFL-1.1) | CLS 0 after the fix |
 
+## Enhancement layer (added 2026-10-13 evening)
+| Feature | Purpose | Owner | Responsive | Reduced motion | Fallback | Cost | QA |
+|---|---|---|---|---|---|---|---|
+| Liquid-gradient hero | Depth and identity behind the statement | CSS `.liquid` | Clipped inside the hero | Static | Static gradient | 3 radial gradients, no blur, paused off-screen | Contrast audit 0 failures; no overflow |
+| Hero parallax and panel tilt | Spatial continuity (cloth/parallax idea) | `fx.js` + GSAP `quickTo` | Fine pointers only | Off | Static | Negligible | Manual pointer check |
+| Bento proof band | Shows 1,761 = 1,732 passing + 29 failing at a glance | CSS `.stats`, `.suitebar` | 4, then 2 columns | Static | — | — | Screenshots |
+| Evidence-flow beam | Shows the pipeline state while classifying, then the verdict colour | CSS `.flow` + inline script | Classifier node hidden ≤640px | No sweep | Text loading state | CSS only | 4 scenarios |
+| Border beam | Marks the selected run | CSS `@property` conic gradient, 2 iterations | — | Off | Static accent border | Brief repaint | — |
+| 3D suite map | Shows *which* tests a run classifies how; modules form bands (the 26 AF_UNIX failures cluster) | `fx.js` + Three.js r160 | Full width ≤900px | No auto-rotation, no colour fade | No-WebGL text; the cards carry the counts | 670 KB JS, loaded lazily when visible and idle; render loop idles after 6 s | Live test: targeted run turns the whole sphere "not run" |
+| Scroll-played blind-fix steps | Makes the order sealed → test → fix → reveal felt, not just read | GSAP ScrollTrigger scrub, no pin | — | Static, full opacity | Static steps | — | Measured progress 0 → 0.11 → 0.34 → 0.57 → 0.91 while scrolling |
+| Number tickers | Draw the eye to proof numbers | GSAP | — | Off | Final numbers | — | Accessible names keep the final value (`aria-label` / `.sr` span) |
+| Opt-in chime | Audible verdict: rising = clean, falling = regression, flat = inconclusive or targeted | WebAudio, `fx.js` | — | Allowed (sound is not motion) but **off by default** | Silent | No files | Toggle: `aria-pressed` with a constant name |
+| Keys 1–4 | Fast scenario switching (UI UX Pro Max "keyboard shortcuts" must-have) | Inline script | Hint hidden ≤640px | — | Radios | — | Active only while focus is in the demo (WCAG 2.1.4) |
+
 ## Rejected directions
-3D, WebGL, liquid or gradient scenes, scroll-played sequences, parallax, sound, React or component-library rewrites, cinematic reveal-on-scroll, and testimonials or vanity metrics. The reasons are in `FRONTEND_REFERENCE_QUEUE.md`.
+Still rejected: React or Svelte rewrites, pinned or scroll-jacked sections, autoplaying sound, blur-filter glassmorphism over evidence, and testimonials or vanity metrics. 3D, liquid gradient, scroll-played sequences, parallax and an opt-in chime were **adopted** on 2026-10-13 (see the enhancement layer above). The reasons are in `FRONTEND_REFERENCE_QUEUE.md`.
 
 ## Acceptance criteria
 All of these are met; the evidence is in `docs/evidence/UI_QA_REPORT.md`:

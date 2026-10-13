@@ -5,10 +5,15 @@
   'use strict';
   const SUPPORTED = ['onramp.run/1'];
   const FAIL = s => s === 'FAIL' || s === 'ERROR';
+  const STATUSES = ['PASS', 'FAIL', 'ERROR', 'SKIP'];  // the normalizer's whole vocabulary; anything else is not trusted
 
   function check(run, label) {
     if (!run || SUPPORTED.indexOf(run.schema_version) < 0) return [label + ': unsupported schema_version ' + String(run && run.schema_version)];
-    return (run.problems || []).map(p => label + ': ' + p);
+    const out = (run.problems || []).map(p => label + ': ' + p);
+    if (!run.outcomes || typeof run.outcomes !== 'object' || Array.isArray(run.outcomes)) return out.concat([label + ': outcomes missing']);
+    const bad = Object.keys(run.outcomes).filter(id => STATUSES.indexOf(run.outcomes[id]) < 0).sort();
+    if (bad.length) out.push(label + ': ' + bad.length + ' test(s) with an unknown status (first: ' + bad[0] + ')');
+    return out;
   }
 
   function classify(baseline, current) {
