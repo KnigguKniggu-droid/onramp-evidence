@@ -103,3 +103,19 @@ Test-method limit: simulated Tab key presses from the extension did not move foc
 
 ## 200% zoom
 Not tested directly. At 200% zoom a 1440px window lays out at 720 CSS px; the 768 and 375px captures show no overflow, so reflow at that size is expected to hold. Recorded as approximate.
+
+## Redesign QA, 2026-10-13 (site commits 5fa5428, 39b30f5 and the contrast fix)
+- **Responsive:** `tools/qa_capture.ps1 -Label after-redesign` uses true-width iframes. There is no document overflow at 320, 375, 768 or 1440px. The first run found a 478px overflow at 320 and 375px: under a `1fr` grid column, the 420px-min table set the column's width. Switching to `minmax(0,1fr)` fixed it. The remaining "offenders" are nav links inside the horizontally scrolling nav, which is intended.
+- **Demo:** the scenario radios were clicked in turn.
+  - Full suite: 0 regressions, 29 inherited.
+  - Targeted run: 1,761 not run, none counted as fixed.
+  - Synthetic break: 1 regression.
+  - Crashed run: Inconclusive, no verdict.
+- **Live check:** the deployed site was checked in Chrome at 5fa5428. The verdict renders on load, both #1090 images load at 660px wide, IBM Plex loads, and the page has no horizontal overflow. Parity CI and the Pages deploy both succeeded for 5fa5428.
+- **Contrast:** computed from the tokens with the WCAG formula; no tool measured rendered pixels.
+  - The redesign's tinted chips measured 3.6–3.8:1 in light mode, and dark red on a panel measured 4.48:1.
+  - Fix: light status colours #0e6027, #a2191f, #684e00 and #6929c4; dark red #ff6b74.
+  - Result: tinted chips are now ≥5.4:1 in light mode and ≥4.7:1 in dark mode.
+- **Light theme:** captured with Edge `--blink-settings=preferredColorScheme=1` as `after-redesign-light-1280.png`.
+- **Copy fix:** the "(the bug this run exposed)" note now appears only on run 2, where the "Unknown" error type was the bug. Run 1 exposed the Django assumptions.
+- **Screenshots:** `docs/qa/screenshots/after-redesign-{320,375,768,1440}.png` and `after-redesign-light-1280.png`, plus `after-redesign-metrics.jsonl`.
