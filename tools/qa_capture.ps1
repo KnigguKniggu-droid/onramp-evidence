@@ -18,10 +18,10 @@ const f=document.getElementById('f');
 f.addEventListener('load',async()=>{const d=f.contentDocument,win=f.contentWindow;
  await new Promise(r=>setTimeout(r,800));
  const vw=d.documentElement.clientWidth, sw=d.documentElement.scrollWidth;
- const offenders=[...d.querySelectorAll('body *')].filter(e=>{const b=e.getBoundingClientRect();return b.width>0&&b.right>vw+1&&!e.closest('.scroll,.diff,nav .in,.list')}).slice(0,8).map(e=>e.tagName.toLowerCase()+(e.className?'.'+String(e.className).split(' ')[0]:''));
+ const offenders=[...d.querySelectorAll('body *')].filter(e=>{const b=e.getBoundingClientRect();return b.width>0&&b.right>vw+1&&!e.closest('.scroll,.diff,nav .in,.list')}).slice(0,8).map(e=>e.tagName.toLowerCase()+(e.className?'.'+String(e.className).split(' ')[0]:'')+'@'+Math.round(e.getBoundingClientRect().right));
  const small=[...d.querySelectorAll('a,button,select,summary')].filter(e=>{const b=e.getBoundingClientRect();return b.width>0&&(b.height<24||b.width<24)}).length;
- let verdict='n/a';try{d.getElementById('runBtn').click();await new Promise(r=>setTimeout(r,1500));verdict=d.getElementById('verdict').textContent.slice(0,90)}catch(e){verdict='error: '+e.message}
- document.getElementById('out').textContent=JSON.stringify({width:$w,clientWidth:vw,scrollWidth:sw,overflow:sw>vw,offenders,smallTargets:small,verdict});
+ let verdict='n/a';const verdicts=[];try{const rb=d.getElementById('runBtn');if(rb){rb.click();await new Promise(r=>setTimeout(r,1500))}verdict=d.getElementById('verdict').textContent.slice(0,90);for(const r of d.querySelectorAll('input[name=cur]')){r.click();await new Promise(z=>setTimeout(z,700));verdicts.push(r.value+': '+d.getElementById('verdict').textContent.slice(0,70))}if(verdicts.length){d.querySelector('input[name=cur]').click();await new Promise(z=>setTimeout(z,700))}}catch(e){verdict='error: '+e.message}
+ document.getElementById('out').textContent=JSON.stringify({width:$w,clientWidth:vw,scrollWidth:sw,overflow:sw>vw,offenders,smallTargets:small,verdict,verdicts});
  document.body.dataset.done='1';});
 </script></body></html>
 "@ | Set-Content -Encoding utf8 $harness
