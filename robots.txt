@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kniggukniggu-droid.github.io/onramp-evidence/sitemap.xml
