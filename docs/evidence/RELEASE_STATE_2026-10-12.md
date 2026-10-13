@@ -160,3 +160,24 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 | Live-demo rule confirmation | OPEN (human) | email buildwithibm@angelhack.com |
 | Eligibility (18+, US resident) | OPEN (human) | confirm |
 | Form submission | OPEN (human) | must be submitted manually (ToS voids automated submissions) |
+
+
+## Update 2026-10-13 (Claude Code)
+- **SHAs:**
+  - kit `30bb017`: Tests, Mypy and Coverage all green
+  - site `c42070f`: parity and Pages green; the deployed SHA equals the source SHA, per the deploy run for `c42070f`
+- **Records:** `docs/evidence/UI_QA_REPORT.md`, `CLAIM_TO_SOURCE_MATRIX.md`, `CLAIM_RISK_REGISTER.md`, `UI_STATE_AND_A11Y_MATRIX.md`, `ORCHESTRATOR_CONTRACT.md`, `WORKER_RUN_LEDGER.jsonl`; `docs/design/REFERENCE_REGISTRY.md`, `FRONTEND_REFERENCE_QUEUE.md`, the design brief; `docs/qa/MOTION_AND_PERFORMANCE_BUDGET.md`, `RESOURCE_SECURITY_REVIEW.md`.
+
+| Gate | Status |
+|---|---|
+| R0 reconciliation | PASS. Local equals origin for both repos; CI and deploy are green. |
+| R1 parser / classifier / P0 | PASS. Verified 2026-10-12: 20 normalizer tests, 65 Bob tests, parity golden cases. |
+| R2 fresh install | PASS. Django and Flask, 2026-10-12 (private log). |
+| R3 hook truthfulness | PASS. README states runner feedback only (30bb017). |
+| R4 reproduction / classification | PASS. Targeted runs are never green (63e1499). |
+| R5 design | PASS. Redesign plus design audit (c42070f). |
+| R6 browser QA | PASS (automated / programmatic), except the human screen-reader pass, which is OPEN. |
+| R7 claims and provenance | PASS for the site and README. Video and organizer confirmation are OPEN (human). |
+| R8 deploy parity, metadata, 404, rollback | PASS. Rollback target `b717ce8`. |
+| R9 final readiness | **NOT_SUBMISSION_CLEAN**. The video, organizer email, eligibility confirmation, screen-reader pass and form submission are all human steps. |
+| S1 submission | Human only. |
