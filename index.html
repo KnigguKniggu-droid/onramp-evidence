@@ -5,7 +5,13 @@
 <meta property="og:title" content="OnRamp · an IBM Bob kit for joining an unfamiliar codebase">
 <meta property="og:description" content="Baseline-aware verification, a blind fix compared with the maintainer's, and a kit that runs unchanged on a second app.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://kniggukniggu-droid.github.io/onramp-evidence/">
+<meta property="og:site_name" content="OnRamp Evidence Explorer">
+<link rel="canonical" href="https://kniggukniggu-droid.github.io/onramp-evidence/">
+<meta name="robots" content="index,follow">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OnRamp · an IBM Bob kit for joining an unfamiliar codebase">
+<meta name="twitter:description" content="Separates inherited test failures from new regressions; blind fix compared with the maintainer's; same kit on a second app.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232563eb'/><path d='M8 22 L15 10 L18 15 L21 11 L25 22 Z' fill='white'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -153,7 +159,8 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 <label><input type="radio" name="cur" value="synthetic_new_failure.json"><b>One test broken on purpose</b><span>full suite</span><br><span class="tag syn">synthetic</span></label>
 <label><input type="radio" name="cur" value="synthetic_crashed_run.json"><b>Run cut off mid-way</b><span>crash or timeout</span><br><span class="tag syn">synthetic</span></label>
 </fieldset>
-<div id="verdict" class="verdict v-ok" role="status" aria-live="polite">Classifying…</div>
+<div id="verdict" class="verdict" role="status" aria-live="polite">Loading test runs and classifying…</div>
+<noscript><p class="verdict v-warn">The classifier needs JavaScript. Without it nothing is classified; the raw logs and normalized JSON are linked under "How this demo works".</p></noscript>
 <div class="cards" id="cards"></div>
 <div class="list" id="list" hidden></div>
 <details><summary>How this demo works</summary>
@@ -168,7 +175,7 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 <p class="take">Before Bob changed a line, OnRamp recorded which tests already fail on this machine — so red tests are never blamed on the fix.</p></div>
 <div class="two">
 <div class="panel"><div class="scroll"><table><tr><th>Error type</th><th>Tests</th><th>Why it fails here</th></tr><tr><td><span class="pill">AttributeError</span></td><td class="n">26</td><td>Signal integration tests need socket.AF_UNIX, which Windows lacks</td></tr><tr><td><span class="pill">ValueError</span></td><td class="n">2</td><td>A Linux-only strftime format (e.g. %-d)</td></tr><tr><td><span class="pill">AssertionError</span></td><td class="n">1</td><td>DST test needs time-zone switching, unavailable on Windows</td></tr></table></div></div>
-<div class="panel"><p class="sub" style="color:var(--text)">Fingerprint taken at <code>e10db36</code> on Windows, Python 3.13.2. All 29 are Windows-only; on Linux CI the same suite passes.</p>
+<div class="panel"><p class="sub" style="color:var(--text)">Fingerprint recorded at kit commit <code>e10db36</code>, whose application code (<code>hc/</code>, <code>templates/</code>, <code>static/</code>) is identical to upstream Healthchecks <code>0968fa2</code>; Windows, Python 3.13.2. All 29 are Windows-only; on Linux CI the same suite passes.</p>
 <p class="sub">The first baseline was captured before the kit's parser fix (<code>8165552</code>) and stored error types as "Unknown"; Bob re-classified a fresh run in <code>baseline_reclassified.json</code>. Its error types match Claude's independent run exactly.</p></div>
 </div>
 </div></section>
@@ -204,7 +211,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 <figure><img src="shots/1090-after-bob.png" alt="After: the same request body pretty-printed over several indented lines, with café and a check mark intact" width="660" height="210"><figcaption><b>After</b> · Bob's branch: indented, non-ASCII intact</figcaption></figure>
 </div>
 <p class="sub" style="margin-top:12px">Captured from local development servers with a throwaway test check. An independent check found <code>json.dumps</code> escaping "café"; Bob added a test and fixed it (<code>e4032c2</code>).</p>
-<details><summary>View the code change</summary><div class="diff" style="margin-top:10px"><div class="ln hunk">@@ -1,6 +1,7 @@</div><div class="ln "> from __future__ import annotations</div><div class="ln "> </div><div class="ln "> import email</div><div class="ln add">+import json</div><div class="ln "> import logging</div><div class="ln "> import os</div><div class="ln "> import re</div><div class="ln hunk">@@ -758,10 +759,18 @@ def ping_details(</div><div class="ln ">     except Ping.GetBodyError:</div><div class="ln ">         body_bytes = None</div><div class="ln "> </div><div class="ln add">+    body_str = body_bytes.decode(errors=&quot;replace&quot;) if body_bytes else None</div><div class="ln add">+    if body_str and ping.scheme != &quot;email&quot;:</div><div class="ln add">+        try:</div><div class="ln add">+            parsed_json = json.loads(body_str)</div><div class="ln add">+            body_str = json.dumps(parsed_json, indent=2)</div><div class="ln add">+        except ValueError:</div><div class="ln add">+            pass</div><div class="ln add">+</div><div class="ln ">     ctx = {</div><div class="ln ">         &quot;check&quot;: check,</div><div class="ln ">         &quot;ping&quot;: ping,</div><div class="ln del">-        &quot;body&quot;: body_bytes.decode(errors=&quot;replace&quot;) if body_bytes else None,</div><div class="ln add">+        &quot;body&quot;: body_str,</div><div class="ln ">         &quot;plain&quot;: None,</div><div class="ln ">         &quot;html&quot;: None,</div><div class="ln ">         &quot;active&quot;: None,</div></div></details>
+<details><summary>View the code change (786c034 and the follow-up e4032c2)</summary><div class="diff" style="margin-top:10px"><div class="ln hunk">@@ -1,6 +1,7 @@</div><div class="ln "> from __future__ import annotations</div><div class="ln "> </div><div class="ln "> import email</div><div class="ln add">+import json</div><div class="ln "> import logging</div><div class="ln "> import os</div><div class="ln "> import re</div><div class="ln hunk">@@ -758,10 +759,18 @@ def ping_details(</div><div class="ln ">     except Ping.GetBodyError:</div><div class="ln ">         body_bytes = None</div><div class="ln "> </div><div class="ln add">+    body_str = body_bytes.decode(errors=&quot;replace&quot;) if body_bytes else None</div><div class="ln add">+    if body_str and ping.scheme != &quot;email&quot;:</div><div class="ln add">+        try:</div><div class="ln add">+            parsed_json = json.loads(body_str)</div><div class="ln add">+            body_str = json.dumps(parsed_json, indent=2)</div><div class="ln add">+        except ValueError:</div><div class="ln add">+            pass</div><div class="ln add">+</div><div class="ln ">     ctx = {</div><div class="ln ">         &quot;check&quot;: check,</div><div class="ln ">         &quot;ping&quot;: ping,</div><div class="ln del">-        &quot;body&quot;: body_bytes.decode(errors=&quot;replace&quot;) if body_bytes else None,</div><div class="ln add">+        &quot;body&quot;: body_str,</div><div class="ln ">         &quot;plain&quot;: None,</div><div class="ln ">         &quot;html&quot;: None,</div><div class="ln ">         &quot;active&quot;: None,</div><div class="ln hunk">@@ -763,7 +763,7 @@ def ping_details(</div><div class="ln ">     if body_str and ping.scheme != &quot;email&quot;:</div><div class="ln ">         try:</div><div class="ln ">             parsed_json = json.loads(body_str)</div><div class="ln del">-            body_str = json.dumps(parsed_json, indent=2)</div><div class="ln add">+            body_str = json.dumps(parsed_json, indent=2, ensure_ascii=False)</div><div class="ln ">         except ValueError:</div><div class="ln ">             pass</div><div class="ln "> </div></div></details>
 </div></section>
 
 <section id="portability" class="band"><div class="wrap">
@@ -248,10 +255,17 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
       v.textContent = 'Inconclusive — no verdict. ' + res.problems.join('; ') + '. OnRamp refuses to report "fixed" or "0 regressions" from an incomplete run.';
       return;
     }
-    const regs = res.regression.length + res.new_failure.length;
-    v.className = 'verdict ' + (regs ? 'v-bad' : 'v-ok');
-    v.textContent = (regs ? regs + ' new failure' + (regs > 1 ? 's' : '') + ' found (' + res.regression.length + ' regression, ' + res.new_failure.length + ' new failing test)' : 'No regressions') +
-      (res.scope === 'TARGETED' ? ' · targeted run: ' + res.not_run.length.toLocaleString() + ' baseline tests did not run, so none of them count as fixed' : ' · full run · ' + res.inherited.length + ' inherited failures still failing');
+    const regs = res.regression.length + res.new_failure.length, ran = res.total_current || (res.unchanged_pass.length + res.new_test.length + res.inherited.length + res.fixed.length + regs);
+    const found = regs + ' new failure' + (regs > 1 ? 's' : '') + ' found (' + res.regression.length + ' regression, ' + res.new_failure.length + ' new failing test)';
+    if (res.scope === 'TARGETED') {
+      // a targeted run can never be an all-clear: amber, and it says what it does not prove
+      v.className = 'verdict ' + (regs ? 'v-bad' : 'v-warn');
+      v.textContent = 'Targeted run, not a full-suite result · ' + (regs ? found : 'no failures among the ' + ran.toLocaleString() + ' test' + (ran === 1 ? '' : 's') + ' that ran') +
+        ' · ' + res.not_run.length.toLocaleString() + ' baseline tests did not run, so none count as fixed and no suite-wide verdict is given';
+    } else {
+      v.className = 'verdict ' + (regs ? 'v-bad' : 'v-ok');
+      v.textContent = (regs ? found : 'No regressions') + ' · full run · ' + res.inherited.length + ' inherited failures still failing';
+    }
     KINDS.forEach(([key, cls, label, help]) => {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'card ' + cls; b.setAttribute('aria-pressed', 'false'); b.title = help + ' — click to list them';
