@@ -3,7 +3,7 @@
 # Headless Edge cannot shrink its own viewport below ~492px, so phone widths use same-origin iframes
 # (file:// with --allow-file-access-from-files). Not a WCAG certification; a repeatable evidence capture.
 param([Parameter(Mandatory)][string]$SiteDir, [Parameter(Mandatory)][string]$Label, [string]$OutDir = "$PSScriptRoot\..\docs\qa\screenshots")
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'  # Edge writes harmless sync errors to stderr
 $edge = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
 New-Item -ItemType Directory -Force $OutDir | Out-Null; $OutDir = (Resolve-Path $OutDir).Path
 $results = @()
