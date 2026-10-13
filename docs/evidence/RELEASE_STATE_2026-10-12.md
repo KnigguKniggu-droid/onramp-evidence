@@ -153,7 +153,8 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 | R6 links/console/error state | PASS | 34 links 200; no console errors; missing-data error shown |
 | R5 design pass | PASS (Claude-assessed) | Redesign 2026-10-13 (5fa5428+): decision-rule hero, auto-run demo, run cards; brief in `docs/design/EVIDENCE_EXPLORER_DESIGN_BRIEF.md`; before/after screenshots in `docs/qa/screenshots/` |
 | R6 redesign re-QA | PASS (automated) | after-redesign captures: no overflow 320–1440, 4 scenario verdicts correct, light theme captured, token contrast ≥4.5:1 both themes (computed) |
-| R6 screen reader, pixel-measured contrast, direct 200% zoom, slow/offline | OPEN | not yet performed |
+| R6 rendered contrast, direct 200% zoom, slow/offline/fonts-blocked, a11y tree | PASS (automated) | `docs/qa/QA_RESULTS_2026-10-13_extra.md`; light accent fixed after the audit found 4.41:1 |
+| R6 human screen-reader pass (NVDA/Narrator) | OPEN (human) | accessibility-tree proxy passed; listening pass not done |
 | #1090 visual proof | PASS | real before/after screenshots from local dev servers |
 | Demo video | OPEN (human) | record and upload ≤3:00 |
 | Live-demo rule confirmation | OPEN (human) | email buildwithibm@angelhack.com |

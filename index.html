@@ -12,7 +12,7 @@
 <style>
 :root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
  --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent);--info-bg:color-mix(in srgb,var(--info) 14%,transparent)}
-@media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f6f7f9;--band:#eef1f5;--panel:#fff;--panel2:#f7f8fa;--line:#dfe3ea;--text:#161a22;--muted:#525c6e;--accent:#0f62fe;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
+@media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f6f7f9;--band:#eef1f5;--panel:#fff;--panel2:#f7f8fa;--line:#dfe3ea;--text:#161a22;--muted:#525c6e;--accent:#0050e6;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
@@ -268,11 +268,19 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
       cards.appendChild(b);
     });
   }
+  let seq = 0;  // only the latest selection may draw, even if an earlier, slower load finishes later
   async function run() {
-    const v = $('verdict'); v.className = 'verdict'; v.textContent = 'Classifying…';
+    const my = ++seq, v = $('verdict');
+    v.className = 'verdict'; v.textContent = 'Loading test runs and classifying…'; $('cards').setAttribute('aria-busy', 'true');
     const pick = document.querySelector('input[name="cur"]:checked');
-    try { show(OnRampClassifier.classify(await load('baseline_run.json'), await load(pick.value))); }
-    catch (e) { v.className = 'verdict v-warn'; v.textContent = e.message + ' — the demo data could not be loaded; nothing was classified.'; $('cards').innerHTML = ''; }
+    try {
+      const res = OnRampClassifier.classify(await load('baseline_run.json'), await load(pick.value));
+      if (my === seq) show(res);
+    } catch (e) {
+      if (my !== seq) return;
+      v.className = 'verdict v-warn'; $('cards').innerHTML = ''; $('list').hidden = true;
+      v.textContent = (navigator.onLine === false ? 'You appear to be offline' : 'The demo data could not be loaded (' + e.message + ')') + ' — nothing was classified. Reload or pick a run again to retry.';
+    } finally { if (my === seq) $('cards').removeAttribute('aria-busy'); }
   }
   document.querySelectorAll('input[name="cur"]').forEach(r => r.addEventListener('change', run));
   run();
