@@ -1,3 +1,5 @@
+> **Historical snapshot.** The R0 block directly below describes the repository as of 2026-10-12 (HEAD d35d3fc). The current state is in the dated updates at the end of this file.
+
 # OnRamp Release State — 2026-10-12 R0 Reconciliation
 
 **Reconciliation Date:** 2026-10-12  
@@ -171,7 +173,7 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 | Gate | Status |
 |---|---|
 | R0 reconciliation | PASS. Local equals origin for both repos; CI and deploy are green. |
-| R1 parser / classifier / P0 | PASS. Verified 2026-10-12: 20 normalizer tests, 65 Bob tests, parity golden cases. |
+| R1 parser / classifier / P0 | PASS. Verified 2026-10-12: 23 normalizer tests, 65 Bob tests, parity golden cases. |
 | R2 fresh install | PASS. Django and Flask, 2026-10-12 (private log). |
 | R3 hook truthfulness | PASS. README states runner feedback only (30bb017). |
 | R4 reproduction / classification | PASS. Targeted runs are never green (63e1499). |
@@ -181,3 +183,26 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 | R8 deploy parity, metadata, 404, rollback | PASS. Rollback target `b717ce8`. |
 | R9 final readiness | **NOT_SUBMISSION_CLEAN**. The video, organizer email, eligibility confirmation, screen-reader pass and form submission are all human steps. |
 | S1 submission | Human only. |
+
+
+## Update 2026-10-13, evening (Claude Code): enhancement layer
+- **What shipped:** the participant directed that the named resources be used.
+  - Three.js suite map; GSAP ScrollTrigger sequence, tickers and reveals
+  - liquid-gradient hero, parallax and tilt, opt-in chime
+  - Magic UI-style beams; bento band from UI UX Pro Max data; keys 1–4
+- **Independent audit:** 8 parallel read-only auditor agents (workflow run wf_d17b0a12-827) reported 31 findings. All P0 and P1 findings were fixed before commit, including:
+  - a **false-green classifier bug for null or unknown outcomes**, fixed in both the browser and Python versions (kit 278ab94); parity now has 7 golden cases
+  - an infinite animation not covered by reduced motion
+  - WCAG 2.1.4 single-key shortcuts
+  - per-frame blur cost, and an always-on WebGL render loop
+  - stale cards during loading, and a class-name collision
+  - stale records
+- **Re-QA:**
+  - no overflow at 320/375/768/1440 with the layer on (HTTP) or off (file://)
+  - 4 verdicts correct in both modes
+  - rendered contrast: 0 failures in both themes
+  - 200% zoom: no overflow
+  - reduced-motion captures: `fx-http-reduced-*`
+- **Status:**
+  - R0, R6 and R8 must be re-confirmed against the new deployed SHA. See the UI QA report addendum.
+  - The verdict stays **NOT_SUBMISSION_CLEAN**: the video, organizer email, eligibility confirmation, screen-reader pass and form submission are human steps.

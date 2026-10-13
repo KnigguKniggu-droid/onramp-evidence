@@ -2,6 +2,24 @@
 
 Maintained by Claude Code. Last reviewed 2026-10-13. Nothing in this table is a dependency because it appeared in a saved reel, a ChatGPT conversation or this file. Only rows marked **ADOPTED** are used by the Evidence Explorer.
 
+
+## Revision, 2026-10-13 (evening)
+The participant directed that the named resources be **used**, not only studied. The earlier "reference only / rejected" decisions below were reversed where a resource could serve the evidence. Rows changed:
+
+| Resource | New decision | What ships | Version / licence / hash | Fallback |
+|---|---|---|---|---|
+| **Three.js** | **ADOPTED** | The 3D "Suite map": one dot per Healthchecks test (1,767), ordered by test id so modules form bands. It recolours when the classifier verdict changes (`fx.js`). | r160 (0.160.0), MIT. Self-hosted `vendor/three.module.min.js`, SHA-256 3e690ac7…ba6, identical on jsDelivr and unpkg. | Loaded only when the map is visible and the browser is idle. No WebGL means a text fallback; the result cards carry the same counts. |
+| **GSAP + ScrollTrigger** | **ADOPTED** | Scroll-played blind-fix sequence: a scrubbed progress bar with the steps lighting up in order, never pinned. Also section reveals, number tickers, and the verdict and card transitions. | 3.12.5, GSAP Standard "No Charge" License. Self-hosted; SHA-256 28033e44… (gsap) and ad33c2df… (ScrollTrigger), identical on cdnjs and jsDelivr. | Content is static HTML. Every tween animates *from* an offset, so nothing is hidden without JS. Reduced motion turns all of it off. |
+| GetLayers (layer principle) | **ADOPTED (principle)** | The hero is built as layers: a drifting liquid-gradient layer, then the statement, then the decision-rules panel. Each has a stated purpose. | No GetLayers prompt or asset used | Static gradient under reduced motion |
+| Unnamed 3D / liquid / gradient roundup | **ADOPTED (category only)** | Original CSS liquid gradient: three radial gradients drifting slowly, with no blur filter; paused when the hero is off-screen | — (repository identities still not obtained) | Static |
+| Framer cloth / parallax / chime | **ADOPTED (original implementation)** | Pointer parallax on the hero layers, a gentle tilt (3°, no overshoot) on the rules panel, and an **opt-in** WebAudio chime that differs for clean, regression and inconclusive results | No Framer remix used. Sound is synthesised with no audio files and is off by default. | Fine pointers only. Off under reduced motion. Never autoplays. |
+| Reactive scenes / loaders / scroll-played | **ADOPTED** | Evidence-flow beam (Baseline → Later run → Classifier → Verdict) animates while classifying and turns green, red or amber with the verdict. The suite map is the reactive scene. The scroll-played sequence is above. | — | Text loading state, `aria-busy` |
+| Magic UI | **ADOPTED (patterns, original code)** | "Animated beam" (the evidence flow), "border beam" (runs twice on the selected scenario), "number ticker" (stats and result cards). Written from scratch in CSS and vanilla JS; no Magic UI code copied. | Magic UI is MIT; nothing vendored | Static border, static numbers |
+| UI UX Pro Max | **USED (data only, read-only)** | Its `products.csv` / `ui-reasoning.csv` rows for "Developer Tool / IDE" recommend dark minimal Swiss style plus a bento grid, with keyboard shortcuts as a must-have. Applied as the bento proof band (1,761 cell with a pass/fail bar) and the 1–4 demo shortcuts. | Shallow clone at commit 7246805992a42b7bba37d4cac83b01416f0c6c44 (MIT). Read only; **no script executed, nothing installed.** | — |
+| 21st MCP, Paper, Vectary, Jitter, HyperFrames, Motion (React), R3F, Threlte, Webflow, Framer (hosting), Awwwards, MotionSites, Awesmos | unchanged | Not used. 21st/Paper would need an API key or account connection; R3F, Threlte and Motion need React or Svelte; HyperFrames and Jitter belong to the video track. | — | — |
+
+The rows below this revision are the earlier decision record, kept for history.
+
 ## Provenance categories
 - **Saved-reel review:** the participant's private review of saved Instagram reels. Reel identifiers and transcripts are kept in the private workspace, not in this public repo.
 - **Package check, 2026-10-11:** checks recorded in the private handoff package, made by the ChatGPT assistant. They were not repeated by Claude unless the row says so.

@@ -2,7 +2,7 @@
 # screenshots each width, and measures document overflow, focusable targets and the classifier result.
 # Headless Edge cannot shrink its own viewport below ~492px, so phone widths use same-origin iframes
 # (file:// with --allow-file-access-from-files). Not a WCAG certification; a repeatable evidence capture.
-param([Parameter(Mandatory)][string]$SiteDir, [Parameter(Mandatory)][string]$Label, [string]$OutDir = "$PSScriptRoot\..\docs\qa\screenshots")
+param([Parameter(Mandatory)][string]$SiteDir, [Parameter(Mandatory)][string]$Label, [string]$OutDir = "$PSScriptRoot\..\docs\qa\screenshots", [string]$BaseUrl = "", [switch]$ReducedMotion)
 $ErrorActionPreference = 'Continue'  # Edge writes harmless sync errors to stderr
 $edge = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
 New-Item -ItemType Directory -Force $OutDir | Out-Null; $OutDir = (Resolve-Path $OutDir).Path
@@ -26,13 +26,14 @@ f.addEventListener('load',async()=>{const d=f.contentDocument,win=f.contentWindo
 </script></body></html>
 "@ | Set-Content -Encoding utf8 $harness
   $url = 'file:///' + ($harness -replace '\\', '/')
+  if ($BaseUrl) { $url = $BaseUrl.TrimEnd('/') + '/' + (Split-Path $harness -Leaf) }  # http mode, so ES modules (fx.js) load
   $winW = [Math]::Max($w, 500)
-  $dom = & $edge --headless=new --disable-gpu --hide-scrollbars --allow-file-access-from-files --virtual-time-budget=8000 --window-size="$winW,2400" --dump-dom $url 2>$null | Out-String
+  $dom = & $edge --headless=new --disable-gpu --hide-scrollbars --allow-file-access-from-files $(if ($ReducedMotion) { '--force-prefers-reduced-motion' }) --virtual-time-budget=8000 --window-size="$winW,2400" --dump-dom $url 2>$null | Out-String
   $m = [regex]::Match($dom, '<pre id="out"[^>]*>([^<]*)</pre>')
   $json = [System.Net.WebUtility]::HtmlDecode($m.Groups[1].Value)
   $results += $json
   $png = Join-Path $OutDir "$Label-$w.png"
-  & $edge --headless=new --disable-gpu --hide-scrollbars --allow-file-access-from-files --virtual-time-budget=8000 --window-size="$winW,2400" --screenshot="$png" $url 2>$null
+  & $edge --headless=new --disable-gpu --hide-scrollbars --allow-file-access-from-files $(if ($ReducedMotion) { '--force-prefers-reduced-motion' }) --virtual-time-budget=8000 --window-size="$winW,2400" --screenshot="$png" $url 2>$null
   for ($i = 0; $i -lt 40 -and -not (Test-Path $png); $i++) { Start-Sleep -Milliseconds 250 }
   if ($w -lt 500 -and (Test-Path $png)) {  # crop the harness screenshot to the iframe's true width
     Add-Type -AssemblyName System.Drawing
