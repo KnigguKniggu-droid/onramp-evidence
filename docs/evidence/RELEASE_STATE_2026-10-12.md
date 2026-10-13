@@ -151,7 +151,9 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 | R6 responsive | PASS (automated) | True-width iframes 320/375/768/1440: no document overflow, before (d35d3fc) and after screenshots in `docs/qa/screenshots/` |
 | R6 keyboard/focus/structure | PASS (programmatic) | 36 reachable controls all show focus; skip link; 1 h1, 6 h2; labelled selects; aria-live verdict |
 | R6 links/console/error state | PASS | 34 links 200; no console errors; missing-data error shown |
-| R6 screen reader, contrast measurement, 200% zoom, slow/offline | OPEN | not yet performed |
+| R5 design pass | PASS (Claude-assessed) | Redesign 2026-10-13 (5fa5428+): decision-rule hero, auto-run demo, run cards; brief in `docs/design/EVIDENCE_EXPLORER_DESIGN_BRIEF.md`; before/after screenshots in `docs/qa/screenshots/` |
+| R6 redesign re-QA | PASS (automated) | after-redesign captures: no overflow 320–1440, 4 scenario verdicts correct, light theme captured, token contrast ≥4.5:1 both themes (computed) |
+| R6 screen reader, pixel-measured contrast, direct 200% zoom, slow/offline | OPEN | not yet performed |
 | #1090 visual proof | PASS | real before/after screenshots from local dev servers |
 | Demo video | OPEN (human) | record and upload ≤3:00 |
 | Live-demo rule confirmation | OPEN (human) | email buildwithibm@angelhack.com |
