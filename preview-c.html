@@ -251,12 +251,33 @@ code{font-size:13px}.kbd{font-size:12px}
 .steps li:nth-child(1){--i:0}.steps li:nth-child(2){--i:1}.steps li:nth-child(3){--i:2}.steps li:nth-child(4){--i:3}
 .steps li.active{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
 @media (max-width:900px){.steps li{grid-template-columns:minmax(0,1fr)}.steps li:nth-child(even) .st-text{order:0}}
+
+/* ===== visible design pass (2026-10-13): evidence console, not a generic landing page ===== */
+:root{--hero-ink:#f7f8ff;--hero-muted:#aeb6ca;--violet:#8d7dff;--cyan:#62d9e8}
+body{background:radial-gradient(1100px 620px at 50% -180px,color-mix(in srgb,var(--accent) 13%,transparent),transparent 64%),var(--bg)}
+nav{background:color-mix(in srgb,var(--bg) 76%,transparent);box-shadow:0 1px 0 color-mix(in srgb,var(--text) 6%,transparent)}
+nav .wrap{max-width:1180px;padding-top:10px;padding-bottom:10px}
+nav b{display:flex;align-items:center;gap:9px;letter-spacing:.01em}.brand-mark{display:inline-block;width:11px;height:11px;border-radius:3px;background:linear-gradient(135deg,var(--cyan),var(--violet));box-shadow:0 0 18px color-mix(in srgb,var(--cyan) 65%,transparent)}.nav-kicker{color:var(--muted);font:500 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}
+.hero{min-height:min(700px,calc(100vh - 64px));padding:92px 0 76px;background:linear-gradient(135deg,color-mix(in srgb,var(--bg) 87%,var(--accent)),var(--bg) 52%,color-mix(in srgb,var(--bg) 90%,var(--info)));}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.2;background-image:linear-gradient(color-mix(in srgb,var(--text) 8%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--text) 8%,transparent) 1px,transparent 1px);background-size:52px 52px;-webkit-mask-image:linear-gradient(135deg,#000,transparent 72%);mask-image:linear-gradient(135deg,#000,transparent 72%)}
+.hero .wrap{max-width:1180px;grid-template-columns:minmax(0,1.06fr) minmax(400px,.94fr);gap:72px;position:relative}
+.liquid{opacity:.5}.liquid span{filter:blur(18px);mix-blend-mode:screen}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 18px;padding:6px 10px;border:1px solid color-mix(in srgb,var(--cyan) 35%,var(--line));border-radius:99px;color:var(--cyan);background:color-mix(in srgb,var(--cyan) 7%,transparent);font:600 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em}
+.eyebrow-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px color-mix(in srgb,var(--cyan) 15%,transparent),0 0 14px var(--cyan)}.eyebrow-tag{color:var(--muted);letter-spacing:.06em}
+h1{font-size:clamp(44px,7vw,78px);letter-spacing:-.065em;line-height:.98;max-width:760px;margin:0 0 22px;color:var(--hero-ink)}
+.lede{max-width:58ch;color:var(--hero-muted);font-size:clamp(17px,2vw,20px);line-height:1.55}
+.cta{margin-top:26px}.btn{border-radius:14px;padding:13px 19px}.btn.primary{background:linear-gradient(135deg,var(--btn),color-mix(in srgb,var(--violet) 70%,var(--btn)));box-shadow:0 12px 30px -14px var(--btn)}
+.context{max-width:60ch}.hero-signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:34px;border-top:1px solid color-mix(in srgb,var(--text) 14%,transparent);border-bottom:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:color-mix(in srgb,var(--text) 12%,transparent)}.hero-signal{padding:14px 14px 13px 0;background:transparent}.hero-signal b{display:block;font:600 24px/1.1 "IBM Plex Mono",ui-monospace,monospace;color:var(--hero-ink)}.hero-signal span{display:block;margin-top:5px;color:var(--hero-muted);font-size:12px}
+.rules{border-radius:22px;padding:24px;background:linear-gradient(150deg,color-mix(in srgb,var(--panel) 95%,var(--accent)),color-mix(in srgb,var(--panel) 90%,var(--info)));border-color:color-mix(in srgb,var(--accent) 30%,var(--line));box-shadow:0 28px 70px -34px color-mix(in srgb,var(--accent) 80%,transparent),inset 0 1px 0 color-mix(in srgb,#fff 10%,transparent)}.rules::before{content:"CLASSIFICATION ENGINE / 01";display:block;margin-bottom:20px;color:var(--cyan);font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em}.rules h2{font-size:20px;letter-spacing:-.02em}.rules p{max-width:42ch;line-height:1.5}.rgrid{gap:8px}.rgrid .h{font-size:11px;text-transform:uppercase;letter-spacing:.06em}.rgrid .rh{font-size:12px}.cell{min-height:66px;display:grid;place-content:center;border:1px solid color-mix(in srgb,var(--text) 6%,transparent);border-radius:14px}.c-inh{background:linear-gradient(145deg,color-mix(in srgb,var(--warn) 24%,transparent),var(--warn-bg))}.c-fix{background:linear-gradient(145deg,color-mix(in srgb,var(--ok) 25%,transparent),var(--ok-bg))}.c-reg{background:linear-gradient(145deg,color-mix(in srgb,var(--bad) 25%,transparent),var(--bad-bg))}.c-ok{background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 18%,transparent),var(--panel2))}.c-nr{background:linear-gradient(145deg,color-mix(in srgb,var(--info) 25%,transparent),var(--info-bg))}
+@media (max-width:900px){.hero{min-height:auto;padding:68px 0 56px}.hero .wrap{grid-template-columns:minmax(0,1fr);gap:42px}.rules{max-width:680px}.hero-signals{max-width:680px}}
+@media (max-width:640px){.hero{padding-top:48px}.eyebrow{font-size:10px}.eyebrow-tag{display:none}h1{font-size:clamp(42px,13vw,62px)}.hero-signals{grid-template-columns:repeat(3,1fr)}.hero-signal b{font-size:20px}.hero-signal{padding-right:8px}.rules{border-radius:16px;padding:18px}}
 </style></head><body>
 <a class="skip" href="#demo">Skip to the classifier demo</a>
-<nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b>OnRamp</b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
+<nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b><span class="brand-mark" aria-hidden="true"></span>OnRamp <span class="nav-kicker">/ Evidence Explorer</span></b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
 
-<header class="hero"><div class="wrap">
+<header class="hero"><div class="liquid" aria-hidden="true"><span></span><span></span><span></span></div><div class="wrap">
 <div>
+<p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>LIVE EVIDENCE WORKFLOW <span class="eyebrow-tag">IBM BOB KIT</span></p>
 <h1>Know what's broken before you fix it.</h1>
 <p class="lede">OnRamp is an IBM Bob kit for joining an unfamiliar codebase. It records which tests already fail, reproduces a bug with a failing test first, and verifies the fix without ever mistaking an old failure for a new one.</p>
 <div class="cta">
@@ -266,6 +287,7 @@ code{font-size:13px}.kbd{font-size:12px}
 <a class="textlink" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Pitch deck (PDF)</a>
 </div>
 <p class="context">Built for AngelHack × IBM, “Building with IBM Bob”, Theme 1: explore an unfamiliar app, fix a real bug, add a feature. What did not work is listed in <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CLAUDE_CORRECTIONS_2026-10-11.md">corrections and limitations</a>.</p>
+<div class="hero-signals" aria-label="Evidence summary"><div class="hero-signal"><b>1,761</b><span>baseline tests</span></div><div class="hero-signal"><b>0</b><span>regressions</span></div><div class="hero-signal"><b>4</b><span>auditable steps</span></div></div>
 </div>
 <aside class="rules" aria-labelledby="rules-h">
 <h2 id="rules-h">How OnRamp decides</h2>
