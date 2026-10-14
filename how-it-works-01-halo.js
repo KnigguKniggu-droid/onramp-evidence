@@ -3,7 +3,7 @@
   const section = document.querySelector('.halo-how');
   if (!section) return;
 
-  const reveal = [...section.querySelectorAll('.halo-step, .halo-cta-row')];
+  const reveal = [...section.querySelectorAll('.halo-label, .halo-lead, .halo-step, .halo-cta-row')];
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
     reveal.forEach((node) => node.classList.add('is-visible'));
     return;

@@ -161,7 +161,7 @@ const suite = (() => {
     } catch (e) { box.classList.add('nogl'); return null; }
     const canvas = box.querySelector('canvas');
     // The map is intentionally decorative; authoritative counts and text remain the accessible interface.
-    canvas.style.pointerEvents = 'none';
+    canvas.style.pointerEvents = 'auto';
     let renderer;
     try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { box.classList.add('nogl'); return null; }
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
@@ -239,9 +239,17 @@ const suite = (() => {
       spin(); kick();
     }
 
-    // interaction: drag to rotate; slow auto-rotation unless reduced motion
-    let dragging = false, lx = 0, ly = 0, vy = 0, idleT = 0;
-    const spin = () => { kick(); };  // no idle auto-rotation: the map only turns when dragged
+    // interaction: controlled pointer/keyboard rotation; yaw is intentionally unbounded so the
+    // point cloud can make a complete 360-degree turn without losing its evidence mapping.
+    const TAU = Math.PI * 2, PITCH_MIN = -1.25, PITCH_MAX = 1.25;
+    let dragging = false, activePointer = null, lx = 0, ly = 0, dragDistance = 0, suppressClick = false, vy = 0;
+    const rotateBy = (yaw, pitch) => {
+      group.rotation.y = (group.rotation.y + yaw) % TAU;
+      group.rotation.x = Math.max(PITCH_MIN, Math.min(PITCH_MAX, group.rotation.x + pitch));
+      kick();
+    };
+    const resetView = () => { group.rotation.y = 0; group.rotation.x = 0.35; kick(); };
+    const spin = () => { kick(); };
     canvas.addEventListener('pointerenter', spin);
     motion.on(still => { if (still) { vy = 0; } });
 
@@ -260,6 +268,8 @@ const suite = (() => {
         .sort((a, b) => a.distanceToRay - b.distanceToRay || a.distance - b.distance)[0];
       if (!hit) { tip.hidden = true; return; }
       const id = ids[hit.index], kind = kindOf[hit.index] || 'not in this run';
+      const status = box.querySelector('.suite-status');
+      if (status) status.textContent = id + ': ' + (LABEL[kind] || kind);
       tip.innerHTML = '';
       const b = document.createElement('b'); b.textContent = LABEL[kind] || kind; tip.appendChild(b);
       tip.appendChild(document.createTextNode(id));
@@ -269,15 +279,49 @@ const suite = (() => {
     }
     canvas.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') pick(e); });
     canvas.addEventListener('pointerleave', () => { tip.hidden = true; });
-    canvas.addEventListener('click', pick);
-    canvas.addEventListener('pointerdown', e => { dragging = true; lx = e.clientX; ly = e.clientY; canvas.setPointerCapture(e.pointerId); });
+    canvas.addEventListener('click', e => {
+      if (suppressClick) { suppressClick = false; return; }
+      pick(e);
+    });
+    canvas.addEventListener('pointerdown', e => {
+      if (activePointer !== null || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      activePointer = e.pointerId; dragging = true; dragDistance = 0; lx = e.clientX; ly = e.clientY;
+      canvas.setPointerCapture(e.pointerId);
+    });
     canvas.addEventListener('pointermove', e => {
-      if (!dragging) return;
-      group.rotation.y += (e.clientX - lx) * 0.008; group.rotation.x = Math.max(-1.2, Math.min(1.2, group.rotation.x + (e.clientY - ly) * 0.006));
+      if (!dragging || e.pointerId !== activePointer) return;
+      const dx = e.clientX - lx, dy = e.clientY - ly;
+      dragDistance += Math.abs(dx) + Math.abs(dy);
+      if (dragDistance > 6) suppressClick = true;
+      rotateBy(dx * 0.008, dy * 0.006);
       lx = e.clientX; ly = e.clientY; kick();
     });
-    canvas.addEventListener('pointerup', () => { dragging = false; });
-    canvas.addEventListener('pointercancel', () => { dragging = false; });
+    const endDrag = e => {
+      if (activePointer !== null && e.pointerId !== activePointer) return;
+      dragging = false; activePointer = null; dragDistance = 0;
+    };
+    canvas.addEventListener('pointerup', endDrag);
+    canvas.addEventListener('pointercancel', endDrag);
+    canvas.addEventListener('lostpointercapture', endDrag);
+    canvas.addEventListener('keydown', e => {
+      if (e.target !== canvas) return;
+      const step = Math.PI / 18;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); rotateBy(-step, 0); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); rotateBy(step, 0); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); rotateBy(0, -step); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); rotateBy(0, step); }
+      else if (e.key.toLowerCase() === 'r') { e.preventDefault(); resetView(); }
+    });
+    box.querySelectorAll('[data-suite-rotate]').forEach(button => {
+      button.addEventListener('click', () => {
+        const action = button.getAttribute('data-suite-rotate');
+        if (action === 'left') rotateBy(-Math.PI / 18, 0);
+        else if (action === 'right') rotateBy(Math.PI / 18, 0);
+        else if (action === 'up') rotateBy(0, -Math.PI / 18);
+        else if (action === 'down') rotateBy(0, Math.PI / 18);
+        else if (action === 'reset') resetView();
+      });
+    });
 
     function resize() {
       const w = canvas.clientWidth, h = canvas.clientHeight || w;
