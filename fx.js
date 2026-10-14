@@ -135,8 +135,8 @@ if (liquid) new IntersectionObserver(es => liquid.classList.toggle('paused', !es
 
 // ---------- demo reactions: verdict transition, card tickers, chime ----------
 function onResult(detail) {
-  if (gsap && reduce) gsap.fromTo('#verdict, #cards', { opacity: 0.4 }, { opacity: 1, duration: 0.15 });
-  if (gsap && !reduce) {
+  if (gsap && reduce && !document.hidden) gsap.fromTo('#verdict, #cards', { opacity: 0.4 }, { opacity: 1, duration: 0.15 });
+  if (gsap && !reduce && !document.hidden) {  // never start an entrance that a background tab would freeze half-way
     gsap.fromTo('#verdict', { opacity: 0.35, y: 4 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
     gsap.from('#cards .card', { opacity: 0, y: 8, duration: 0.3, stagger: 0.035, ease: 'power2.out' });
     document.querySelectorAll('#cards .card b').forEach(b => {
