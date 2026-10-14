@@ -273,20 +273,171 @@ h1{font-size:clamp(44px,7vw,78px);letter-spacing:-.065em;line-height:.98;max-wid
 @media (max-width:640px){.hero{padding-top:48px}.eyebrow{font-size:10px}.eyebrow-tag{display:none}h1{font-size:clamp(42px,13vw,62px)}.hero-signals{grid-template-columns:repeat(3,1fr)}.hero-signal b{font-size:20px}.hero-signal{padding-right:8px}.rules{border-radius:16px;padding:18px}}
 
 /* ===== How it works / Halo adaptation ===== */
-.halo-how{--halo-paper:#f3f0e7;--halo-ink:#17332f;--halo-sub:#5a6f6a;--halo-forest:#034f46;--halo-line:#aab8b2;--halo-lime:#e5f0c6;background:var(--halo-paper);color:var(--halo-ink);border-top:0;padding:96px 0 104px}
+.halo-how{--halo-paper:#f3f0e7;--halo-ink:#1a1a1a;--halo-sub:#5c5c5c;--halo-forest:#034f46;--halo-line:#5c5c5c;--halo-lime:#e5f0c6;background:var(--halo-paper);color:var(--halo-ink);border-top:0;padding:96px 0 104px}
 .halo-how .wrap{max-width:1440px;padding-left:40px;padding-right:40px;display:flex;flex-direction:column;gap:32px}
-.halo-layout{display:flex;align-items:flex-start;gap:64px}.halo-label{width:22%;flex:0 0 22%;display:flex;gap:12px;align-items:baseline;font-size:18px;line-height:1.35}.halo-index{font:600 12px "IBM Plex Mono",ui-monospace,monospace;color:var(--halo-forest);letter-spacing:.1em}.halo-content{width:75%;flex:1;min-width:0}.halo-kicker{margin:0 0 16px;color:var(--halo-forest);font:600 12px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}.halo-lead{max-width:760px;margin:0 0 64px}.halo-lead h2{font-size:clamp(28px,3.1vw,46px);line-height:1.12;letter-spacing:-.045em;font-weight:450;color:var(--halo-ink);margin:0}.halo-lead p{color:var(--halo-sub);font-size:19px;line-height:1.55;max-width:64ch;margin:18px 0 0}
-.halo-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,6vw,90px);margin-bottom:52px}.halo-step{border-left:1px solid var(--halo-line);padding:0 0 36px 25px;min-height:232px;opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.215,.61,.355,1),transform .6s cubic-bezier(.215,.61,.355,1)}.halo-step.is-visible,.halo-cta-row.is-visible{opacity:1;transform:none}.halo-step:nth-child(2){transition-delay:.1s}.halo-step:nth-child(3){transition-delay:.2s}.halo-step header{display:flex;align-items:center;justify-content:space-between;gap:12px}.halo-number{display:flex;width:46px;height:46px;align-items:center;justify-content:center;border-radius:50%;background:var(--halo-forest);color:#fff;font:400 22px/1 "IBM Plex Mono",ui-monospace,monospace}.halo-status{color:var(--halo-sub);font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em}.halo-step h3{color:var(--halo-ink);font-size:20px;line-height:1.35;font-weight:500;margin:28px 0 12px;white-space:nowrap}.halo-step p{color:var(--halo-sub);font-size:16px;line-height:1.5;max-width:280px;margin:0}.halo-step a{display:inline-block;margin-top:18px;color:var(--halo-forest);font:600 12px "IBM Plex Mono",ui-monospace,monospace;text-decoration:underline;text-underline-offset:4px}
-.halo-cta-row{display:flex;flex-direction:column;align-items:flex-start;gap:16px;opacity:0;transform:translateY(12px);transition:opacity .6s .3s cubic-bezier(.215,.61,.355,1),transform .6s .3s cubic-bezier(.215,.61,.355,1)}.halo-cta-row.is-visible{opacity:1;transform:none}.halo-cta{display:inline-flex;align-items:center;gap:10px;border-radius:999px;background:var(--halo-forest);padding:4px 20px 4px 4px;color:#fdfdfd;font-size:16px;line-height:24px;text-decoration:none;transition:opacity .18s ease}.halo-cta:hover{opacity:.88;text-decoration:none}.halo-cta svg{width:44px;height:44px;flex:0 0 44px}.halo-proof{display:flex;align-items:center;gap:10px;color:var(--halo-ink);font-size:16px;line-height:1.4}.halo-proof svg{width:32px;height:32px;flex:0 0 32px}.halo-proof span{display:block;color:var(--halo-sub);font-size:13px}
-@media (max-width:900px){.halo-how{padding:72px 0}.halo-how .wrap{padding-left:24px;padding-right:24px}.halo-layout{flex-direction:column;gap:28px}.halo-label,.halo-content{width:100%}.halo-lead{margin-bottom:44px}.halo-steps{gap:0;grid-template-columns:1fr}.halo-step{min-height:0;padding-bottom:42px}.halo-step h3{white-space:normal}.halo-cta-row{margin-top:4px}}
-@media (prefers-reduced-motion:reduce){.halo-step,.halo-cta-row{opacity:1;transform:none;transition:none}}
+.halo-layout{display:flex;align-items:flex-start;gap:64px}.halo-label{width:22%;flex:0 0 22%;font-size:18px;line-height:24px;font-weight:400}.halo-content{width:75%;flex:1;min-width:0}.halo-lead{max-width:900px;margin:0 0 80px;opacity:0;transform:translateY(12px);transition:opacity .6s .1s cubic-bezier(.215,.61,.355,1),transform .6s .1s cubic-bezier(.215,.61,.355,1)}.halo-lead p{color:var(--halo-ink);font-size:30px;line-height:36px;font-weight:400;max-width:none;margin:0}.halo-label{opacity:0;transform:translateY(12px);transition:opacity .6s .1s cubic-bezier(.215,.61,.355,1),transform .6s .1s cubic-bezier(.215,.61,.355,1)}
+.halo-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:90px;margin:0 0 56px}.halo-step{border-left:1px solid var(--halo-line);padding:0 0 0 25px;height:280px;opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.215,.61,.355,1),transform .6s cubic-bezier(.215,.61,.355,1)}.halo-label.is-visible,.halo-lead.is-visible,.halo-step.is-visible,.halo-cta-row.is-visible{opacity:1;transform:none}.halo-step:nth-child(1){transition-delay:.2s}.halo-step:nth-child(2){transition-delay:.3s}.halo-step:nth-child(3){transition-delay:.4s}.halo-number{display:flex;width:46px;height:46px;align-items:center;justify-content:center;border-radius:50%;background:var(--halo-forest);color:#fff;font:400 24px/32px "IBM Plex Sans",system-ui,sans-serif}.halo-step h3{color:var(--halo-ink);font-size:20px;line-height:28px;font-weight:400;margin:32px 0 16px;white-space:nowrap}.halo-step p{color:var(--halo-sub);font-size:16px;line-height:24px;font-weight:400;max-width:280px;margin:0}
+.halo-cta-row{display:flex;flex-direction:column;align-items:flex-start;gap:16px;opacity:0;transform:translateY(12px);transition:opacity .6s .5s cubic-bezier(.215,.61,.355,1),transform .6s .5s cubic-bezier(.215,.61,.355,1)}.halo-cta-row.is-visible{opacity:1;transform:none}.halo-cta{display:inline-flex;align-items:center;gap:10px;border-radius:999px;background:var(--halo-forest);padding:4px 20px 4px 4px;color:#fdfdfd;font-size:16px;line-height:24px;font-weight:400;text-decoration:none;transition:opacity .18s ease}.halo-cta:hover{opacity:.9;text-decoration:none}.halo-cta svg{width:44px;height:44px;flex:0 0 44px}.halo-rating{display:flex;align-items:center;gap:8px;color:#000;font-size:16px;line-height:24px;font-weight:400}.halo-rating svg{width:32px;height:32px;flex:0 0 32px}
+@media (max-width:900px){.halo-how{padding:72px 0}.halo-how .wrap{padding-left:40px;padding-right:40px}.halo-layout{flex-direction:column;gap:32px}.halo-label,.halo-content{width:100%}.halo-lead{margin-bottom:56px}.halo-steps{gap:0;grid-template-columns:1fr}.halo-step{height:auto;padding:0 0 48px 25px}.halo-step h3{white-space:normal}}
+@media (max-width:640px){.halo-how .wrap{padding-left:40px;padding-right:40px}.halo-lead p{font-size:26px;line-height:32px}}
+@media (prefers-reduced-motion:reduce){.halo-label,.halo-lead,.halo-step,.halo-cta-row{opacity:1;transform:none;transition:none}}
+/* ===== forensic editorial redesign: evidence is the visual system ===== */
+:root{
+  --bg:#0a0d0c;--band:#111815;--panel:#111917;--panel2:#18231f;--line:#2a3932;
+  --text:#f4f2e9;--muted:#a3b0a8;--accent:#d9f05b;--ok:#7ee28f;--bad:#ff777c;
+  --warn:#f5c451;--info:#a9a0ff;--cyan:#8ef3d0;--paper:#f1eee5;--ink:#101412;
+  --burnt:#c86735;--max:1320px;
+}
+html{scroll-padding-top:76px;background:var(--bg)}
+body{
+  background:var(--bg);color:var(--text);font-family:"IBM Plex Sans",system-ui,sans-serif;
+  line-height:1.55;letter-spacing:-.01em;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.18;
+  background-image:linear-gradient(to right,rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:72px 72px;mask-image:linear-gradient(to bottom,#000,transparent 80%);
+}
+.wrap{max-width:var(--max);padding-inline:32px}
+nav{background:rgba(10,13,12,.9);border-bottom:1px solid rgba(217,240,91,.22);backdrop-filter:blur(18px)}
+nav .wrap{max-width:var(--max);min-height:72px;padding-block:12px;gap:22px}
+nav b{font-size:15px;letter-spacing:0;text-transform:none}
+.brand-mark{width:12px;height:12px;border-radius:2px;background:var(--accent);box-shadow:0 0 0 4px rgba(217,240,91,.12),0 0 18px rgba(217,240,91,.4)}
+.nav-kicker{color:#77857d}
+nav a{color:#aab6ae;font:500 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+nav a:hover{color:var(--accent)}
+.hero{
+  position:relative;isolation:isolate;overflow:hidden;min-height:min(900px,calc(100vh - 72px));
+  padding:clamp(84px,10vw,144px) 0 64px;background:#0a0d0c;border-bottom:1px solid var(--line)
+}
+.hero::after{
+  content:"01 / BASELINE → VERDICT";position:absolute;right:32px;bottom:28px;color:#607168;
+  font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em
+}
+.hero .wrap{max-width:var(--max);grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);gap:clamp(44px,8vw,132px);align-items:end}
+.hero .wrap>div:first-child{position:relative;z-index:1}
+.liquid{opacity:.1;filter:saturate(.4)}
+.liquid span{filter:blur(34px);mix-blend-mode:screen}
+.eyebrow{
+  margin:0 0 28px;padding:0;border:0;border-radius:0;color:var(--accent);background:none;
+  font:600 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.15em
+}
+.eyebrow-dot{width:7px;height:7px;background:var(--accent);box-shadow:none}
+.eyebrow-tag{color:#73837a}
+h1{
+  max-width:9ch;margin:0 0 28px;color:var(--text);font-size:clamp(58px,8.8vw,124px);
+  line-height:.86;letter-spacing:-.085em;font-weight:600;text-wrap:balance
+}
+.lede{max-width:55ch;margin-bottom:26px;color:#b4c0b8;font-size:clamp(17px,1.7vw,21px);line-height:1.5}
+.cta{margin-top:28px;gap:12px}
+.btn{min-height:48px;border:1px solid #3b4b42;border-radius:999px;padding:12px 20px;background:transparent;color:var(--text);font-size:14px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#111810;box-shadow:none}
+.btn.primary:hover{background:#ecff82;border-color:#ecff82;color:#111810}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.textlink{color:#91a098;font-size:13px}
+.context{max-width:52ch;margin-top:26px;color:#718078;font-size:13px}
+.context a{color:var(--cyan)}
+.hero-signals{
+  max-width:680px;margin-top:52px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:none;gap:0
+}
+.hero-signal{padding:17px 20px 15px 0;background:none}
+.hero-signal+ .hero-signal{border-left:1px solid var(--line);padding-left:20px}
+.hero-signal b{color:var(--text);font:500 clamp(25px,3vw,42px)/1 "IBM Plex Mono",ui-monospace,monospace}
+.hero-signal span{margin-top:8px;color:#829188;font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
+.rules{
+  position:relative;border:1px solid #37483e;border-radius:28px;padding:28px;background:#131b17;
+  box-shadow:0 28px 80px -42px rgba(0,0,0,.9)
+}
+.rules::before{content:"CLASSIFICATION ENGINE / 01";margin-bottom:30px;color:var(--cyan);font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.16em}
+.rules h2{color:var(--text);font-size:21px;font-weight:500}
+.rules p{color:#8e9e94;line-height:1.5}
+.rgrid{gap:8px}.rgrid .h{color:#77877d;font:500 10px "IBM Plex Mono",ui-monospace,monospace;text-transform:uppercase;letter-spacing:.1em}
+.rgrid .rh{color:#77877d;font:500 11px "IBM Plex Mono",ui-monospace,monospace;text-transform:uppercase}
+.cell{min-height:72px;border:1px solid rgba(255,255,255,.08);border-radius:16px;font-size:14px}
+.c-inh{background:rgba(245,196,81,.13);color:#f5d477}.c-fix{background:rgba(126,226,143,.13);color:#9bf0a8}
+.c-reg{background:rgba(255,119,124,.13);color:#ff9b9f}.c-ok{background:#1b2923;color:#d4ddd6}.c-nr{background:rgba(169,160,255,.13);color:#beb8ff}
+.wrap>.summary{max-width:var(--max);margin:0 auto;padding:44px 32px 0}
+.summary{background:var(--bg)}
+.summary caption{padding-bottom:18px;color:var(--accent);font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+.summary th{color:#8a998f;font:500 12px "IBM Plex Mono",ui-monospace,monospace;text-transform:uppercase;letter-spacing:.05em}
+.summary td{color:#aab5ad}.summary td.n{color:var(--text)}
+section{padding:clamp(86px,10vw,148px) 0;border-top:1px solid var(--line)}
+section.band{background:#111815}
+section .sh{max-width:var(--max);grid-template-columns:minmax(220px,.38fr) minmax(0,1fr);align-items:start;gap:32px;margin-bottom:52px}
+section .sh h2{max-width:15ch;color:var(--text);font-size:clamp(34px,5.5vw,78px);line-height:.92;letter-spacing:-.065em;font-weight:500}
+section .sh .take{max-width:48ch;padding-top:10px;color:#93a199;font-size:clamp(16px,1.5vw,20px);line-height:1.55}
+.num{color:var(--accent);font-size:11px;letter-spacing:.14em}
+.scope{border:1px solid var(--line);border-radius:20px;gap:1px;background:var(--line);overflow:hidden}
+.scope div{background:#121a16;padding:20px 22px}.scope dt{color:#73847a;font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}.scope dd{color:var(--text);font-size:14px;line-height:1.45}
+.two{gap:24px}.panel{border:1px solid var(--line);border-radius:22px;padding:24px;background:#111917}
+table{font-size:14px}th,td{padding:14px 12px;border-bottom:1px solid var(--line)}th{color:#8e9d94}
+.pill,.tag{border-radius:999px}.pill{background:rgba(245,196,81,.13);color:#f5d477}
+.demo-grid{grid-template-columns:minmax(0,1.03fr) minmax(360px,.97fr);gap:24px}
+#demo .scen{gap:10px;margin-bottom:20px}
+.scen label{border:1px solid #35483d;border-radius:16px;padding:16px;background:#121a16}
+.scen label:hover{border-color:#718c7b}
+.scen label:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;background:#1a261f}
+.scen b{color:var(--text);font-size:14px}.scen span{color:#87988d}
+.tag.real{background:rgba(126,226,143,.12);color:#9bf0a8}.tag.syn{background:rgba(245,196,81,.12);color:#f5d477}
+.verdict{border-radius:16px;padding:16px 18px;background:#18231f}
+.cards{gap:10px}.card{border:1px solid #35483d;border-radius:16px;background:#121a16;padding:14px}
+.card:hover{border-color:var(--accent);background:#1a261f}.card[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.card b{color:var(--text);font-size:27px}.card span{color:#85968b}
+.suite{border:1px solid #3a4c42;border-radius:28px;background:#0c1210;padding:22px;box-shadow:none}
+.suite h3{color:var(--text);font:500 16px/1.2 "IBM Plex Sans",system-ui}.suite p{color:#91a097;line-height:1.5}
+.suite canvas{max-height:440px;cursor:grab;touch-action:pan-y;border-radius:18px}.suite canvas:active{cursor:grabbing}
+.suite-help{margin:12px 0 0;color:#bec9c1;font:500 12px/1.45 "IBM Plex Mono",ui-monospace,monospace}
+.suite-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.suite-controls button{min-width:42px;min-height:42px;border:1px solid #3a4c42;border-radius:999px;background:#15211b;color:#b7c7bc;font:600 14px "IBM Plex Mono",ui-monospace;cursor:pointer}
+.suite-controls button:hover,.suite-controls button:focus-visible{border-color:var(--accent);color:var(--accent)}
+#blind .diff{border:1px solid #3a4c42;border-radius:20px;background:#0c1210;padding:20px}
+#blind .steps li{border:1px solid #34473d;border-radius:22px;background:#121a16;padding:24px}
+#blind .steps li.active{border-color:var(--accent);box-shadow:inset 3px 0 var(--accent)}
+.term{border:1px solid #2f4037;border-radius:14px;background:#0a0e0c}
+.strip{gap:8px;margin-bottom:28px}.strip span{border:1px solid #3a4c42;border-radius:999px;background:#15211b;padding:8px 12px;color:#b8c6bd;font:500 11px "IBM Plex Mono",ui-monospace}
+#feature figure{margin:0;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#121a16}
+#feature figure img{display:block;width:100%;height:auto;filter:saturate(.8)}
+#feature figcaption{padding:14px 16px;color:#91a097}
+.runs{gap:14px}.run{border:1px solid #35483d;border-radius:22px;background:#121a16;padding:22px}.run:hover{border-color:var(--accent);transform:translateY(-3px)}
+.run-k{color:var(--text);font-size:21px}.run-d,.run-m{color:#93a199}
+.who{gap:14px}.who .panel{border-radius:22px}.who h3{color:var(--accent);font-size:23px}
+.timeline{border-left:1px solid #3a4c42}.timeline li{border-bottom:1px solid var(--line);padding:14px 0 14px 20px}.timeline time{color:var(--accent)}
+footer{border-top:1px solid var(--line);background:#080b0a;padding:34px 0;color:#87958d}footer .wrap{gap:18px}footer a{color:var(--accent)}
+.motionbtn{right:22px;bottom:22px;border:1px solid #3a4c42;background:#121a16;color:#b8c6bd;box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.motionbtn[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
+/* Editorial studio index: portfolio grammar used for evidence, not decoration. */
+.halo-proof-dot{width:10px;height:10px;border-radius:50%;background:var(--burnt);box-shadow:0 0 0 4px rgba(200,103,53,.16)}
+.lumora-studio{background:var(--paper);color:var(--ink);padding:0 0 120px;overflow:hidden}
+.lumora-shell{max-width:var(--max);margin:0 auto;padding:0 32px}
+.lumora-head{display:flex;align-items:end;justify-content:space-between;gap:48px;padding:118px 0 56px}
+.lumora-eyebrow{display:flex;align-items:center;gap:9px;margin:0 0 18px;color:var(--burnt);font:600 11px "IBM Plex Mono",ui-monospace;letter-spacing:.14em;text-transform:uppercase}
+.lumora-eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--burnt)}
+.lumora-head h2{max-width:13ch;color:var(--ink);font-size:clamp(42px,6vw,84px);line-height:.88;letter-spacing:-.075em;font-weight:500}
+.lumora-intro{max-width:330px;margin:0;color:#5c665f;font-size:16px;line-height:1.5}
+.lumora-band{display:grid;grid-template-columns:1fr 1.5fr auto 1fr;align-items:center;gap:18px;margin-bottom:24px;padding:24px 28px;border-radius:24px;background:#e5e0d5;color:var(--ink);font-size:clamp(24px,4vw,54px);line-height:1;letter-spacing:-.06em;font-weight:500}
+.lumora-band span:nth-child(3){color:var(--burnt);text-align:center}.lumora-band span:last-child{text-align:right}
+.lumora-work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.lumora-work-card{position:relative;display:flex;min-height:23rem;flex-direction:column;justify-content:space-between;overflow:hidden;border-radius:28px;background:#0a0d0c;color:#fff;padding:26px;text-decoration:none;box-shadow:0 14px 0 rgba(16,20,18,.08);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease}
+.lumora-work-card:hover{transform:translateY(-8px);box-shadow:0 22px 36px -24px rgba(16,20,18,.55);text-decoration:none}
+.lumora-work-card:focus-visible{outline:3px solid var(--burnt);outline-offset:4px}
+.lumora-meta{display:flex;justify-content:space-between;color:#8a9790;font:500 11px "IBM Plex Mono",ui-monospace;letter-spacing:.1em;text-transform:uppercase}
+.lumora-arrow{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#1a2821;color:#fff;transition:transform .3s ease,background .2s ease}
+.lumora-work-card:hover .lumora-arrow{transform:rotate(45deg);background:var(--burnt)}
+.lumora-mark{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,.07);font-size:110px;pointer-events:none}
+.lumora-card-copy{position:relative;z-index:1;max-width:33rem}.lumora-card-copy h3{margin:0;color:#fff;font-size:clamp(28px,3.7vw,48px);line-height:.95;letter-spacing:-.06em;font-weight:500}.lumora-card-copy p{max-width:29rem;margin:14px 0 20px;color:#a6b2aa;font-size:14px;line-height:1.55}
+.lumora-tags{display:flex;flex-wrap:wrap;gap:7px}.lumora-tags span{border:1px solid #405247;border-radius:999px;padding:7px 11px;color:#dbe5dd;font-size:11px}
+@media (max-width:1000px){.hero .wrap{grid-template-columns:1fr}.hero{min-height:auto}.rules{max-width:700px}section .sh{grid-template-columns:1fr}.section .sh h2,section .sh h2{max-width:18ch}.lumora-head{align-items:start;flex-direction:column}}
+@media (max-width:900px){.wrap{padding-inline:24px}.demo-grid{grid-template-columns:1fr}.lumora-work-grid{grid-template-columns:1fr}.lumora-work-card{min-height:20rem}}
+@media (max-width:640px){.wrap{padding-inline:18px}nav .wrap{gap:16px}.hero{padding-top:70px}.hero::after{display:none}h1{font-size:clamp(54px,15vw,84px)}.hero-signals{grid-template-columns:repeat(3,1fr)}.hero-signal+ .hero-signal{padding-left:12px}.hero-signal{padding-right:10px}.hero-signal b{font-size:22px}.rules{padding:20px;border-radius:22px}.rgrid .rh{font-size:10px}.scope{grid-template-columns:1fr}section .sh{gap:16px;margin-bottom:34px}.two{grid-template-columns:1fr}.scen{grid-template-columns:1fr 1fr}.suite{padding:16px;border-radius:22px}.suite canvas{max-height:330px}.lumora-shell{padding-inline:18px}.lumora-head{padding-top:80px}.lumora-band{grid-template-columns:1fr 1fr;gap:20px;padding:22px;border-radius:20px}.lumora-band span:nth-child(3),.lumora-band span:last-child{text-align:left}.lumora-work-card{border-radius:22px;padding:22px}}
+@media (prefers-reduced-motion:reduce){.lumora-work-card,.lumora-arrow,.run{transition:none}.lumora-work-card:hover,.run:hover{transform:none}}
 </style></head><body>
 <a class="skip" href="#demo">Skip to the classifier demo</a>
-<nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b><span class="brand-mark" aria-hidden="true"></span>OnRamp <span class="nav-kicker">/ Evidence Explorer</span></b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
+<nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b><span class="brand-mark" aria-hidden="true"></span>OnRamp <span class="nav-kicker">/ Evidence Explorer</span></b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="#studio">Studio</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
 
 <header class="hero"><div class="liquid" aria-hidden="true"><span></span><span></span><span></span></div><div class="wrap">
 <div>
-<p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>LIVE EVIDENCE WORKFLOW <span class="eyebrow-tag">IBM BOB KIT</span></p>
+<p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span>BROWSER CLASSIFIER · SUPPLIED RUNS <span class="eyebrow-tag">IBM BOB KIT</span></p>
 <h1>Know what's broken before you fix it.</h1>
 <p class="lede">OnRamp is an IBM Bob kit for joining an unfamiliar codebase. It records which tests already fail, reproduces a bug with a failing test first, and verifies the fix without ever mistaking an old failure for a new one.</p>
 <div class="cta">
@@ -336,7 +487,7 @@ h1{font-size:clamp(44px,7vw,78px);letter-spacing:-.065em;line-height:.98;max-wid
 <div class="cards" id="cards"></div>
 <div class="list" id="list" hidden></div>
 </div>
-<figure class="suite" id="suite"><h3>Fig. 1, suite map</h3><p>A decorative visual index of outcomes, not a dependency graph: every dot is one Healthchecks test, placed in test-id order and coloured by how the selected run classifies it. Position carries no meaning, and individual dots are not required to interpret the result; the counts on the left are authoritative.</p><canvas aria-hidden="true"></canvas><div class="suite-fallback">The 3D suite map needs WebGL. The counts on the left carry the same information.</div>
+<figure class="suite" id="suite"><h3>Fig. 1, suite map</h3><p>Live visual index of outcomes, not a dependency graph: every dot is one Healthchecks test, placed in test-id order and coloured by the selected run. Position carries no test meaning; the counts and test details remain authoritative.</p><p id="suite-help" class="suite-help">Drag to rotate through 360°. Use the arrow controls or keyboard arrows for the same view changes. Pick a dot to inspect its test.</p><div class="suite-controls" aria-label="Suite map controls"><button type="button" data-suite-rotate="left" aria-label="Rotate suite map left">←</button><button type="button" data-suite-rotate="right" aria-label="Rotate suite map right">→</button><button type="button" data-suite-rotate="up" aria-label="Tilt suite map up">↑</button><button type="button" data-suite-rotate="down" aria-label="Tilt suite map down">↓</button><button type="button" data-suite-rotate="reset" aria-label="Reset suite map view">Reset</button></div><div class="suite-status sr" aria-live="polite"></div><canvas tabindex="0" role="img" aria-describedby="suite-help" aria-label="Interactive 3D suite map"></canvas><div class="suite-fallback">The 3D suite map needs WebGL. The counts on the left carry the same information.</div>
 <ul class="legend"><li style="--c:var(--muted)">unchanged</li><li style="--c:var(--warn)">inherited</li><li style="--c:var(--bad)">regression / new failing</li><li style="--c:var(--ok)">fixed / new passing</li><li style="--c:var(--info)">not run</li></ul></figure>
 </div>
 <details><summary>How this demo works</summary>
@@ -415,14 +566,20 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 </div></section>
 
 <section id="how-it-works" class="halo-how" aria-labelledby="how-it-works-title"><div class="wrap"><div class="halo-layout">
-<aside class="halo-label"><span class="halo-index">01</span><span>How OnRamp Works</span></aside>
-<div class="halo-content"><div class="halo-lead"><p class="halo-kicker">From unknown failures to defensible evidence</p><h2 id="how-it-works-title">Every change gets a trail you can inspect, replay, and defend.</h2><p>OnRamp turns the uncertainty of an unfamiliar codebase into a calm sequence: establish what was already broken, reproduce the issue before touching the fix, then compare the completed run against the same starting point.</p></div>
-<div class="halo-steps" aria-label="Three-step OnRamp workflow">
-<article class="halo-step"><header><span class="halo-number">01</span><span class="halo-status">BASELINE</span></header><h3>Seal the starting point</h3><p>Record the baseline scope, environment, and failures so inherited problems are never mistaken for regressions.</p><a href="#baseline">Inspect baseline →</a></article>
-<article class="halo-step"><header><span class="halo-number">02</span><span class="halo-status">REPRODUCE</span></header><h3>Make the bug fail first</h3><p>Capture the symptom as a failing test before the implementation changes, with the brief and source evidence linked.</p><a href="#blind">See the blind fix →</a></article>
-<article class="halo-step"><header><span class="halo-number">03</span><span class="halo-status">VERIFY</span></header><h3>Compare what actually ran</h3><p>Classify fixed, inherited, regressed, new, and not-run tests without giving an incomplete run a false verdict.</p><a href="#demo">Run the classifier →</a></article>
+<aside class="halo-label"><span>How OnRamp Works</span></aside>
+<div class="halo-content"><div class="halo-lead"><p id="how-it-works-title">OnRamp makes a code change inspectable before it makes it trustworthy. It starts with a baseline, reproduces the reported failure, then compares the final run with the evidence that existed before the fix.</p></div>
+<div class="halo-steps" aria-label="How OnRamp Works steps">
+<article class="halo-step"><span class="halo-number">1</span><h3>Record the baseline</h3><p>Capture what already fails, where it ran, and which environment produced the result.</p></article>
+<article class="halo-step"><span class="halo-number">2</span><h3>Reproduce before fixing</h3><p>Seal the brief, write the failing test, and keep the first red result attached to the change.</p></article>
+<article class="halo-step"><span class="halo-number">3</span><h3>Compare with proof</h3><p>Classify inherited failures, regressions, fixes, and not-run tests without guessing.</p></article>
 </div>
-<div class="halo-cta-row"><a class="halo-cta" href="#demo"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="0" y="0" width="44" height="44" rx="22" fill="#E5F0C6"/><path d="M17 27.5 26.5 18M26.5 18V26M26.5 18H18.5" fill="none" stroke="#034F46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Explore the evidence trail</span></a><div class="halo-proof"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="m16 3 3.6 7.3 8.1 1.2-5.9 5.7 1.4 8.1-7.2-3.8-7.2 3.8 1.4-8.1-5.9-5.7 8.1-1.2L16 3Z" fill="#00B67A"/><path d="m16 7 2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7L16 7Z" fill="#005128"/></svg><div><b>Evidence stays visible</b><span>Real run scope, source links, and inconclusive states remain part of the interface.</span></div></div></div>
+<div class="halo-cta-row"><a class="halo-cta" href="#demo"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="0" y="0" width="44" height="44" rx="22" fill="#E5F0C6"/><path d="M17 27.5 26.5 18M26.5 18V26M26.5 18H18.5" fill="none" stroke="#034F46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Run the classifier</span></a><div class="halo-rating"><span class="halo-proof-dot" aria-hidden="true"></span><span>Every verdict keeps its source.</span></div></div>
+</div></div></section>
+<section id="studio" class="lumora-studio" aria-labelledby="studio-title"><div class="lumora-shell"><div class="lumora-head"><div><p class="lumora-eyebrow"><i aria-hidden="true"></i>Evidence studio</p><h2 id="studio-title">Design and engineering, connected by proof.</h2></div><p class="lumora-intro">A compact index of the work behind the page. Each card routes to a real section of the evidence trail.</p></div><div class="lumora-band" aria-label="Evidence workflow"><span>WE</span><span>RECORD</span><span aria-hidden="true">→</span><span>VERIFY</span></div><div class="lumora-work-grid">
+<a class="lumora-work-card" href="#baseline"><div class="lumora-meta"><span>01 / Baseline</span><span class="lumora-arrow" aria-hidden="true">↗</span></div><span class="lumora-mark" aria-hidden="true">✦</span><div class="lumora-card-copy"><h3>Inherited failures</h3><p>Separate the 29 Windows-only failures from anything introduced by the change.</p><div class="lumora-tags"><span>Scope</span><span>Environment</span><span>Source</span></div></div></a>
+<a class="lumora-work-card" href="#blind"><div class="lumora-meta"><span>02 / Blind fix</span><span class="lumora-arrow" aria-hidden="true">↗</span></div><span class="lumora-mark" aria-hidden="true">✦</span><div class="lumora-card-copy"><h3>Failing test first</h3><p>Reproduce the webhook bug before the implementation changes, then compare the fix.</p><div class="lumora-tags"><span>Reproducer</span><span>Diff</span><span>Provenance</span></div></div></a>
+<a class="lumora-work-card" href="#feature"><div class="lumora-meta"><span>03 / Feature</span><span class="lumora-arrow" aria-hidden="true">↗</span></div><span class="lumora-mark" aria-hidden="true">✦</span><div class="lumora-card-copy"><h3>Readable JSON</h3><p>Show the product improvement alongside the evidence that protects non-ASCII request bodies.</p><div class="lumora-tags"><span>Before / after</span><span>QA</span></div></div></a>
+<a class="lumora-work-card" href="#portability"><div class="lumora-meta"><span>04 / Portability</span><span class="lumora-arrow" aria-hidden="true">↗</span></div><span class="lumora-mark" aria-hidden="true">✦</span><div class="lumora-card-copy"><h3>Profile-driven kit</h3><p>Track how the workflow moved from Healthchecks assumptions to a Flask and unittest profile.</p><div class="lumora-tags"><span>TaskFlow</span><span>Profiles</span><span>Runs</span></div></div></a>
 </div></div></section>
 </main>
 
