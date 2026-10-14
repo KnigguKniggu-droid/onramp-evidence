@@ -70,3 +70,24 @@ Tools: `tools/qa_variant.ps1` with `qa_slop.js` and `qa_contrast.js`; `qa_captur
 **Not changed, with reasons:**
 - The 3D suite map, scroll-played steps and opt-in chime stay. They answer the user or explain an order, which the skill allows.
 - Bordered containers (~33) remain the main open taste item. Most are real UI fragments (scenario options, result counts, run cards, diff panes) rather than decoration.
+
+## Second opinion: ChatGPT consultation, 2026-10-13
+**Question asked:** should the effects removed in B (haze, parallax/tilt, section fade-ins, count-up tickers) come back? ChatGPT inspected the public commit 754caeb.
+
+**Recommendation:** keep B, and keep all four effects removed:
+- **Haze:** the truth table is the better hero visual.
+- **Tilt:** it makes evidence behave like a promotional card.
+- **Fade-ins:** evidence must be visible immediately.
+- **Tickers:** "numbers are evidence, not entertainment".
+
+It found these issues, all fixed in this commit:
+- Result cards still counted up from zero. Now the final numbers show immediately, with a 200 ms opacity confirmation.
+- "Pause motion" didn't cover everything. It now also suppresses the result transitions and the 3D colour fade; classification itself is never paused.
+- **The sound toggle wrote its label into the SVG icon** (a regression from the icon change). Fixed to update the text span.
+- Terminal evidence lines were hidden until scrolled to. They are now always visible; scroll only moves the progress node and marks the active step.
+- The selected-scenario border beam span. It is now a static 2px border.
+- The suite map is now captioned as "a visual index of outcomes, not a dependency graph". Idle auto-rotation was removed; the map only turns when dragged.
+- The tooltip is clamped inside narrow containers.
+- Nav, sound and pause controls are 44 px. Inline text links are exempt under WCAG 2.5.8.
+
+**Process note it raised:** B was promoted before the participant approved it. Future design swaps go to a preview first, with screenshots and approval. The A rollback is kept.
