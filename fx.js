@@ -17,10 +17,14 @@ const motion = (() => {
   const listeners = [];
   const apply = () => {
     document.documentElement.classList.toggle('still', still);
-    if (btn) { btn.setAttribute('aria-pressed', String(still)); btn.lastElementChild.textContent = still ? 'Resume motion' : 'Pause motion'; }
+    if (btn) {
+      btn.setAttribute('aria-pressed', String(still));
+      btn.setAttribute('aria-label', still ? 'Decorative motion is paused; activate to resume' : 'Decorative motion is active; activate to pause');
+      btn.lastElementChild.textContent = still ? 'Resume motion' : 'Pause motion';
+    }
     listeners.forEach(f => f(still));
   };
-  if (btn && !reduce) { btn.hidden = false; btn.addEventListener('click', () => { still = !still; try { localStorage.setItem('onramp-still', still ? '1' : '0'); } catch (e) { /* ignore */ } apply(); }); }
+  if (btn) { btn.addEventListener('click', () => { still = !still; try { localStorage.setItem('onramp-still', still ? '1' : '0'); } catch (e) { /* ignore */ } apply(); }); }
   apply();
   return { get still() { return still || reduce; }, on: f => listeners.push(f) };
 })();
@@ -30,7 +34,7 @@ const sound = (() => {
   const btn = document.getElementById('sound');
   let on = false, ac = null;
   try { on = localStorage.getItem('onramp-sound') === '1'; } catch (e) { /* storage blocked */ }
-  const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(on)); const lab = btn.querySelector('span[aria-hidden]'); if (lab) lab.textContent = on ? 'Sound on' : 'Sound off'; };
+  const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(on)); btn.setAttribute('aria-label', 'Classification chime, ' + (on ? 'on' : 'off')); const lab = btn.querySelector('span[aria-hidden]'); if (lab) lab.textContent = on ? 'Sound on' : 'Sound off'; };
   paint();
   btn?.addEventListener('click', () => {
     on = !on; paint();
@@ -156,6 +160,8 @@ const suite = (() => {
       THREE = await import('./vendor/three.module.min.js');
     } catch (e) { box.classList.add('nogl'); return null; }
     const canvas = box.querySelector('canvas');
+    // The map is intentionally decorative; authoritative counts and text remain the accessible interface.
+    canvas.style.pointerEvents = 'none';
     let renderer;
     try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { box.classList.add('nogl'); return null; }
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
