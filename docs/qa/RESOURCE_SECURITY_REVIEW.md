@@ -10,7 +10,7 @@ The site has no other third-party scripts, no analytics, no trackers and no embe
 The Google Fonts requests send the visitor's IP and user agent to Google. That is the only privacy-relevant request. It is disclosed here, and the page renders correctly with those hosts blocked.
 
 ## Update, 2026-10-13 (evening): vendored libraries
-- **What was added:** `vendor/three.module.min.js` (three r160, MIT), `vendor/gsap.min.js` and `vendor/ScrollTrigger.min.js` (GSAP 3.12.5, Standard "No Charge" License). The site is a free public page.
+- **What was added:** `vendor/three.module.min.js` (three r160, MIT), `vendor/gsap.min.js` and `vendor/ScrollTrigger.min.js` (GSAP 3.12.5, GSAP Standard License: free including commercial use; excludes competing no-code animation builders). The site is a free public page.
 - **How they were verified:** each file was downloaded from two independent CDNs and the copies were byte-identical. SHA-256 hashes are in `vendor/README.md`.
 - **Served same-origin:** the enhancement layer adds **no third-party requests**. `fx.js` imports only `./vendor/three.module.min.js`.
 - **What `fx.js` touches:**

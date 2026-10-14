@@ -80,14 +80,16 @@ if (gsap && ScrollTrigger) {
     t.focus({ preventScroll: true });
   });
   const steps = document.getElementById('steps');
+  // Variant B (frontend-design skill): one orchestrated moment only, so no per-section reveals or stat tickers
+  const quiet = document.documentElement.dataset.variant === 'b';
   if (!reduce) {
     // section reveals: elements start visible in the HTML; GSAP only animates *from* an offset
-    gsap.utils.toArray('main section .sh, main section .two, main section .strip, main .runs, main .who, main .timeline').forEach(el => {
+    if (!quiet) gsap.utils.toArray('main section .sh, main section .two, main section .strip, main .runs, main .who, main .timeline').forEach(el => {
       if (el.getBoundingClientRect().top < innerHeight) return;
       gsap.from(el, { y: 16, opacity: 0, duration: 0.5, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'clamp(top 90%)', once: true } });
     });
     // stats ticker: counts up to the exact number in the HTML, then restores the original text
-    document.querySelectorAll('.stat > b').forEach(b => {
+    if (!quiet) document.querySelectorAll('.stat > b').forEach(b => {
       const final = b.textContent, n = parseInt(final.replace(/,/g, ''), 10);
       if (!n) return;
       const sr = document.createElement('span'); sr.className = 'sr'; sr.textContent = final;
