@@ -433,6 +433,13 @@ footer{border-top:1px solid var(--line);background:#080b0a;padding:34px 0;color:
 @media (max-width:900px){.wrap{padding-inline:24px}.demo-grid{grid-template-columns:1fr}.lumora-work-grid{grid-template-columns:1fr}.lumora-work-card{min-height:20rem}}
 @media (max-width:640px){.wrap{padding-inline:18px}nav .wrap{gap:16px}.hero{padding-top:70px}.hero::after{display:none}h1{font-size:clamp(54px,15vw,84px)}.hero-signals{grid-template-columns:repeat(3,1fr)}.hero-signal+ .hero-signal{padding-left:12px}.hero-signal{padding-right:10px}.hero-signal b{font-size:22px}.rules{padding:20px;border-radius:22px}.rgrid .rh{font-size:10px}.scope{grid-template-columns:1fr}section .sh{gap:16px;margin-bottom:34px}.two{grid-template-columns:1fr}.scen{grid-template-columns:1fr 1fr}.suite{padding:16px;border-radius:22px}.suite canvas{max-height:330px}.lumora-shell{padding-inline:18px}.lumora-head{padding-top:80px}.lumora-band{grid-template-columns:1fr 1fr;gap:20px;padding:22px;border-radius:20px}.lumora-band span:nth-child(3),.lumora-band span:last-child{text-align:left}.lumora-work-card{border-radius:22px;padding:22px}}
 @media (prefers-reduced-motion:reduce){.lumora-work-card,.lumora-arrow,.run{transition:none}.lumora-work-card:hover,.run:hover{transform:none}}
+/* GitHub frontend-skill hardening: explicit state, targets, numbers, and anchors. */
+html{color-scheme:dark;scroll-padding-top:92px}
+section[id],#demo,#suite{scroll-margin-top:92px}
+button,a,summary{touch-action:manipulation;-webkit-tap-highlight-color:rgba(217,240,91,.16)}
+.suite-controls button{min-width:44px;min-height:44px}
+.hero-signal b,.stat b,.n,.cell{font-variant-numeric:tabular-nums}
+::selection{background:#d9f05b;color:#101412}
 
 /* ===== cinematic evidence hero: merged supplied video + Vesper reference language ===== */
 :root{
