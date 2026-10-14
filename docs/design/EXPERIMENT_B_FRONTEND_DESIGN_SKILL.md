@@ -91,3 +91,14 @@ It found these issues, all fixed in this commit:
 - Nav, sound and pause controls are 44 px. Inline text links are exempt under WCAG 2.5.8.
 
 **Process note it raised:** B was promoted before the participant approved it. Future design swaps go to a preview first, with screenshots and approval. The A rollback is kept.
+
+## Third opinion: Codex consultation, 2026-10-13
+The Codex desktop thread that wrote the master prompt was asked the same questions. The message was typed into its visible window and the reply read from its thread.
+
+**Verdict:** keep variant B; add no more libraries or effects. The remaining work is release proof and the human gates: the video first, then the manual a11y passes. Its credibility fixes are applied in this commit:
+- **Section heading:** "29 inherited Windows failures, zero regressions". Its takeaway says Linux CI passes and that the 29 are Windows-only.
+- **Summary rows:** the full run is qualified as the same Windows machine against the pinned baseline. "Built by IBM Bob" became "Generated through IBM Bob", with a link to the commits.
+- **Synthetic scenarios:** labelled "classifier safety test". "How this demo works" says what each synthetic fixture is.
+- **Portability:** the section links Bob's public fix commits (4facc4b, 6be3235, 8165552).
+- **Footer:** "independent hackathon entry, not endorsed by IBM".
+- **Copy repaired:** three sentences garbled by the earlier em-dash replacement (`: so`, `: plus`, `ran out:`).
