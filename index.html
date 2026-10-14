@@ -147,7 +147,7 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 @keyframes beamx{from{transform:translateX(-110%)}to{transform:translateX(260%)}}
 /* border beam on the selected scenario (Magic UI "border beam" idea, original CSS) */
 @property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
-.scen label:has(input:checked)::after{content:"";position:absolute;inset:-1px;border-radius:12px;padding:1.5px;background:conic-gradient(from var(--ang),transparent 0 72%,var(--accent) 86%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 1.6s linear 2;pointer-events:none}
+.scen label:has(input:checked)::after{content:"";position:absolute;inset:-1px;border-radius:12px;padding:1.5px;background:conic-gradient(from var(--ang),transparent 0 72%,var(--accent) 86%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;display:none}
 @keyframes spin{to{--ang:360deg}}
 .kbd{font:500 11px "IBM Plex Mono",monospace;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:0 5px;color:var(--muted);float:right;background:var(--panel2)}
 /* demo layout: results + 3D suite map */
@@ -196,7 +196,7 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 .diff:hover .ln:not(.add):not(.del):not(.hunk),.diff:focus-within .ln:not(.add):not(.del):not(.hunk){opacity:.45}
 .diff .ln.add,.diff .ln.del{border-radius:4px}.diff .ln.add{background:var(--ok-bg)}.diff .ln.del{background:var(--bad-bg)}
 /* three.js picking tooltip */
-.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font:12px/1.4 "IBM Plex Mono",monospace;color:var(--text);max-width:260px;box-shadow:0 8px 24px rgba(0,0,0,.35);z-index:2;overflow-wrap:anywhere}
+.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font:12px/1.4 "IBM Plex Mono",monospace;color:var(--text);max-width:min(260px,90%);box-shadow:0 8px 24px rgba(0,0,0,.35);z-index:2;overflow-wrap:anywhere}
 .tip b{display:block;font-family:"IBM Plex Sans",system-ui;font-size:12px}
 /* Webflow: decorative motion must be pausable */
 .motionbtn{position:fixed;right:14px;bottom:14px;z-index:6;display:inline-flex;gap:6px;align-items:center;font:600 13px "IBM Plex Sans",system-ui;background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:7px 12px;min-height:36px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25)}
@@ -206,6 +206,9 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 @media (prefers-reduced-motion:reduce){.btn:hover,.card:hover,.scen label:hover{transform:none}}
 
 /* ===== Variant B (frontend-design skill pass) ===== */
+.steps li.active{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+.scen label:has(input:checked){border-width:2px}
+nav a{padding:10px 4px;min-height:44px;display:inline-flex;align-items:center}.snd,.motionbtn{min-height:44px}.textlink{display:inline-block;padding:12px 2px}
 html{color-scheme:dark light;scrollbar-color:var(--line) var(--bg)}
 ::selection{background:color-mix(in srgb,var(--accent) 35%,transparent);color:var(--text)}
 input,textarea{caret-color:var(--accent)}
@@ -282,7 +285,7 @@ code{font-size:13px}.kbd{font-size:12px}
 <div class="cards" id="cards"></div>
 <div class="list" id="list" hidden></div>
 </div>
-<figure class="suite" id="suite"><h3>Fig. 1, suite map</h3><p>Every dot is one Healthchecks test, ordered by module. Colour shows how the selected run classifies it. Drag to turn.</p><canvas aria-hidden="true"></canvas><div class="suite-fallback">The 3D suite map needs WebGL. The counts on the left carry the same information.</div>
+<figure class="suite" id="suite"><h3>Fig. 1, suite map</h3><p>A visual index of outcomes, not a dependency graph: every dot is one Healthchecks test, placed in test-id order, coloured by how the selected run classifies it. Position carries no meaning beyond that order. Drag to turn; the counts on the left are the authoritative numbers.</p><canvas aria-hidden="true"></canvas><div class="suite-fallback">The 3D suite map needs WebGL. The counts on the left carry the same information.</div>
 <ul class="legend"><li style="--c:var(--muted)">unchanged</li><li style="--c:var(--warn)">inherited</li><li style="--c:var(--bad)">regression / new failing</li><li style="--c:var(--ok)">fixed / new passing</li><li style="--c:var(--info)">not run</li></ul></figure>
 </div>
 <details><summary>How this demo works</summary>

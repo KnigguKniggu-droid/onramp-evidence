@@ -30,7 +30,7 @@ const sound = (() => {
   const btn = document.getElementById('sound');
   let on = false, ac = null;
   try { on = localStorage.getItem('onramp-sound') === '1'; } catch (e) { /* storage blocked */ }
-  const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(on)); btn.firstElementChild.textContent = on ? '♪ Sound on' : '♪ Sound off'; };
+  const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(on)); const lab = btn.querySelector('span[aria-hidden]'); if (lab) lab.textContent = on ? 'Sound on' : 'Sound off'; };
   paint();
   btn?.addEventListener('click', () => {
     on = !on; paint();
@@ -102,13 +102,11 @@ if (gsap && ScrollTrigger) {
     if (steps) {
       steps.classList.add('seq');
       const items = [...steps.children];
-      gsap.set(items, { opacity: 0.75 });
+      // evidence stays fully visible; scroll only moves the progress node and marks the active step
       const tl = gsap.timeline({ scrollTrigger: { trigger: steps, start: 'clamp(top 85%)', end: 'clamp(bottom 45%)', scrub: 0.5 } });
       tl.to(steps, { '--prog': 1, ease: 'none', duration: items.length }, 0);
       items.forEach((li, i) => {
-        tl.to(li, { opacity: 1, duration: 0.4 }, i + 0.1);
-        const lines = li.querySelectorAll('.term .ln2');
-        if (lines.length) { gsap.set(lines, { opacity: 0, x: -4 }); tl.to(lines, { opacity: 1, x: 0, duration: 0.15, stagger: 0.18 }, i + 0.25); }
+        tl.call(() => items.forEach((x, j) => x.classList.toggle('active', j <= i)), null, i + 0.1);
       });
     }
     // pointer parallax + cloth-like tilt on the hero layers (fine pointers only)
@@ -137,17 +135,9 @@ if (liquid) new IntersectionObserver(es => liquid.classList.toggle('paused', !es
 
 // ---------- demo reactions: verdict transition, card tickers, chime ----------
 function onResult(detail) {
-  if (gsap && reduce && !document.hidden) gsap.fromTo('#verdict, #cards', { opacity: 0.4 }, { opacity: 1, duration: 0.15 });
-  if (gsap && !reduce && !document.hidden) {  // never start an entrance that a background tab would freeze half-way
-    gsap.fromTo('#verdict', { opacity: 0.35, y: 4 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
-    gsap.from('#cards .card', { opacity: 0, y: 8, duration: 0.3, stagger: 0.035, ease: 'power2.out' });
-    document.querySelectorAll('#cards .card b').forEach(b => {
-      const final = b.textContent, n = parseInt(final.replace(/,/g, ''), 10);
-      if (!n) return;
-      const o = { v: 0 };
-      gsap.to(o, { v: n, duration: 0.7, ease: 'power2.out', onUpdate: () => { b.textContent = Math.round(o.v).toLocaleString('en-US'); }, onComplete: () => { b.textContent = final; } });
-    });
-  }
+  if (gsap && reduce && !motion.still && !document.hidden) gsap.fromTo('#verdict, #cards', { opacity: 0.4 }, { opacity: 1, duration: 0.15 });
+  // Result Change Confirm: numbers appear final immediately; only a 200 ms opacity confirmation (none when paused)
+  if (gsap && !reduce && !motion.still && !document.hidden) gsap.fromTo('#verdict, #cards', { opacity: 0.45 }, { opacity: 1, duration: 0.2, ease: 'power1.out' });
   if (detail.user) sound.play(detail.state);
   suite.update(detail.res);
 }
@@ -239,13 +229,13 @@ const suite = (() => {
       }
       if (!base) return;
       from = colors.slice(); paintTargets(res); t0 = performance.now();
-      if (reduce) { colors.set(target); from = null; base.geometry.attributes.color.needsUpdate = true; }
+      if (reduce || motion.still) { colors.set(target); from = null; base.geometry.attributes.color.needsUpdate = true; }
       spin(); kick();
     }
 
     // interaction: drag to rotate; slow auto-rotation unless reduced motion
     let dragging = false, lx = 0, ly = 0, vy = 0, idleT = 0;
-    const spin = () => { if (reduce || motion.still) return; vy = 0.0016; clearTimeout(idleT); idleT = setTimeout(() => { vy = 0; }, 6000); kick(); };
+    const spin = () => { kick(); };  // no idle auto-rotation: the map only turns when dragged
     canvas.addEventListener('pointerenter', spin);
     motion.on(still => { if (still) { vy = 0; } });
 
@@ -269,7 +259,7 @@ const suite = (() => {
       tip.appendChild(document.createTextNode(id));
       tip.hidden = false;
       const bx = box.getBoundingClientRect();
-      tip.style.left = Math.min(e.clientX - bx.left + 12, bx.width - 270) + 'px'; tip.style.top = (e.clientY - bx.top + 12) + 'px';
+      tip.style.left = Math.max(4, Math.min(e.clientX - bx.left + 12, bx.width - tip.offsetWidth - 4)) + 'px'; tip.style.top = (e.clientY - bx.top + 12) + 'px';
     }
     canvas.addEventListener('pointermove', e => { if (e.pointerType === 'mouse') pick(e); });
     canvas.addEventListener('pointerleave', () => { tip.hidden = true; });
