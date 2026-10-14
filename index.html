@@ -232,6 +232,25 @@ code{font-size:13px}.kbd{font-size:12px}
 .rules{box-shadow:none}
 #demo::before{content:none}
 @media (max-width:640px){.summary th{width:auto;display:block;border:0;padding:12px 0 0}.summary td{display:inline-block;border:0;padding:2px 0 10px}.summary td.n{width:auto;font-size:22px;text-align:left;padding-right:10px}.summary tr{display:block;border-top:1px solid var(--line)}}
+
+.vid{font-size:13px;color:var(--muted);margin:-4px 0 12px;max-width:68ch}.vid a{font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+.scope{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:0 0 16px}
+.scope div{background:var(--panel);padding:12px 14px}.scope dt{font-size:12px;color:var(--muted)}.scope dd{margin:2px 0 0;font-size:14px;font-weight:500}
+@media (max-width:900px){.scope{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Evidence-first component treatment informed by the audited UI references; no prompt text or copied template code. */
+.steps{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.steps li{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+.steps li:nth-child(even) .st-text{order:2}
+.steps li::before{content:none}
+.st-text{display:grid;gap:6px;min-width:0}
+.st-text b{font-size:18px}.st-text p{color:var(--muted);font-size:15px;margin:0}.st-text span{font-size:13px;color:var(--muted)}
+.st-n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--panel2);color:var(--accent);font:600 13px "IBM Plex Mono",monospace}
+.steps .term{margin:0;font-size:13px;min-height:7.5em}
+.fx .steps.seq::after,.fx .steps.seq::before{content:none}
+@media (min-width:900px) and (prefers-reduced-motion:no-preference){.steps li{position:sticky;top:calc(72px + var(--i,0) * 14px)}}
+.steps li:nth-child(1){--i:0}.steps li:nth-child(2){--i:1}.steps li:nth-child(3){--i:2}.steps li:nth-child(4){--i:3}
+.steps li.active{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
+@media (max-width:900px){.steps li{grid-template-columns:minmax(0,1fr)}.steps li:nth-child(even) .st-text{order:0}}
 </style></head><body>
 <a class="skip" href="#demo">Skip to the classifier demo</a>
 <nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b>OnRamp</b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
@@ -261,17 +280,17 @@ code{font-size:13px}.kbd{font-size:12px}
 </div></header>
 
 <div class="wrap"><table class="summary"><caption>What the evidence shows</caption>
-<tr><th scope="row">Baseline</th><td class="n">1,761</td><td>Healthchecks tests at upstream <code>0968fa2</code>, of which <b class="t-inh">29</b> already fail on Windows (AF_UNIX sockets, a Linux-only strftime format, a DST switch)</td></tr>
+<tr><th scope="row">Baseline</th><td class="n">1,761</td><td>Healthchecks application at upstream <code>0968fa2</code>; the kit recorded it at <code>e10db36</code>. <b class="t-inh">29</b> already fail on Windows (AF_UNIX sockets, a Linux-only strftime format, a DST switch)</td></tr>
 <tr><th scope="row">After Bob's fix and feature</th><td class="n t-ok">0</td><td>regressions in an independent full run of 1,767 tests on the same Windows machine, against the pinned baseline</td></tr>
 <tr><th scope="row">Blind fix</th><td class="n">1</td><td>line changed in <code>hc/api/transports.py</code>, the same line the maintainer changed later</td></tr>
-<tr><th scope="row">Generated through IBM Bob</th><td class="n">23</td><td><a href="https://github.com/KnigguKniggu-droid/onramp/commits/main">commits</a>, each ending <code>Generated-by: IBM Bob</code>. The upstream test suite passes in <a href="https://github.com/KnigguKniggu-droid/onramp/actions">Linux CI</a>; the 29 baseline failures are Windows-only.</td></tr>
+<tr><th scope="row">Generated through IBM Bob</th><td class="n">23</td><td><a href="https://github.com/KnigguKniggu-droid/onramp/commits/main">commits</a>, each ending <code>Generated-by: IBM Bob</code>. The upstream test suite passed in <a href="https://github.com/KnigguKniggu-droid/onramp/actions/runs/38460743005">recorded Linux CI run 38460743005</a>; the 29 baseline failures are Windows-only.</td></tr>
 </table></div>
 
 <main id="main">
 <section id="demo" class="band" aria-labelledby="demo-h"><div class="wrap">
 <div class="sh"><h2 id="demo-h">Inherited failure or regression?</h2>
 <p class="take">Pick a later test run of Healthchecks and OnRamp classifies it against the baseline, right here in your browser.</p></div>
-<div class="dhead"><p class="base">Baseline: Healthchecks at the pinned upstream commit, 1,761 tests, 29 failing on Windows. With focus in the demo, keys <span class="mono">1</span>–<span class="mono">4</span> pick a run.</p><button type="button" class="snd" id="sound" aria-pressed="false" aria-label="Chime when a run is classified" title="Play a short chime when a run is classified"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 12.5a2 2 0 1 1-1-1.73V3l8-1.5v8.7a2 2 0 1 1-1-1.73V4.2L6 5.3z" fill="currentColor"/></svg><span aria-hidden="true">Sound off</span></button></div>
+<div class="dhead"><p class="base">Baseline: Healthchecks at the pinned upstream commit, 1,761 tests, 29 failing on Windows. With focus in the demo, keys <span class="mono">1</span>–<span class="mono">4</span> pick a run.</p><button type="button" class="snd" id="sound" aria-pressed="false" aria-label="Classification chime, off" title="Toggle the optional classification chime"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 12.5a2 2 0 1 1-1-1.73V3l8-1.5v8.7a2 2 0 1 1-1-1.73V4.2L6 5.3z" fill="currentColor"/></svg><span aria-hidden="true">Sound off</span></button></div>
 <fieldset class="scen" id="scen"><legend>Later run</legend>
 <label><input type="radio" name="cur" value="full_run_after_fix.json" checked><b>Full suite after Bob's work<span class="kbd" aria-hidden="true">1</span></b><span>1,767 tests</span><br><span class="tag real">real run</span></label>
 <label><input type="radio" name="cur" value="targeted_run.json"><b>Only Bob's new test<span class="kbd" aria-hidden="true">2</span></b><span>1 test</span><br><span class="tag real">real run</span></label>
@@ -280,12 +299,13 @@ code{font-size:13px}.kbd{font-size:12px}
 </fieldset>
 <div class="flow" id="flow" aria-hidden="true"><b>Baseline, 1,761</b><i></i><b>Later run</b><i></i><b class="opt">Classifier</b><i></i><b>Verdict</b></div>
 <div class="demo-grid"><div>
-<div id="verdict" class="verdict" role="status" aria-live="polite">Loading test runs and classifying…</div>
+<div id="verdict" class="verdict" role="status" aria-live="polite"></div>
+<p class="vid" id="vid"></p>
 <noscript><p class="verdict v-warn">The classifier needs JavaScript. Without it nothing is classified; the raw logs and normalized JSON are linked under "How this demo works".</p></noscript>
 <div class="cards" id="cards"></div>
 <div class="list" id="list" hidden></div>
 </div>
-<figure class="suite" id="suite"><h3>Fig. 1, suite map</h3><p>A visual index of outcomes, not a dependency graph: every dot is one Healthchecks test, placed in test-id order, coloured by how the selected run classifies it. Position carries no meaning beyond that order. Drag to turn; the counts on the left are the authoritative numbers.</p><canvas aria-hidden="true"></canvas><div class="suite-fallback">The 3D suite map needs WebGL. The counts on the left carry the same information.</div>
+<figure class="suite" id="suite"><h3>Fig. 1, suite map</h3><p>A decorative visual index of outcomes, not a dependency graph: every dot is one Healthchecks test, placed in test-id order and coloured by how the selected run classifies it. Position carries no meaning, and individual dots are not required to interpret the result; the counts on the left are authoritative.</p><canvas aria-hidden="true"></canvas><div class="suite-fallback">The 3D suite map needs WebGL. The counts on the left carry the same information.</div>
 <ul class="legend"><li style="--c:var(--muted)">unchanged</li><li style="--c:var(--warn)">inherited</li><li style="--c:var(--bad)">regression / new failing</li><li style="--c:var(--ok)">fixed / new passing</li><li style="--c:var(--info)">not run</li></ul></figure>
 </div>
 <details><summary>How this demo works</summary>
@@ -298,24 +318,30 @@ code{font-size:13px}.kbd{font-size:12px}
 <section id="baseline"><div class="wrap">
 <div class="sh"><h2>29 inherited Windows failures, zero regressions</h2>
 <p class="take">Before Bob changed a line, OnRamp recorded which tests already fail on this Windows machine, so red tests are never blamed on the fix. On Linux CI the same suite passes; the 29 are Windows-only.</p></div>
+<dl class="scope">
+<div><dt>Environment</dt><dd>Windows, Python 3.13.2</dd></div>
+<div><dt>Tests in the baseline</dt><dd>1,761</dd></div>
+<div><dt>Recorded at</dt><dd>kit commit <code>e10db36</code>; app code equals upstream <code>0968fa2</code></dd></div>
+<div><dt>Scope of the 29</dt><dd>Windows only; the same suite passes in Linux CI</dd></div>
+</dl>
 <div class="two">
 <div class="panel"><div class="scroll"><table><tr><th>Error type</th><th>Tests</th><th>Why it fails here</th></tr><tr><td><span class="pill">AttributeError</span></td><td class="n">26</td><td>Signal integration tests need socket.AF_UNIX, which Windows lacks</td></tr><tr><td><span class="pill">ValueError</span></td><td class="n">2</td><td>A Linux-only strftime format (e.g. %-d)</td></tr><tr><td><span class="pill">AssertionError</span></td><td class="n">1</td><td>DST test needs time-zone switching, unavailable on Windows</td></tr></table></div></div>
 <div class="panel"><p class="sub" style="color:var(--text)">Fingerprint recorded at kit commit <code>e10db36</code>, whose application code (<code>hc/</code>, <code>templates/</code>, <code>static/</code>) is identical to upstream Healthchecks <code>0968fa2</code>; Windows, Python 3.13.2. All 29 are Windows-only; on Linux CI the same suite passes.</p>
-<p class="sub">The first baseline was captured before the kit's parser fix (<code>8165552</code>) and stored error types as "Unknown"; Bob re-classified a fresh run in <code>baseline_reclassified.json</code>. Its error types match Claude's independent run exactly.</p></div>
+<p class="sub">The first baseline was captured before the kit's parser fix (<code>8165552</code>) and stored error types as "Unknown"; Bob re-classified a fresh run in <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/baseline_reclassified.json"><code>baseline_reclassified.json</code></a>. Its error types match Claude's independent run exactly.</p></div>
 </div>
 </div></section>
 
 <section id="blind" class="band"><div class="wrap">
 <div class="sh"><h2>Bob vs the maintainer, blind</h2>
-<p class="take">Healthchecks was pinned one commit before its maintainer fixed a real webhook bug. Bob saw only the symptoms. After Bob's fix was committed, we revealed the maintainer's.</p></div>
+<p class="take">Healthchecks was pinned one commit before its maintainer fixed a real webhook bug. The issue-specific brief was sealed before the fix work; after Bob's fix was committed, we revealed the maintainer's.</p></div>
 <div class="strip"><span class="same">Same affected behaviour</span><span class="same">Same source line</span><span class="diffr">Different accepted-status policy</span></div>
 <div class="two"><div class="diff"><h3>Fig. 2, IBM Bob, commit 5f16187</h3><div class="ln hunk">@@ -158,7 +158,7 @@ class HttpTransport(Transport):</div><div class="ln ">                 auth=auth,</div><div class="ln ">                 timeout=30,</div><div class="ln ">             )</div><div class="ln del">-            if r.status_code not in (200, 201, 202, 204):</div><div class="ln add">+            if r.status_code not in range(200, 300):</div><div class="ln ">                 cls.raise_for_response(r)</div><div class="ln ">         except curl.CurlError as e:</div><div class="ln ">             raise TransportError(e.message)</div></div>
 <div class="diff"><h3>Fig. 3, maintainer, upstream 0a9bff9, revealed afterwards</h3><div class="ln hunk">@@ -158,7 +158,7 @@ class HttpTransport(Transport):</div><div class="ln ">                 auth=auth,</div><div class="ln ">                 timeout=30,</div><div class="ln ">             )</div><div class="ln del">-            if r.status_code not in (200, 201, 202, 204):</div><div class="ln add">+            if r.status_code not in (200, 201, 202, 204, 205):</div><div class="ln ">                 cls.raise_for_response(r)</div><div class="ln ">         except curl.CurlError as e:</div><div class="ln ">             raise TransportError(e.message)</div></div></div>
 <ol class="steps" id="steps">
-<li><b>Brief sealed</b><span>21:05:38 UTC, SHA-256 <code>12c482dc2578402a…</code></span><pre class="term"><span class="src">benchmark_webhook-205.json</span><span class="ln2 p">&quot;sealed_at&quot;: &quot;2026-10-11T21:05:38.561200+00:00&quot;</span><span class="ln2 p">&quot;brief_sha256&quot;: &quot;12c482dc2578402a5c77c5ae60bca4f5…&quot;</span></pre></li>
-<li><b>Failing test first</b><span><code>AssertionError: 3 != 1</code></span><pre class="term"><span class="src">pre_fix_webhook-205.txt</span><span class="ln2 bad">FAIL: test_webhooks_accept_http_205</span><span class="ln2 bad">AssertionError: 3 != 1</span><span class="ln2 bad">FAILED (failures=1)</span></pre></li>
-<li><b>One-line fix</b><span>committed 21:10 UTC</span><pre class="term"><span class="src">git show 5f16187 -- hc/api/transports.py · post_fix_webhook-205.txt</span><span class="ln2 del">- if r.status_code not in (200, 201, 202, 204):</span><span class="ln2 add">+ if r.status_code not in range(200, 300):</span><span class="ln2 ok">Ran 1 test in 0.007s</span><span class="ln2 ok">OK</span></pre></li>
-<li><b>Reveal &amp; compare</b><span>Bob's own report: the narrower upstream fix is safer</span><pre class="term"><span class="src">reference_upstream_0a9bff9.patch</span><span class="ln2 add">+ if r.status_code not in (200, 201, 202, 204, 205):</span><span class="ln2 cm"># annotation: same line as Bob&#x27;s fix; upstream adds only 205</span></pre></li>
+<li><div class="st-text"><span class="st-n" aria-hidden="true">1</span><b><span class="sr">Step 1 of 4: </span>Brief sealed</b><p>The symptom report was hashed before the issue-specific work began, so it could not be adjusted after the fix.</p><span>21:05:38 UTC, SHA-256 <code>12c482dc2578402a…</code></span></div><pre class="term"><a class="src" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/benchmark_webhook-205.json">benchmark_webhook-205.json</a><span class="ln2 p">&quot;sealed_at&quot;: &quot;2026-10-11T21:05:38.561200+00:00&quot;</span><span class="ln2 p">&quot;brief_sha256&quot;: &quot;12c482dc2578402a5c77c5ae60bca4f5…&quot;</span></pre></li>
+<li><div class="st-text"><span class="st-n" aria-hidden="true">2</span><b><span class="sr">Step 2 of 4: </span>Failing test first</b><p>Bob wrote a test that reproduces the bug and fails on the unfixed code.</p><span><code>AssertionError: 3 != 1</code></span></div><pre class="term"><a class="src" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/pre_fix_webhook-205.txt">pre_fix_webhook-205.txt</a><span class="ln2 bad">FAIL: test_webhooks_accept_http_205</span><span class="ln2 bad">AssertionError: 3 != 1</span><span class="ln2 bad">FAILED (failures=1)</span></pre></li>
+<li><div class="st-text"><span class="st-n" aria-hidden="true">3</span><b><span class="sr">Step 3 of 4: </span>One-line fix</b><p>One line changed in <code>hc/api/transports.py</code>. The new test passes, and the later full run shows no regressions.</p><span>committed 21:10 UTC</span></div><pre class="term"><a class="src" href="https://github.com/KnigguKniggu-droid/onramp/commit/5f16187">git show 5f16187 -- hc/api/transports.py, post_fix_webhook-205.txt</a><span class="ln2 del">- if r.status_code not in (200, 201, 202, 204):</span><span class="ln2 add">+ if r.status_code not in range(200, 300):</span><span class="ln2 ok">Ran 1 test in 0.007s</span><span class="ln2 ok">OK</span></pre></li>
+<li><div class="st-text"><span class="st-n" aria-hidden="true">4</span><b><span class="sr">Step 4 of 4: </span>Reveal &amp; compare</b><p>Only then was the maintainer's own fix revealed: the same line, with a narrower accepted-status policy.</p><span>Corrected comparison: the upstream patch adds only status 205.</span></div><pre class="term"><a class="src" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/reference_upstream_0a9bff9.patch">reference_upstream_0a9bff9.patch</a><span class="ln2 add">+ if r.status_code not in (200, 201, 202, 204, 205):</span><span class="ln2 cm"># annotation: same line as Bob&#x27;s fix; upstream adds only 205</span></pre></li>
 </ol>
 <p class="sub" style="margin-top:8px">Terminal panels are excerpts copied from the evidence files named in each panel (whitespace collapsed; the line starting with # is our annotation). They are not a live session.</p>
 <p class="sub" style="margin-top:14px">Our brief said "a 2xx response such as 205" should succeed, and Bob accepted every 2xx; the maintainer added only 205, because <code>HttpTransport</code> is shared by about 25 integrations. <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CORRECTED_REPORT_webhook-205_2026-10-12.md">Corrected evidence report</a>, <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/REPORT_webhook-205.md">historical report</a> (superseded: it counted 29 never-run tests as fixed).</p>
@@ -331,7 +357,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 
 <section id="feature"><div class="wrap">
 <div class="sh"><h2>Readable JSON webhook bodies (#1090)</h2>
-<p class="take">A feature Healthchecks users asked for in 2024: JSON request bodies are shown indented, while Download Original still serves the exact bytes.</p></div>
+<p class="take">Feature #1090: JSON request bodies are shown indented, while Download Original still serves the exact bytes. The evidence below demonstrates the formatting and non-ASCII preservation behavior.</p></div>
 <div class="two">
 <figure><img src="shots/1090-before-upstream.png" alt="Before: the request body is one long line of JSON that has to be scrolled sideways" width="660" height="115"><figcaption><b>Before</b>, upstream Healthchecks: one long line</figcaption></figure>
 <figure><img src="shots/1090-after-bob.png" alt="After: the same request body pretty-printed over several indented lines, with café and a check mark intact" width="660" height="210"><figcaption><b>After</b>, Bob's branch: indented, non-ASCII intact</figcaption></figure>
@@ -342,7 +368,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 
 <section id="portability" class="band"><div class="wrap">
 <div class="sh"><h2>Not hardcoded for Healthchecks</h2>
-<p class="take">The same kit was copied, unchanged, into a different app three times: TaskFlow, a Flask app tested with plain unittest. Each run's gaps went back to Bob, and his fixes are public commits: <a href="https://github.com/KnigguKniggu-droid/onramp/commit/4facc4b">4facc4b</a> and <a href="https://github.com/KnigguKniggu-droid/onramp/commit/6be3235">6be3235</a> (profile-driven kit), <a href="https://github.com/KnigguKniggu-droid/onramp/commit/8165552">8165552</a> (unittest parser).</p></div>
+<p class="take">Profile-driven portability was tested across three TaskFlow runs, a Flask app using plain unittest. Each run's gaps went back to Bob, with public fixes in <a href="https://github.com/KnigguKniggu-droid/onramp/commit/4facc4b">4facc4b</a> and <a href="https://github.com/KnigguKniggu-droid/onramp/commit/6be3235">6be3235</a> (profile-driven kit), plus <a href="https://github.com/KnigguKniggu-droid/onramp/commit/8165552">8165552</a> (unittest parser).</p></div>
 <ol class="runs"><li class="run run-gaps"><div class="run-h"><b>Run 1</b><span>kit <code>a3acbc3</code></span></div><p class="run-k">7 kinds of Django assumptions found</p><p class="run-d">Loaded unchanged; exposed 7 kinds of Django assumptions (hardcoded hc/, Django-only output parsing, baseline.txt vs baseline.json, Reproducer edit scope, Django-specific skill steps).</p><p class="run-m">4 tests · failure type recorded: <b>Unknown</b></p></li><li class="run run-partial"><div class="run-h"><b>Run 2</b><span>kit <code>e4032c2</code></span></div><p class="run-k">1 parser gap found</p><p class="run-d">After Bob made the kit profile-driven: worked, but recorded the unittest failure type as &quot;Unknown&quot;.</p><p class="run-m">4 tests · failure type recorded: <b>Unknown</b> (the bug this run exposed)</p></li><li class="run run-ok"><div class="run-h"><b>Run 3</b><span>kit <code>8165552</code></span></div><p class="run-k">worked unchanged</p><p class="run-d">After Bob&#x27;s parser fix: profile, baseline and map produced, failure classified as AssertionError.</p><p class="run-m">4 tests · failure type recorded: <b>AssertionError</b></p></li></ol>
 </div></section>
 
@@ -358,7 +384,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 </main>
 
 <footer><div class="wrap"><span>Built by Claude Code from the repository's evidence files. Healthchecks is an independent BSD-3-Clause project, not affiliated with this submission. OnRamp is an independent hackathon entry and is not endorsed by IBM.</span><span><a href="https://github.com/KnigguKniggu-droid/onramp">Kit on GitHub</a>, <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Deck</a>, <a href="https://github.com/KnigguKniggu-droid/onramp-evidence">Site source</a></span></div></footer>
-<button type="button" class="motionbtn" id="motionbtn" aria-pressed="false" hidden><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z" fill="currentColor"/></svg><span>Pause motion</span></button>
+<button type="button" class="motionbtn" id="motionbtn" aria-pressed="false" aria-label="Decorative motion is active; activate to pause" title="Toggle decorative motion"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z" fill="currentColor"/></svg><span>Pause motion</span></button>
 <script src="classifier.js"></script>
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
@@ -425,7 +451,13 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
     const pick = document.querySelector('input[name="cur"]:checked');
     const slow = setTimeout(() => { if (my === seq && !$('cards').children.length) v.textContent = 'Still loading the test runs after 15 seconds. Check your connection; nothing has been classified yet.'; }, 15000);
     try {
-      const res = OnRampClassifier.classify(await load('baseline_run.json'), await load(pick.value));
+      const cur = await load(pick.value), res = OnRampClassifier.classify(await load('baseline_run.json'), cur);
+      if (my === seq) {
+        const kind = /^synthetic/.test(pick.value) ? 'synthetic classifier safety test' : 'real run';
+        const vid = $('vid'); vid.textContent = '';
+        const a = document.createElement('a'); a.href = 'data/' + pick.value; a.textContent = 'data/' + pick.value;
+        vid.append('Evidence: ', a, ' (' + kind + ', ' + (res.scope || 'no verdict') + (cur.source_sha256 ? ', log sha256 ' + cur.source_sha256.slice(0, 12) : '') + '). The counts are authoritative; the suite map is an index of them.');
+      }
       if (my === seq) show(res, user === true);
     } catch (e) {
       if (my !== seq) return;
