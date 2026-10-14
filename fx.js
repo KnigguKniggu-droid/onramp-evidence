@@ -29,6 +29,18 @@ const motion = (() => {
   return { get still() { return still || reduce; }, on: f => listeners.push(f) };
 })();
 
+// Supplied cinematic hero video is decorative only: keep it in sync with the
+// existing motion contract and leave a truthful black fallback when motion is reduced.
+const heroVideo = document.querySelector('.hero-video');
+if (heroVideo) {
+  const syncHeroVideo = paused => {
+    if (paused) heroVideo.pause();
+    else heroVideo.play().catch(() => { /* autoplay may be blocked; black fallback remains */ });
+  };
+  motion.on(syncHeroVideo);
+  syncHeroVideo(motion.still);
+}
+
 // ---------- sound (off by default; the user turns it on) ----------
 const sound = (() => {
   const btn = document.getElementById('sound');
