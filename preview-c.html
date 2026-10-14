@@ -233,6 +233,10 @@ code{font-size:13px}.kbd{font-size:12px}
 #demo::before{content:none}
 @media (max-width:640px){.summary th{width:auto;display:block;border:0;padding:12px 0 0}.summary td{display:inline-block;border:0;padding:2px 0 10px}.summary td.n{width:auto;font-size:22px;text-align:left;padding-right:10px}.summary tr{display:block;border-top:1px solid var(--line)}}
 
+.vid{font-size:13px;color:var(--muted);margin:-4px 0 12px;max-width:68ch}.vid a{font-family:"IBM Plex Mono",monospace;font-size:12.5px}
+.scope{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:0 0 16px}
+.scope div{background:var(--panel);padding:12px 14px}.scope dt{font-size:12px;color:var(--muted)}.scope dd{margin:2px 0 0;font-size:14px;font-weight:500}
+@media (max-width:900px){.scope{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* ===== Variant C preview: blind-fix steps as stacked two-column evidence cards (structure from a free MotionSites prompt, used privately; no copied text or styling) ===== */
 .steps{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
 .steps li{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:20px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
@@ -296,6 +300,7 @@ code{font-size:13px}.kbd{font-size:12px}
 <div class="flow" id="flow" aria-hidden="true"><b>Baseline, 1,761</b><i></i><b>Later run</b><i></i><b class="opt">Classifier</b><i></i><b>Verdict</b></div>
 <div class="demo-grid"><div>
 <div id="verdict" class="verdict" role="status" aria-live="polite">Loading test runs and classifying…</div>
+<p class="vid" id="vid"></p>
 <noscript><p class="verdict v-warn">The classifier needs JavaScript. Without it nothing is classified; the raw logs and normalized JSON are linked under "How this demo works".</p></noscript>
 <div class="cards" id="cards"></div>
 <div class="list" id="list" hidden></div>
@@ -313,6 +318,12 @@ code{font-size:13px}.kbd{font-size:12px}
 <section id="baseline"><div class="wrap">
 <div class="sh"><h2>29 inherited Windows failures, zero regressions</h2>
 <p class="take">Before Bob changed a line, OnRamp recorded which tests already fail on this Windows machine, so red tests are never blamed on the fix. On Linux CI the same suite passes; the 29 are Windows-only.</p></div>
+<dl class="scope">
+<div><dt>Environment</dt><dd>Windows, Python 3.13.2</dd></div>
+<div><dt>Tests in the baseline</dt><dd>1,761</dd></div>
+<div><dt>Recorded at</dt><dd>kit commit <code>e10db36</code>; app code equals upstream <code>0968fa2</code></dd></div>
+<div><dt>Scope of the 29</dt><dd>Windows only; the same suite passes in Linux CI</dd></div>
+</dl>
 <div class="two">
 <div class="panel"><div class="scroll"><table><tr><th>Error type</th><th>Tests</th><th>Why it fails here</th></tr><tr><td><span class="pill">AttributeError</span></td><td class="n">26</td><td>Signal integration tests need socket.AF_UNIX, which Windows lacks</td></tr><tr><td><span class="pill">ValueError</span></td><td class="n">2</td><td>A Linux-only strftime format (e.g. %-d)</td></tr><tr><td><span class="pill">AssertionError</span></td><td class="n">1</td><td>DST test needs time-zone switching, unavailable on Windows</td></tr></table></div></div>
 <div class="panel"><p class="sub" style="color:var(--text)">Fingerprint recorded at kit commit <code>e10db36</code>, whose application code (<code>hc/</code>, <code>templates/</code>, <code>static/</code>) is identical to upstream Healthchecks <code>0968fa2</code>; Windows, Python 3.13.2. All 29 are Windows-only; on Linux CI the same suite passes.</p>
@@ -358,6 +369,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 <section id="portability" class="band"><div class="wrap">
 <div class="sh"><h2>Not hardcoded for Healthchecks</h2>
 <p class="take">The same kit was copied, unchanged, into a different app three times: TaskFlow, a Flask app tested with plain unittest. Each run's gaps went back to Bob, and his fixes are public commits: <a href="https://github.com/KnigguKniggu-droid/onramp/commit/4facc4b">4facc4b</a> and <a href="https://github.com/KnigguKniggu-droid/onramp/commit/6be3235">6be3235</a> (profile-driven kit), <a href="https://github.com/KnigguKniggu-droid/onramp/commit/8165552">8165552</a> (unittest parser).</p></div>
+<p class="sub" style="max-width:68ch">Re-checked on 2026-10-13 in fresh clones with the committed kit: Healthchecks gave a valid full run (1,761 tests, 29 inherited, 0 regressions) and TaskFlow a valid full run (4 tests, 1 inherited); a deliberately unknown test status was reported as inconclusive in both. The first attempt exposed a parser gap on fresh Django output, fixed in <a href="https://github.com/KnigguKniggu-droid/onramp/commit/187c8fe">187c8fe</a>. <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CLEAN_INSTALL_RERUN_2026-10-13.md">Re-run record</a>.</p>
 <ol class="runs"><li class="run run-gaps"><div class="run-h"><b>Run 1</b><span>kit <code>a3acbc3</code></span></div><p class="run-k">7 kinds of Django assumptions found</p><p class="run-d">Loaded unchanged; exposed 7 kinds of Django assumptions (hardcoded hc/, Django-only output parsing, baseline.txt vs baseline.json, Reproducer edit scope, Django-specific skill steps).</p><p class="run-m">4 tests · failure type recorded: <b>Unknown</b></p></li><li class="run run-partial"><div class="run-h"><b>Run 2</b><span>kit <code>e4032c2</code></span></div><p class="run-k">1 parser gap found</p><p class="run-d">After Bob made the kit profile-driven: worked, but recorded the unittest failure type as &quot;Unknown&quot;.</p><p class="run-m">4 tests · failure type recorded: <b>Unknown</b> (the bug this run exposed)</p></li><li class="run run-ok"><div class="run-h"><b>Run 3</b><span>kit <code>8165552</code></span></div><p class="run-k">worked unchanged</p><p class="run-d">After Bob&#x27;s parser fix: profile, baseline and map produced, failure classified as AssertionError.</p><p class="run-m">4 tests · failure type recorded: <b>AssertionError</b></p></li></ol>
 </div></section>
 
@@ -440,7 +452,13 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
     const pick = document.querySelector('input[name="cur"]:checked');
     const slow = setTimeout(() => { if (my === seq && !$('cards').children.length) v.textContent = 'Still loading the test runs after 15 seconds. Check your connection; nothing has been classified yet.'; }, 15000);
     try {
-      const res = OnRampClassifier.classify(await load('baseline_run.json'), await load(pick.value));
+      const cur = await load(pick.value), res = OnRampClassifier.classify(await load('baseline_run.json'), cur);
+      if (my === seq) {
+        const kind = /^synthetic/.test(pick.value) ? 'synthetic classifier safety test' : 'real run';
+        const vid = $('vid'); vid.textContent = '';
+        const a = document.createElement('a'); a.href = 'data/' + pick.value; a.textContent = 'data/' + pick.value;
+        vid.append('Evidence: ', a, ' (' + kind + ', ' + (res.scope || 'no verdict') + (cur.source_sha256 ? ', log sha256 ' + cur.source_sha256.slice(0, 12) : '') + '). The counts are authoritative; the suite map is an index of them.');
+      }
       if (my === seq) show(res, user === true);
     } catch (e) {
       if (my !== seq) return;
