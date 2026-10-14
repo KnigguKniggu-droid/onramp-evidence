@@ -6,3 +6,6 @@ __pycache__/
 !tools/
 tools/*
 !tools/qa_capture.ps1
+template_a.html
+template_b.html
+index_b.html
