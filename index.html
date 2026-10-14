@@ -24,7 +24,7 @@
 :root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
  --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent);--info-bg:color-mix(in srgb,var(--info) 14%,transparent)}
 @media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f6f7f9;--band:#eef1f5;--panel:#fff;--panel2:#f7f8fa;--line:#dfe3ea;--text:#161a22;--muted:#525c6e;--accent:#0050e6;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}html.fx{scroll-behavior:auto}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
@@ -115,7 +115,7 @@ figcaption{font-size:14px;margin-top:8px;color:var(--muted)}figcaption b{color:v
 footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}footer .wrap{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
 @media (max-width:900px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.cards{grid-template-columns:repeat(4,minmax(0,1fr))}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.runs{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.scen{grid-template-columns:repeat(2,minmax(0,1fr))}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.two,.who{grid-template-columns:minmax(0,1fr)}.steps{grid-template-columns:minmax(0,1fr)}.timeline li{grid-template-columns:1fr;gap:2px}.hero{padding-top:36px}section{padding:40px 0}.rgrid{font-size:12px}.cell{padding:8px 6px}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition-property:opacity,color,background-color,border-color!important;transition-duration:.15s!important}}
 
 /* ===== enhancement layer (Claude Code, 2026-10-13). Page is complete without fx.js; motion respects reduced-motion. ===== */
 /* liquid-gradient hero layers (GetLayers layering + 3D/liquid/gradient category, original CSS) */
@@ -169,9 +169,42 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 @media (max-width:640px){.flow{grid-template-columns:auto minmax(10px,1fr) auto minmax(10px,1fr) auto}.flow .opt,.flow .opt+i{display:none}.kbd{display:none}.demo-grid .cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (prefers-reduced-motion:reduce){.liquid span{animation:none}.scen label:has(input:checked)::after{animation:none}.flow.st-run i::after{animation:none;width:100%;opacity:.5}}
+
+/* ===== guidance pass (2026-10-13): GetLayers, MotionSites, Magic UI, GSAP, three.js, Motion, Webflow, UI UX Pro Max ===== */
+.ic{width:14px;height:14px;flex:none;vertical-align:-2px}
+/* UUPM: hover feedback 150-300ms; Webflow: transform/opacity/colour only, one easing family */
+.btn,.card,.scen label,.snd,.run,nav a{transition:border-color .18s ease-out,color .18s ease-out,transform .18s ease-out,background-color .18s ease-out}
+.btn:hover,.card:hover,.scen label:hover{transform:translateY(-1px)}
+.card,.scen label,.snd,summary{cursor:pointer}
+/* Magic UI scroll progress */
+.sprog{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--accent),var(--info));transform-origin:0 50%;transform:scaleX(var(--sp,0));pointer-events:none}
+/* Magic UI dot pattern behind the demo (static, decorative) */
+#demo{position:relative;isolation:isolate}
+#demo::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(color-mix(in srgb,var(--muted) 22%,transparent) 1px,transparent 1.4px);background-size:22px 22px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 70%);mask-image:linear-gradient(180deg,#000,transparent 70%);pointer-events:none}
+/* MotionSites "how it works" + Magic UI Terminal: each step pairs its text with the real evidence excerpt */
+.term{margin:10px 0 0;background:#10141c;border:1px solid var(--line);border-radius:8px;padding:8px 10px 9px;font:12px/1.55 "IBM Plex Mono",ui-monospace,Consolas,monospace;color:#c9d1e0;white-space:pre-wrap;overflow-wrap:anywhere;min-height:5.2em}
+.term .src{display:block;color:#8b95a7;font-size:11px;margin-bottom:4px}
+.term .p{color:#7fb0ff}.term .cm{color:#8b95a7;font-style:italic}.term .bad{color:#ff8a92}.term .ok{color:#6fdc8c}.term .add{color:#6fdc8c}.term .del{color:#ff8a92}
+.term .ln2{display:block}
+.steps li{position:relative}
+/* GetLayers "Roadmap Ascent" idea: a glowing node travels the spine and lights each milestone */
+.fx .steps.seq::after{content:"";position:absolute;top:-13px;left:calc(var(--prog,0)*100%);width:13px;height:13px;margin-left:-6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%,transparent),0 0 18px var(--accent);pointer-events:none}
+.steps .count{font:500 12px "IBM Plex Mono",monospace;color:var(--muted)}
+/* Magic UI code comparison: focus the changed line, dim the context while the diff is hovered */
+.diff:hover .ln:not(.add):not(.del):not(.hunk),.diff:focus-within .ln:not(.add):not(.del):not(.hunk){opacity:.45}
+.diff .ln.add,.diff .ln.del{border-radius:4px}.diff .ln.add{background:var(--ok-bg)}.diff .ln.del{background:var(--bad-bg)}
+/* three.js picking tooltip */
+.tip{position:absolute;pointer-events:none;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font:12px/1.4 "IBM Plex Mono",monospace;color:var(--text);max-width:260px;box-shadow:0 8px 24px rgba(0,0,0,.35);z-index:2;overflow-wrap:anywhere}
+.tip b{display:block;font-family:"IBM Plex Sans",system-ui;font-size:12px}
+/* Webflow: decorative motion must be pausable */
+.motionbtn{position:fixed;right:14px;bottom:14px;z-index:6;display:inline-flex;gap:6px;align-items:center;font:600 13px "IBM Plex Sans",system-ui;background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:7px 12px;min-height:36px;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.motionbtn[aria-pressed="true"]{color:var(--accent);border-color:var(--accent)}
+.still .liquid span,.still .scen label:has(input:checked)::after,.still .flow.st-run i::after{animation-play-state:paused!important}
+.motionbtn[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){.btn:hover,.card:hover,.scen label:hover{transform:none}}
 </style></head><body>
 <a class="skip" href="#demo">Skip to the classifier demo</a>
-<nav aria-label="Sections"><div class="wrap"><b>OnRamp</b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
+<nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b>OnRamp</b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
 
 <header class="hero"><div class="liquid" aria-hidden="true" data-depth="34"><span></span><span></span><span></span></div><div class="wrap">
 <div>
@@ -179,7 +212,7 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 <h1>Know what's broken before you fix it.</h1>
 <p class="lede">OnRamp is an IBM Bob kit for joining an unfamiliar codebase. It records which tests already fail, reproduces a bug with a failing test first, and verifies the fix without ever mistaking an old failure for a new one.</p>
 <div class="cta">
-<a class="btn primary" href="#demo">▶ Try the classifier</a>
+<a class="btn primary" href="#demo"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Try the classifier</a>
 <a class="btn" href="https://github.com/KnigguKniggu-droid/onramp">Get the kit</a>
 <a class="btn" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Pitch deck</a>
 
@@ -210,7 +243,7 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 <section id="demo" class="band" aria-labelledby="demo-h"><div class="wrap">
 <div class="sh"><span class="num">TRY IT</span><h2 id="demo-h">Inherited failure or regression?</h2>
 <p class="take">Pick a later test run of Healthchecks and OnRamp classifies it against the baseline, right here in your browser.</p></div>
-<div class="dhead"><p class="base">Baseline: Healthchecks at the pinned upstream commit, 1,761 tests, 29 failing on Windows. With focus in the demo, keys <span class="mono">1</span>–<span class="mono">4</span> pick a run.</p><button type="button" class="snd" id="sound" aria-pressed="false" aria-label="Chime when a run is classified" title="Play a short chime when a run is classified"><span aria-hidden="true">♪ Sound off</span></button></div>
+<div class="dhead"><p class="base">Baseline: Healthchecks at the pinned upstream commit, 1,761 tests, 29 failing on Windows. With focus in the demo, keys <span class="mono">1</span>–<span class="mono">4</span> pick a run.</p><button type="button" class="snd" id="sound" aria-pressed="false" aria-label="Chime when a run is classified" title="Play a short chime when a run is classified"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 12.5a2 2 0 1 1-1-1.73V3l8-1.5v8.7a2 2 0 1 1-1-1.73V4.2L6 5.3z" fill="currentColor"/></svg><span aria-hidden="true">Sound off</span></button></div>
 <fieldset class="scen" id="scen"><legend>Later run</legend>
 <label><input type="radio" name="cur" value="full_run_after_fix.json" checked><b>Full suite after Bob's work<span class="kbd" aria-hidden="true">1</span></b><span>1,767 tests</span><br><span class="tag real">real run</span></label>
 <label><input type="radio" name="cur" value="targeted_run.json"><b>Only Bob's new test<span class="kbd" aria-hidden="true">2</span></b><span>1 test</span><br><span class="tag real">real run</span></label>
@@ -251,11 +284,12 @@ footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px soli
 <div class="two"><div class="diff"><h3>IBM Bob · commit 5f16187</h3><div class="ln hunk">@@ -158,7 +158,7 @@ class HttpTransport(Transport):</div><div class="ln ">                 auth=auth,</div><div class="ln ">                 timeout=30,</div><div class="ln ">             )</div><div class="ln del">-            if r.status_code not in (200, 201, 202, 204):</div><div class="ln add">+            if r.status_code not in range(200, 300):</div><div class="ln ">                 cls.raise_for_response(r)</div><div class="ln ">         except curl.CurlError as e:</div><div class="ln ">             raise TransportError(e.message)</div></div>
 <div class="diff"><h3>Maintainer · upstream 0a9bff9, revealed afterwards</h3><div class="ln hunk">@@ -158,7 +158,7 @@ class HttpTransport(Transport):</div><div class="ln ">                 auth=auth,</div><div class="ln ">                 timeout=30,</div><div class="ln ">             )</div><div class="ln del">-            if r.status_code not in (200, 201, 202, 204):</div><div class="ln add">+            if r.status_code not in (200, 201, 202, 204, 205):</div><div class="ln ">                 cls.raise_for_response(r)</div><div class="ln ">         except curl.CurlError as e:</div><div class="ln ">             raise TransportError(e.message)</div></div></div>
 <ol class="steps" id="steps">
-<li><b>Brief sealed</b><span>21:05:38 UTC · SHA-256 <code>12c482dc2578402a…</code></span></li>
-<li><b>Failing test first</b><span><code>AssertionError: 3 != 1</code></span></li>
-<li><b>One-line fix</b><span>committed 21:10 UTC</span></li>
-<li><b>Reveal &amp; compare</b><span>Bob's own report: the narrower upstream fix is safer</span></li>
+<li><b>Brief sealed</b><span>21:05:38 UTC · SHA-256 <code>12c482dc2578402a…</code></span><pre class="term"><span class="src">benchmark_webhook-205.json</span><span class="ln2 p">&quot;sealed_at&quot;: &quot;2026-10-11T21:05:38.561200+00:00&quot;</span><span class="ln2 p">&quot;brief_sha256&quot;: &quot;12c482dc2578402a5c77c5ae60bca4f5…&quot;</span></pre></li>
+<li><b>Failing test first</b><span><code>AssertionError: 3 != 1</code></span><pre class="term"><span class="src">pre_fix_webhook-205.txt</span><span class="ln2 bad">FAIL: test_webhooks_accept_http_205</span><span class="ln2 bad">AssertionError: 3 != 1</span><span class="ln2 bad">FAILED (failures=1)</span></pre></li>
+<li><b>One-line fix</b><span>committed 21:10 UTC</span><pre class="term"><span class="src">git show 5f16187 -- hc/api/transports.py · post_fix_webhook-205.txt</span><span class="ln2 del">- if r.status_code not in (200, 201, 202, 204):</span><span class="ln2 add">+ if r.status_code not in range(200, 300):</span><span class="ln2 ok">Ran 1 test in 0.007s</span><span class="ln2 ok">OK</span></pre></li>
+<li><b>Reveal &amp; compare</b><span>Bob's own report: the narrower upstream fix is safer</span><pre class="term"><span class="src">reference_upstream_0a9bff9.patch</span><span class="ln2 add">+ if r.status_code not in (200, 201, 202, 204, 205):</span><span class="ln2 cm"># annotation: same line as Bob&#x27;s fix; upstream adds only 205</span></pre></li>
 </ol>
+<p class="sub" style="margin-top:8px">Terminal panels are excerpts copied from the evidence files named in each panel (whitespace collapsed; the line starting with # is our annotation). They are not a live session.</p>
 <p class="sub" style="margin-top:14px">Our brief said "a 2xx response such as 205" should succeed, and Bob accepted every 2xx; the maintainer added only 205, because <code>HttpTransport</code> is shared by about 25 integrations. <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CORRECTED_REPORT_webhook-205_2026-10-12.md">Corrected evidence report</a> · <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/REPORT_webhook-205.md">historical report</a> (superseded: it counted 29 never-run tests as fixed).</p>
 <details><summary>Read the sealed brief and what the seal proves</summary>
 <blockquote>While testing Healthchecks with a personal project, I set up a webhook integration whose endpoint answers with HTTP 205 (Reset Content). When a check changes state, my endpoint receives three identical requests, and the integration is marked as failed with &quot;Received status code 205&quot;.
@@ -296,6 +330,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 </main>
 
 <footer><div class="wrap"><span>Built by Claude Code from the repository's evidence files. Healthchecks is an independent BSD-3-Clause project, not affiliated with this submission.</span><span><a href="https://github.com/KnigguKniggu-droid/onramp">Kit on GitHub</a> · <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Deck</a> · <a href="https://github.com/KnigguKniggu-droid/onramp-evidence">Site source</a></span></div></footer>
+<button type="button" class="motionbtn" id="motionbtn" aria-pressed="false" hidden><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z" fill="currentColor"/></svg><span>Pause motion</span></button>
 <script src="classifier.js"></script>
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>

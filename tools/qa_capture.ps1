@@ -7,7 +7,7 @@ $ErrorActionPreference = 'Continue'  # Edge writes harmless sync errors to stder
 $edge = 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
 New-Item -ItemType Directory -Force $OutDir | Out-Null; $OutDir = (Resolve-Path $OutDir).Path
 $results = @()
-foreach ($w in 320, 375, 768, 1440) {
+foreach ($w in 320, 375, 768, 1024, 1440) {
   $harness = Join-Path $SiteDir "_qa_$w.html"
   @"
 <!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#888}iframe{border:0;display:block}</style></head><body>
