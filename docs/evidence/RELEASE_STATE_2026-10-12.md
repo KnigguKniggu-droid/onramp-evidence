@@ -206,3 +206,13 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 - **Status:**
   - R0, R6 and R8 must be re-confirmed against the new deployed SHA. See the UI QA report addendum.
   - The verdict stays **NOT_SUBMISSION_CLEAN**: the video, organizer email, eligibility confirmation, screen-reader pass and form submission are human steps.
+
+
+## Update 2026-10-13, late night (Claude Code): consultations and final functional pass
+- **Consultations:**
+  - ChatGPT ("Claude Code Master Prompt" chat) and Codex (the thread that wrote the master prompt) both recommend keeping variant B and adding no further effects.
+  - ChatGPT found 6 bugs, fixed in 13a2047.
+  - Codex's credibility fixes were applied in 89fe6f4.
+- **Live endpoint audit (89fe6f4):** robots, sitemap, 404.html, preview.png, deck PDF, corrections, corrected report, Bob fix commits and the commit list all return 200. `/no-such-page` returns 404. All 45 links resolve, the `#run=` deep link works, and there are 0 console errors and 0 failed requests.
+- **Clean-install re-run (C3):** fresh Django and Flask clones with the committed kit. The first attempt found a parser gap: on a fresh Django checkout one test header was glued to migration output, so the run was correctly INCONCLUSIVE. Fixed in kit 187c8fe (+1 regression test, 24 total). The re-run then passed: Django FULL 29 inherited / 0 regressions, Flask FULL 1 inherited, and an injected unknown status was INCONCLUSIVE in both.
+- **Verdict:** remains **NOT_SUBMISSION_CLEAN**. Open items: the demo video, the manual screen-reader, keyboard and mobile passes, the organizer email, eligibility confirmation and the human form submission.

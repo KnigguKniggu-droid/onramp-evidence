@@ -20,6 +20,13 @@ The participant directed that the named resources be **used**, not only studied.
 
 The rows below this revision are the earlier decision record, kept for history.
 
+## Provenance precision (2026-10-13, after the Codex review)
+- **"Saved-reel review" on a row** means the private handoff package attributes that resource to a saved reel. Claude did not re-watch the reels.
+- **Paper, UI UX Pro Max, 21st.dev/MCP, Motion, GSAP, R3F, Framer (hosting) and Webflow** entered through the broader ChatGPT/Codex research context, not through a specific reel. Their rows say "Wider project context".
+- **Magic UI, Threlte, Vectary and Jitter:** the package links them to one saved reel. Treat that link as catalogued, not independently verified.
+- **Three.js:** appears both in the unnamed 3D-roundup reel (repository identities not recovered) and in the wider context.
+- **Adoption:** a resource being ADOPTED or used says nothing about where it came from. Adoption decisions are based only on the official sources checked on 2026-10-13.
+
 ## Provenance categories
 - **Saved-reel review:** the participant's private review of saved Instagram reels. Reel identifiers and transcripts are kept in the private workspace, not in this public repo.
 - **Package check, 2026-10-11:** checks recorded in the private handoff package, made by the ChatGPT assistant. They were not repeated by Claude unless the row says so.

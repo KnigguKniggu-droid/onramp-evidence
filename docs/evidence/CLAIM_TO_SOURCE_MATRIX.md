@@ -31,9 +31,12 @@ This matrix covers public claims on the Evidence Explorer, in the kit README (`.
 | 15 | Browser and Python classifiers agree | Site `parity` workflow succeeded at c42070f (run 38461456091) | GitHub API | VERIFIED |
 | 16 | Healthchecks is a "real 10k-star app" | GitHub API: 10,414 stars, BSD-3-Clause | 2026-10-13 | VERIFIED |
 | 17 | Bob's 180-Bobcoin allowance ran out | Bob IDE log `BudgetExceededError … allowance of 180 Bobcoins`, 2026-10-11 21:37:52 local | Local log; disclosed in `CLAUDE_CORRECTIONS_2026-10-11.md` | VERIFIED_PRIVATE_LOG |
-| 18 | The quick start was tested on untouched Django and Flask clones | `tooling/state/onramp/R2_fresh_install_2026-10-12.txt` (private workspace) | Run 2026-10-12: profile created, FULL, 0 regressions | VERIFIED_PRIVATE_LOG |
-| 19 | The normalizer/bootstrap module is Claude-authored (23 tests) | Kit commits dfb2e58, 93c611d ("Written by Claude Code") | Commit messages and README | VERIFIED |
+| 18 | The quick start was tested on untouched Django and Flask clones | `tooling/state/onramp/R2_fresh_install_rerun_2026-10-13.txt` (private workspace) | **Re-run 2026-10-13 against committed kit 187c8fe**, fresh clones of upstream Healthchecks 0968fa2 and TaskFlow a380909. Django: valid, 1,761 parsed, FULL, 29 inherited, 0 regressions. Flask: valid, 4 tests, 1 inherited. An injected unknown status was inconclusive in both. The first attempt exposed a parser gap (1 of 1,761 tests missed: a migration line ran into a test header), fixed in 187c8fe. | VERIFIED_PRIVATE_LOG |
+| 19 | The normalizer/bootstrap module is Claude-authored (24 tests) | Kit commits dfb2e58, 93c611d ("Written by Claude Code") | Commit messages and README | VERIFIED |
 | 20 | The hook is runner feedback only | `.bob/hooks/run-app-tests.mjs` always calls `process.exit(0)` and never reads the baseline | Source read 2026-10-13; README updated in 30bb017 | VERIFIED |
 | 21 | The demo is a browser classifier, not a live Bob session | Site copy under "How this demo works" | Page text | VERIFIED |
 | 22 | Demo video ≤ 3 min | — | — | NOT_DONE (human) |
 | 23 | Live demo link is acceptable to the organizers | — | Email not yet sent or answered | NOT_DONE (human) |
+
+
+**Update 2026-10-13 (late):** kit SHA `187c8fe`, site SHA after this commit. Rows 15, 18 and 19 were re-verified, and row 5 (targeted run amber) was re-checked live.
