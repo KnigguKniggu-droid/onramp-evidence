@@ -216,3 +216,18 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 - **Live endpoint audit (89fe6f4):** robots, sitemap, 404.html, preview.png, deck PDF, corrections, corrected report, Bob fix commits and the commit list all return 200. `/no-such-page` returns 404. All 45 links resolve, the `#run=` deep link works, and there are 0 console errors and 0 failed requests.
 - **Clean-install re-run (C3):** fresh Django and Flask clones with the committed kit. The first attempt found a parser gap: on a fresh Django checkout one test header was glued to migration output, so the run was correctly INCONCLUSIVE. Fixed in kit 187c8fe (+1 regression test, 24 total). The re-run then passed: Django FULL 29 inherited / 0 regressions, Flask FULL 1 inherited, and an injected unknown status was INCONCLUSIVE in both.
 - **Verdict:** remains **NOT_SUBMISSION_CLEAN**. Open items: the demo video, the manual screen-reader, keyboard and mobile passes, the organizer email, eligibility confirmation and the human form submission.
+
+
+## Update 2026-10-15 (Claude Code): Codex-period review, audit fixes, rework
+
+- **Codex period (2026-10-14 03:3x–04:4x UTC, user-authorized, while Claude was usage-limited):** Codex pushed d057f4f (Preview C promoted, a11y/copy), 00bbbd2 (evidence-console hero), f894f7b (Halo section), a Halo template-copy pass, 72363d3 (evidence studio, 360° map controls), a213f77 (cinematic hero with hotlinked third-party video, Inter/Instrument Serif, liquid nav pills) and a6235be (AGENTS.md, `docs/design/GITHUB_FRONTEND_SKILLS_AUDIT.md`).
+- **Credibility incident:** the template-copy pass contained a fabricated "4.97/5 from over 300 reviews" rating and template brand names. It was live for about 16 minutes before Codex removed it. With the participant's approval the commit was folded into its successor and `main` was force-pushed (with lease) on 2026-10-15; commit dates were kept and the final tree was byte-identical. No reachable commit contains the text. The orphaned object stays fetchable by SHA until GitHub garbage-collects it.
+- **Audit:** Claude plus one Haiku 5.5 and one Sonnet 5.5 read-only subagent audited the live site (a6235be). Findings: duplicated/templated sections, unlicensed hotlinked video (13.9 MB autoplay), unused uncredited webfont, contradictory toggle labels, aria-live firing on pointermove, hidden verdict state colours, sticky steps against AGENTS.md, horizontal overflow at 320/375/1024 px (pre-existing at a6235be). All 4 verdicts and counts were correct.
+- **Fixes shipped:**
+  - 887e886 (rewritten SHA): a11y/colour/overflow fixes
+  - 3e5d76f: video removed
+  - 4384625: rework on a noindex preview
+  - fdb77dc: preview promoted after participant approval. Removed the hero eyebrow, avatar rings, serif accent, duplicate stat rail, caps labels, liquid pills, extra fonts, the Halo and studio sections and sticky steps. Added a "Check it yourself" list of four evidence links (all HTTP 200).
+  - Follow-up commit: deletes the preview page and the unused Halo script.
+- **Verification (fdb77dc):** `python -m unittest discover -s py` 24 OK; `py/parity_check.py` all cases ok; parity CI and Pages deploy success; QA at 320/375/768/1024/1440: no horizontal overflow, 4 verdicts (`docs/qa/screenshots/promoted-*`); live: robots index,follow, suite canvas present, 0 video elements.
+- **Verdict:** remains **NOT_SUBMISSION_CLEAN**. The human steps are the demo video, screen-reader pass, organizer email, eligibility confirmation and form submission.
