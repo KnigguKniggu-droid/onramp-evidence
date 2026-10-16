@@ -22,7 +22,6 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232563eb'/><path d='M8 22 L15 10 L18 15 L21 11 L25 22 Z' fill='white'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
  --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent);--info-bg:color-mix(in srgb,var(--info) 14%,transparent)}
@@ -248,7 +247,6 @@ code{font-size:13px}.kbd{font-size:12px}
 .st-n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--panel2);color:var(--accent);font:600 13px "IBM Plex Mono",monospace}
 .steps .term{margin:0;font-size:13px;min-height:7.5em}
 .fx .steps.seq::after,.fx .steps.seq::before{content:none}
-@media (min-width:900px) and (prefers-reduced-motion:no-preference){.steps li{position:sticky;top:calc(72px + var(--i,0) * 14px)}}
 .steps li:nth-child(1){--i:0}.steps li:nth-child(2){--i:1}.steps li:nth-child(3){--i:2}.steps li:nth-child(4){--i:3}
 .steps li.active{border-color:color-mix(in srgb,var(--accent) 55%,var(--line))}
 @media (max-width:900px){.steps li{grid-template-columns:minmax(0,1fr)}.steps li:nth-child(even) .st-text{order:0}}
@@ -263,25 +261,16 @@ nav b{display:flex;align-items:center;gap:9px;letter-spacing:.01em}.brand-mark{d
 .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.2;background-image:linear-gradient(color-mix(in srgb,var(--text) 8%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--text) 8%,transparent) 1px,transparent 1px);background-size:52px 52px;-webkit-mask-image:linear-gradient(135deg,#000,transparent 72%);mask-image:linear-gradient(135deg,#000,transparent 72%)}
 .hero .wrap{max-width:1180px;grid-template-columns:minmax(0,1.06fr) minmax(400px,.94fr);gap:72px;position:relative}
 .liquid{opacity:.5}.liquid span{filter:blur(18px);mix-blend-mode:screen}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 18px;padding:6px 10px;border:1px solid color-mix(in srgb,var(--cyan) 35%,var(--line));border-radius:99px;color:var(--cyan);background:color-mix(in srgb,var(--cyan) 7%,transparent);font:600 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em}
-.eyebrow-dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 4px color-mix(in srgb,var(--cyan) 15%,transparent),0 0 14px var(--cyan)}.eyebrow-tag{color:var(--muted);letter-spacing:.06em}
 h1{font-size:clamp(44px,7vw,78px);letter-spacing:-.065em;line-height:.98;max-width:760px;margin:0 0 22px;color:var(--hero-ink)}
 .lede{max-width:58ch;color:var(--hero-muted);font-size:clamp(17px,2vw,20px);line-height:1.55}
 .cta{margin-top:26px}.btn{border-radius:14px;padding:13px 19px}.btn.primary{background:linear-gradient(135deg,var(--btn),color-mix(in srgb,var(--violet) 70%,var(--btn)));box-shadow:0 12px 30px -14px var(--btn)}
-.context{max-width:60ch}.hero-signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:34px;border-top:1px solid color-mix(in srgb,var(--text) 14%,transparent);border-bottom:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:color-mix(in srgb,var(--text) 12%,transparent)}.hero-signal{padding:14px 14px 13px 0;background:transparent}.hero-signal b{display:block;font:600 24px/1.1 "IBM Plex Mono",ui-monospace,monospace;color:var(--hero-ink)}.hero-signal span{display:block;margin-top:5px;color:var(--hero-muted);font-size:12px}
+.context{max-width:60ch}
 .rules{border-radius:22px;padding:24px;background:linear-gradient(150deg,color-mix(in srgb,var(--panel) 95%,var(--accent)),color-mix(in srgb,var(--panel) 90%,var(--info)));border-color:color-mix(in srgb,var(--accent) 30%,var(--line));box-shadow:0 28px 70px -34px color-mix(in srgb,var(--accent) 80%,transparent),inset 0 1px 0 color-mix(in srgb,#fff 10%,transparent)}.rules::before{content:"CLASSIFICATION ENGINE / 01";display:block;margin-bottom:20px;color:var(--cyan);font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em}.rules h2{font-size:20px;letter-spacing:-.02em}.rules p{max-width:42ch;line-height:1.5}.rgrid{gap:8px}.rgrid .h{font-size:11px;text-transform:uppercase;letter-spacing:.06em}.rgrid .rh{font-size:12px}.cell{min-height:66px;display:grid;place-content:center;border:1px solid color-mix(in srgb,var(--text) 6%,transparent);border-radius:14px}.c-inh{background:linear-gradient(145deg,color-mix(in srgb,var(--warn) 24%,transparent),var(--warn-bg))}.c-fix{background:linear-gradient(145deg,color-mix(in srgb,var(--ok) 25%,transparent),var(--ok-bg))}.c-reg{background:linear-gradient(145deg,color-mix(in srgb,var(--bad) 25%,transparent),var(--bad-bg))}.c-ok{background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 18%,transparent),var(--panel2))}.c-nr{background:linear-gradient(145deg,color-mix(in srgb,var(--info) 25%,transparent),var(--info-bg))}
-@media (max-width:900px){.hero{min-height:auto;padding:68px 0 56px}.hero .wrap{grid-template-columns:minmax(0,1fr);gap:42px}.rules{max-width:680px}.hero-signals{max-width:680px}}
-@media (max-width:640px){.hero{padding-top:48px}.eyebrow{font-size:10px}.eyebrow-tag{display:none}h1{font-size:clamp(42px,13vw,62px)}.hero-signals{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-signal b{font-size:20px}.hero-signal{padding-right:8px}.rules{border-radius:16px;padding:18px}}
+@media (max-width:900px){.hero{min-height:auto;padding:68px 0 56px}.hero .wrap{grid-template-columns:minmax(0,1fr);gap:42px}.rules{max-width:680px}}
+@media (max-width:640px){.hero{padding-top:48px}h1{font-size:clamp(42px,13vw,62px)}.rules{border-radius:16px;padding:18px}}
 
-/* ===== How it works / Halo adaptation ===== */
-.halo-how{--halo-paper:#f3f0e7;--halo-ink:#1a1a1a;--halo-sub:#5c5c5c;--halo-forest:#034f46;--halo-line:#5c5c5c;--halo-lime:#e5f0c6;background:var(--halo-paper);color:var(--halo-ink);border-top:0;padding:96px 0 104px}
-.halo-how .wrap{max-width:1440px;padding-left:40px;padding-right:40px;display:flex;flex-direction:column;gap:32px}
-.halo-layout{display:flex;align-items:flex-start;gap:64px}.halo-label{width:22%;flex:0 0 22%;font-size:18px;line-height:24px;font-weight:400}.halo-content{width:75%;flex:1;min-width:0}.halo-lead{max-width:900px;margin:0 0 80px;opacity:0;transform:translateY(12px);transition:opacity .6s .1s cubic-bezier(.215,.61,.355,1),transform .6s .1s cubic-bezier(.215,.61,.355,1)}.halo-lead p{color:var(--halo-ink);font-size:30px;line-height:36px;font-weight:400;max-width:none;margin:0}.halo-label{opacity:0;transform:translateY(12px);transition:opacity .6s .1s cubic-bezier(.215,.61,.355,1),transform .6s .1s cubic-bezier(.215,.61,.355,1)}
-.halo-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:90px;margin:0 0 56px}.halo-step{border-left:1px solid var(--halo-line);padding:0 0 0 25px;height:280px;opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.215,.61,.355,1),transform .6s cubic-bezier(.215,.61,.355,1)}.halo-label.is-visible,.halo-lead.is-visible,.halo-step.is-visible,.halo-cta-row.is-visible{opacity:1;transform:none}.halo-step:nth-child(1){transition-delay:.2s}.halo-step:nth-child(2){transition-delay:.3s}.halo-step:nth-child(3){transition-delay:.4s}.halo-number{display:flex;width:46px;height:46px;align-items:center;justify-content:center;border-radius:50%;background:var(--halo-forest);color:#fff;font:400 24px/32px "IBM Plex Sans",system-ui,sans-serif}.halo-step h3{color:var(--halo-ink);font-size:20px;line-height:28px;font-weight:400;margin:32px 0 16px;white-space:nowrap}.halo-step p{color:var(--halo-sub);font-size:16px;line-height:24px;font-weight:400;max-width:280px;margin:0}
-.halo-cta-row{display:flex;flex-direction:column;align-items:flex-start;gap:16px;opacity:0;transform:translateY(12px);transition:opacity .6s .5s cubic-bezier(.215,.61,.355,1),transform .6s .5s cubic-bezier(.215,.61,.355,1)}.halo-cta{display:inline-flex;align-items:center;gap:10px;border-radius:999px;background:var(--halo-forest);padding:4px 20px 4px 4px;color:#fdfdfd;font-size:16px;line-height:24px;font-weight:400;text-decoration:none;transition:opacity .18s ease}.halo-cta:hover{opacity:.9;text-decoration:none}.halo-cta svg{width:44px;height:44px;flex:0 0 44px}.halo-rating{display:flex;align-items:center;gap:8px;color:#000;font-size:16px;line-height:24px;font-weight:400}.halo-rating svg{width:32px;height:32px;flex:0 0 32px}
-@media (max-width:900px){.halo-how{padding:72px 0}.halo-how .wrap{padding-left:40px;padding-right:40px}.halo-layout{flex-direction:column;gap:32px}.halo-label,.halo-content{width:100%}.halo-lead{margin-bottom:56px}.halo-steps{gap:0;grid-template-columns:minmax(0,1fr)}.halo-step{height:auto;padding:0 0 48px 25px}.halo-step h3{white-space:normal}}
-@media (max-width:640px){.halo-how .wrap{padding-left:40px;padding-right:40px}.halo-lead p{font-size:26px;line-height:32px}}
-@media (prefers-reduced-motion:reduce){.halo-label,.halo-lead,.halo-step,.halo-cta-row{opacity:1;transform:none;transition:none}}
+
+
 /* ===== forensic editorial redesign: evidence is the visual system ===== */
 :root{
   --bg:#0a0d0c;--band:#111815;--panel:#111917;--panel2:#18231f;--line:#2a3932;
@@ -319,12 +308,6 @@ nav a:hover{color:var(--accent)}
 .hero .wrap>div:first-child{position:relative;z-index:1}
 .liquid{opacity:.1;filter:saturate(.4)}
 .liquid span{filter:blur(34px);mix-blend-mode:screen}
-.eyebrow{
-  margin:0 0 28px;padding:0;border:0;border-radius:0;color:var(--accent);background:none;
-  font:600 11px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.15em
-}
-.eyebrow-dot{width:7px;height:7px;background:var(--accent);box-shadow:none}
-.eyebrow-tag{color:#73837a}
 h1{
   max-width:9ch;margin:0 0 28px;color:var(--text);font-size:clamp(58px,8.8vw,124px);
   line-height:.86;letter-spacing:-.085em;font-weight:600;text-wrap:balance
@@ -338,14 +321,6 @@ h1{
 .textlink{color:#91a098;font-size:13px}
 .context{max-width:52ch;margin-top:26px;color:#718078;font-size:13px}
 .context a{color:var(--cyan)}
-.hero-signals{
-  max-width:680px;margin-top:52px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  background:none;gap:0
-}
-.hero-signal{padding:17px 20px 15px 0;background:none}
-.hero-signal+ .hero-signal{border-left:1px solid var(--line);padding-left:20px}
-.hero-signal b{color:var(--text);font:500 clamp(25px,3vw,42px)/1 "IBM Plex Mono",ui-monospace,monospace}
-.hero-signal span{margin-top:8px;color:#829188;font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
 .rules{
   position:relative;border:1px solid #37483e;border-radius:28px;padding:28px;background:#131b17;
   box-shadow:0 28px 80px -42px rgba(0,0,0,.9)
@@ -407,37 +382,15 @@ table{font-size:14px}th,td{padding:14px 12px;border-bottom:1px solid var(--line)
 footer{border-top:1px solid var(--line);background:#080b0a;padding:34px 0;color:#87958d}footer .wrap{gap:18px}footer a{color:var(--accent)}
 .motionbtn{right:22px;bottom:22px;border:1px solid #3a4c42;background:#121a16;color:#b8c6bd;box-shadow:0 10px 28px rgba(0,0,0,.35)}
 .motionbtn[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
-/* Editorial studio index: portfolio grammar used for evidence, not decoration. */
-.halo-proof-dot{width:10px;height:10px;border-radius:50%;background:var(--burnt);box-shadow:0 0 0 4px rgba(200,103,53,.16)}
-.lumora-studio{background:var(--paper);color:var(--ink);padding:0 0 120px;overflow:hidden}
-.lumora-shell{max-width:var(--max);margin:0 auto;padding:0 32px}
-.lumora-head{display:flex;align-items:end;justify-content:space-between;gap:48px;padding:118px 0 56px}
-.lumora-eyebrow{display:flex;align-items:center;gap:9px;margin:0 0 18px;color:var(--burnt);font:600 11px "IBM Plex Mono",ui-monospace;letter-spacing:.14em;text-transform:uppercase}
-.lumora-eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--burnt)}
-.lumora-head h2{max-width:13ch;color:var(--ink);font-size:clamp(42px,6vw,84px);line-height:.88;letter-spacing:-.075em;font-weight:500}
-.lumora-intro{max-width:330px;margin:0;color:#5c665f;font-size:16px;line-height:1.5}
-.lumora-band{display:grid;grid-template-columns:1fr 1.5fr auto 1fr;align-items:center;gap:18px;margin-bottom:24px;padding:24px 28px;border-radius:24px;background:#e5e0d5;color:var(--ink);font-size:clamp(24px,4vw,54px);line-height:1;letter-spacing:-.06em;font-weight:500}
-.lumora-band span:nth-child(3){color:var(--burnt);text-align:center}.lumora-band span:last-child{text-align:right}
-.lumora-work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
-.lumora-work-card{position:relative;display:flex;min-height:23rem;flex-direction:column;justify-content:space-between;overflow:hidden;border-radius:28px;background:#0a0d0c;color:#fff;padding:26px;text-decoration:none;box-shadow:0 14px 0 rgba(16,20,18,.08);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease}
-.lumora-work-card:hover{transform:translateY(-8px);box-shadow:0 22px 36px -24px rgba(16,20,18,.55);text-decoration:none}
-.lumora-work-card:focus-visible{outline:3px solid var(--burnt);outline-offset:4px}
-.lumora-meta{display:flex;justify-content:space-between;color:#8a9790;font:500 11px "IBM Plex Mono",ui-monospace;letter-spacing:.1em;text-transform:uppercase}
-.lumora-arrow{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#1a2821;color:#fff;transition:transform .3s ease,background .2s ease}
-.lumora-work-card:hover .lumora-arrow{transform:rotate(45deg);background:var(--burnt)}
-.lumora-mark{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,.07);font-size:110px;pointer-events:none}
-.lumora-card-copy{position:relative;z-index:1;max-width:33rem}.lumora-card-copy h3{margin:0;color:#fff;font-size:clamp(28px,3.7vw,48px);line-height:.95;letter-spacing:-.06em;font-weight:500}.lumora-card-copy p{max-width:29rem;margin:14px 0 20px;color:#a6b2aa;font-size:14px;line-height:1.55}
-.lumora-tags{display:flex;flex-wrap:wrap;gap:7px}.lumora-tags span{border:1px solid #405247;border-radius:999px;padding:7px 11px;color:#dbe5dd;font-size:11px}
-@media (max-width:1000px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.hero{min-height:auto}.rules{max-width:700px}section .sh{grid-template-columns:minmax(0,1fr)}.section .sh h2,section .sh h2{max-width:18ch}.lumora-head{align-items:start;flex-direction:column}}
-@media (max-width:900px){.wrap{padding-inline:24px}.demo-grid{grid-template-columns:minmax(0,1fr)}.lumora-work-grid{grid-template-columns:minmax(0,1fr)}.lumora-work-card{min-height:20rem}}
-@media (max-width:640px){.wrap{padding-inline:18px}nav .wrap{gap:16px}.hero{padding-top:70px}.hero::after{display:none}h1{font-size:clamp(54px,15vw,84px)}.hero-signals{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-signal+ .hero-signal{padding-left:12px}.hero-signal{padding-right:10px}.hero-signal b{font-size:22px}.rules{padding:20px;border-radius:22px}.rgrid .rh{font-size:10px}.scope{grid-template-columns:minmax(0,1fr)}section .sh{gap:16px;margin-bottom:34px}.two{grid-template-columns:minmax(0,1fr)}.scen{grid-template-columns:1fr 1fr}.suite{padding:16px;border-radius:22px}.suite canvas{max-height:330px}.lumora-shell{padding-inline:18px}.lumora-head{padding-top:80px}.lumora-band{grid-template-columns:1fr 1fr;gap:20px;padding:22px;border-radius:20px}.lumora-band span:nth-child(3),.lumora-band span:last-child{text-align:left}.lumora-work-card{border-radius:22px;padding:22px}}
-@media (prefers-reduced-motion:reduce){.lumora-work-card,.lumora-arrow,.run{transition:none}.lumora-work-card:hover,.run:hover{transform:none}}
+@media (max-width:1000px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.hero{min-height:auto}.rules{max-width:700px}section .sh{grid-template-columns:minmax(0,1fr)}.section .sh h2,section .sh h2{max-width:18ch}}
+@media (max-width:900px){.wrap{padding-inline:24px}.demo-grid{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.wrap{padding-inline:18px}nav .wrap{gap:16px}.hero{padding-top:70px}.hero::after{display:none}h1{font-size:clamp(54px,15vw,84px)}.rules{padding:20px;border-radius:22px}.rgrid .rh{font-size:10px}.scope{grid-template-columns:minmax(0,1fr)}section .sh{gap:16px;margin-bottom:34px}.two{grid-template-columns:minmax(0,1fr)}.scen{grid-template-columns:1fr 1fr}.suite{padding:16px;border-radius:22px}.suite canvas{max-height:330px}}
+@media (prefers-reduced-motion:reduce){.run{transition:none}.run:hover{transform:none}}
 /* GitHub frontend-skill hardening: explicit state, targets, numbers, and anchors. */
 html{color-scheme:dark;scroll-padding-top:92px}
 section[id],#demo,#suite{scroll-margin-top:92px}
 button,a,summary{touch-action:manipulation;-webkit-tap-highlight-color:rgba(217,240,91,.16)}
 .suite-controls button{min-width:44px;min-height:44px}
-.hero-signal b,.stat b,.n,.cell{font-variant-numeric:tabular-nums}
 ::selection{background:#d9f05b;color:#101412}
 
 /* ===== cinematic evidence hero: Vesper reference language ===== */
@@ -450,7 +403,7 @@ button,a,summary{touch-action:manipulation;-webkit-tap-highlight-color:rgba(217,
   --vesper-glass:rgba(9,10,10,.58);
 }
 html{background:var(--vesper-black);scroll-behavior:smooth}
-body{background:var(--vesper-black);color:var(--vesper-white);font-family:"Inter","IBM Plex Sans",system-ui,sans-serif}
+body{background:var(--vesper-black);color:var(--vesper-white);font-family:"IBM Plex Sans",system-ui,sans-serif}
 nav{
   background:rgba(0,0,0,.72);
   border-bottom:1px solid rgba(255,255,255,.16);
@@ -466,7 +419,7 @@ nav a{
   position:relative;isolation:isolate;overflow:hidden;
   min-height:38px;padding:8px 14px;border:1px solid rgba(198,198,198,.48);border-radius:8px;
   background:linear-gradient(105deg,#050505 0%,#242625 48%,#454746 100%);
-  color:#f1f2ef;font:500 11px/1 "Inter",system-ui,sans-serif;letter-spacing:.025em;text-transform:none;
+  color:#f1f2ef;font:500 11px/1 system-ui,sans-serif;letter-spacing:.025em;text-transform:none;
   transition:background .35s ease,border-color .35s ease,box-shadow .35s ease,color .35s ease,transform .35s ease;
 }
 nav a::before{
@@ -498,42 +451,21 @@ nav a:hover::before,nav a:focus-visible::before{transform:translateX(125%)}
 .hero::after{right:32px;bottom:28px;color:rgba(255,255,255,.48);content:"01 / BASELINE → VERDICT"}
 .hero .wrap{max-width:1420px;grid-template-columns:minmax(0,1.1fr) minmax(360px,.9fr);gap:clamp(40px,8vw,132px);align-items:end}
 .liquid{opacity:.08}
-.eyebrow{
-  display:inline-flex;align-items:center;gap:8px;margin:0 0 24px;padding:8px 12px;
-  border:1px solid rgba(255,255,255,.28);border-radius:7px;
-  background:linear-gradient(105deg,rgba(255,255,255,.2),rgba(28,28,28,.75) 53%,rgba(0,0,0,.8));
-  color:#f5f5f1;font:500 10px/1.1 "Inter",system-ui,sans-serif;letter-spacing:.13em
-}
-.eyebrow-dot{width:7px;height:7px;flex:0 0 auto;background:#fff;border-radius:50%;box-shadow:0 0 0 4px rgba(255,255,255,.1),0 0 14px rgba(255,255,255,.48)}
-.eyebrow-tag{color:#b4b8b6;letter-spacing:.08em}
-.hero-trust{display:flex;align-items:center;gap:0;margin:0 0 24px;color:#fff}
-.hero-trust-ring{
-  display:grid;place-items:center;width:38px;height:38px;margin-left:-9px;border:1px solid rgba(255,255,255,.48);
-  border-radius:50%;background:#292b2b;color:#111;font:600 9px/1 "IBM Plex Mono",monospace;
-  box-shadow:inset 0 0 0 5px #fff;transition:transform .35s ease
-}
-.hero-trust-ring:first-child{margin-left:0;z-index:3}
-.hero-trust-ring:nth-child(2){z-index:2}.hero-trust-ring:nth-child(3){z-index:1}
-.hero-trust-ring:hover{transform:translateY(-3px);z-index:5}
-.hero-trust-label{
-  min-height:38px;margin-left:-8px;padding:11px 14px 11px 20px;border:1px solid rgba(255,255,255,.35);
-  border-radius:999px;background:rgba(30,30,30,.78);color:#c9ccca;font-size:11px;letter-spacing:.01em
-}
 h1{
-  max-width:11ch;margin:0 0 24px;color:var(--vesper-white);font-family:"Inter","IBM Plex Sans",system-ui,sans-serif;
+  max-width:11ch;margin:0 0 24px;color:var(--vesper-white);font-family:"IBM Plex Sans",system-ui,sans-serif;
   font-size:clamp(58px,8.8vw,124px);font-weight:500;line-height:.88;letter-spacing:-.085em;text-wrap:balance
 }
 .hero-headline-line{display:block;overflow:hidden;padding:.06em .08em .12em;animation:heroMask 1.05s cubic-bezier(.16,1,.3,1) both}
 .hero-headline-line:nth-child(2){animation-delay:.16s}
 .hero-headline-line em{
-  color:#aeb0af;font-family:"Instrument Serif","Times New Roman",serif;font-size:1.08em;font-weight:400;letter-spacing:-.045em
+  color:#aeb0af;font-family:inherit;font-size:1.08em;font-weight:400;letter-spacing:-.045em
 }
 .lede{max-width:55ch;margin-bottom:24px;color:#d0d2cf;font-size:clamp(17px,1.7vw,21px);line-height:1.5}
 .cta{margin-top:25px;gap:10px}
 .btn{
   position:relative;isolation:isolate;overflow:hidden;min-height:46px;padding:12px 18px;border:1px solid rgba(198,198,198,.5);border-radius:7px;
   background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(0,0,0,.5) 52%,rgba(160,175,200,.08));
-  color:#fff;font:500 13px/1 "Inter",system-ui,sans-serif;letter-spacing:-.02em;
+  color:#fff;font:500 13px/1 system-ui,sans-serif;letter-spacing:-.02em;
   transition:background .35s ease,border-color .35s ease,box-shadow .35s ease,color .35s ease,transform .35s ease
 }
 .btn::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(115deg,transparent 20%,rgba(255,255,255,.44) 48%,transparent 76%);transform:translateX(-130%);transition:transform .65s ease}
@@ -543,14 +475,6 @@ h1{
 .btn:hover::after,.btn:focus-visible::after{transform:translateX(130%)}
 .context{max-width:62ch;color:#c0c5c1;font-size:12px}
 .context a{color:#fff;text-decoration:underline;text-underline-offset:3px}
-.hero-signals{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:32px;max-width:700px;
-  border-top:1px solid rgba(255,255,255,.28);border-bottom:1px solid rgba(255,255,255,.2);background:none
-}
-.hero-signal{padding:15px 18px 14px 0;background:none}
-.hero-signal+.hero-signal{padding-left:18px;border-left:1px solid rgba(255,255,255,.2)}
-.hero-signal b{font:500 clamp(24px,3vw,42px)/1 "Inter",system-ui,sans-serif;color:#fff;letter-spacing:-.06em}
-.hero-signal span{margin-top:7px;color:#b6bcb9;font:500 10px/1.2 "IBM Plex Mono",monospace;letter-spacing:.1em;text-transform:uppercase}
 .rules{
   position:relative;border-radius:10px;padding:23px;background:rgba(10,11,11,.7);border:1px solid rgba(255,255,255,.24);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 28px 70px -40px rgba(0,0,0,.9);backdrop-filter:blur(18px) saturate(.9)
@@ -559,7 +483,7 @@ h1{
 .rules h2{color:#fff;font-size:19px}.rules p{color:#bdc2be}
 .cell{border-radius:7px;min-height:64px}.rules .rgrid .h,.rules .rgrid .rh{color:#aeb5b0}
 @keyframes heroMask{from{opacity:0;transform:translateY(40%);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
-@media (min-width:1600px){nav .wrap{min-height:80px;padding-inline:48px}.hero{min-height:calc(100svh - 80px)}h1{font-size:clamp(70px,6vw,132px)}.hero .wrap{max-width:1540px}.hero-trust-ring{width:42px;height:42px}.hero-trust-label{min-height:42px;padding-block:13px}}
+@media (min-width:1600px){nav .wrap{min-height:80px;padding-inline:48px}.hero{min-height:calc(100svh - 80px)}h1{font-size:clamp(70px,6vw,132px)}.hero .wrap{max-width:1540px}}
 @media (max-width:900px){
   nav .wrap{min-height:62px;padding-inline:18px}
   nav .wrap>a{padding-inline:11px}
@@ -575,31 +499,53 @@ h1{
   .hero{padding-top:54px}
   .hero .wrap{padding-inline:18px}
   .hero-video-scrim{background:linear-gradient(180deg,rgba(0,0,0,.7),rgba(0,0,0,.25) 35%,rgba(0,0,0,.92))}
-  .eyebrow{font-size:9px;letter-spacing:.09em}
-  .eyebrow-tag{display:none}
-  .hero-trust-ring{width:34px;height:34px;font-size:8px;box-shadow:inset 0 0 0 4px #fff}
-  .hero-trust-label{min-height:34px;padding:9px 10px 9px 15px;font-size:10px}
   h1{font-size:clamp(52px,15vw,84px);letter-spacing:-.09em}
   .lede{font-size:16px}
-  .hero-signals{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .hero-signal{padding-right:8px}.hero-signal+.hero-signal{padding-left:10px}
-  .hero-signal b{font-size:22px}.hero-signal span{font-size:9px;letter-spacing:.06em}
 }
 @media (prefers-reduced-motion:reduce){
   .hero-headline-line{animation:none;opacity:1;transform:none;filter:none}
-    .hero-trust-ring,.btn,nav a{transition:none}
 }
 
 html,body{overflow-x:clip}
+
+/* ===== preview rework: one type family, plain controls, no template chrome ===== */
+body,h1,.btn,nav a{font-family:"IBM Plex Sans",system-ui,sans-serif}
+nav a{min-height:38px;padding:8px 10px;border:0;border-radius:6px;background:none;color:#b9c2bc;font:500 13px/1 "IBM Plex Sans",system-ui,sans-serif;letter-spacing:0;transition:color .15s ease,background-color .15s ease}
+nav a::before{content:none}
+nav a:hover,nav a:focus-visible{background:rgba(255,255,255,.06);border-color:transparent;box-shadow:none;transform:none;color:#fff}
+.hero{min-height:auto;padding:clamp(64px,8vw,112px) 0 clamp(56px,6vw,88px)}
+.hero::after,.rules::before{content:none}
+.hero-kicker{margin:0 0 22px;color:#9fb0a6;font:500 13px/1.3 "IBM Plex Mono",ui-monospace,monospace;text-transform:none;letter-spacing:0}
+nav .wrap>a{flex:0 0 auto;white-space:nowrap}
+@media (max-width:640px){nav .wrap{overflow-x:auto;scrollbar-width:none}nav .wrap>a{font-size:13px;padding-inline:8px}}
+h1{font-weight:600;letter-spacing:-.06em;max-width:10ch}
+.hl{color:var(--accent);text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.1em}
+.btn{border-radius:8px;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.btn::after{content:none}
+.btn:hover,.btn:focus-visible{transform:none;box-shadow:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#111810;box-shadow:none}
+.btn.primary:hover,.btn.primary:focus-visible{background:#ecff82;color:#111810;box-shadow:none}
+.rules{border-radius:12px;backdrop-filter:none;background:#0e1311}
+.cell{border-radius:8px}
+#blind .steps li{position:static}
+#verify{background:#0a0d0c}
+.verify h2{margin:0 0 12px;font-size:clamp(34px,5vw,64px);line-height:.95;letter-spacing:-.05em;font-weight:600}
+.verify .take{margin:0 0 36px;color:#93a199;max-width:52ch}
+.vlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;counter-reset:v}
+.vlist li{counter-increment:v;background:#0e1311}
+.vlist a{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:16px;padding:22px;color:var(--text);text-decoration:none;min-height:100%;transition:background-color .15s ease}
+.vlist a::before{content:counter(v,decimal-leading-zero);grid-row:span 2;color:var(--accent);font:500 13px/1.6 "IBM Plex Mono",ui-monospace,monospace}
+.vlist a:hover,.vlist a:focus-visible{background:#151d19}
+.vlist b{font-weight:600}.vlist span{color:#93a199;font-size:14px;margin-top:4px}
+@media (max-width:700px){.vlist{grid-template-columns:minmax(0,1fr)}}
 </style></head><body>
 <a class="skip" href="#demo">Skip to the classifier demo</a>
-<nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b><span class="brand-mark" aria-hidden="true"></span>OnRamp <span class="nav-kicker">/ Evidence Explorer</span></b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="#studio">Studio</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
+<nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b><span class="brand-mark" aria-hidden="true"></span>OnRamp <span class="nav-kicker">/ Evidence Explorer</span></b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="#verify">Verify</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
 
 <header class="hero"><div class="hero-video-scrim" aria-hidden="true"></div><div class="liquid" aria-hidden="true"><span></span><span></span><span></span></div><div class="wrap">
 <div>
-<p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span>OPERATIONAL EVIDENCE INFRASTRUCTURE</span><span class="eyebrow-tag">IBM BOB KIT</span></p>
-<div class="hero-trust" aria-label="Evidence contexts"><span class="hero-trust-ring">WIN</span><span class="hero-trust-ring">CI</span><span class="hero-trust-ring">FLASK</span><span class="hero-trust-label">One workflow · three proof contexts</span></div>
-<h1><span class="hero-headline-line">Know what's broken <em>before</em></span><span class="hero-headline-line">you fix it.</span></h1>
+<p class="hero-kicker">IBM Bob kit · Theme 1: Explore, Fix, and Build</p>
+<h1><span class="hero-headline-line">Know what's broken <span class="hl">before</span></span><span class="hero-headline-line">you fix it.</span></h1>
 <p class="lede">OnRamp is an IBM Bob kit for joining an unfamiliar codebase. It records which tests already fail, reproduces a bug with a failing test first, and verifies the fix without ever mistaking an old failure for a new one.</p>
 <div class="cta">
 <a class="btn primary" href="#demo"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Run the classifier</a>
@@ -608,7 +554,6 @@ html,body{overflow-x:clip}
 <a class="textlink" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Pitch deck (PDF)</a>
 </div>
 <p class="context">Built for AngelHack × IBM, “Building with IBM Bob”, Theme 1: explore an unfamiliar app, fix a real bug, add a feature. What did not work is listed in <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CLAUDE_CORRECTIONS_2026-10-11.md">corrections and limitations</a>.</p>
-<div class="hero-signals" aria-label="Evidence summary"><div class="hero-signal"><b>1,761</b><span>baseline tests</span></div><div class="hero-signal"><b>0</b><span>regressions</span></div><div class="hero-signal"><b>4</b><span>auditable steps</span></div></div>
 </div>
 <aside class="rules" aria-labelledby="rules-h">
 <h2 id="rules-h">How OnRamp decides</h2>
@@ -725,22 +670,16 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 <details><summary>All 23 Bob commits (UTC)</summary><ol class="timeline" style="margin-top:8px"><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/8d595cc6"><code>8d595cc6</code></a><time>17:30</time><span>ST-1: add explorer, reproducer, verifier custom modes</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/49414247"><code>49414247</code></a><time>17:31</time><span>ST-2: add four OnRamp skills</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/1a9e8dd0"><code>1a9e8dd0</code></a><time>17:32</time><span>ST-3: add /onramp and /evidence slash commands</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/b8f526eb"><code>b8f526eb</code></a><time>17:37</time><span>ST-4: add PostToolUse hook to run app tests on hc/ Python edits</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/e10db366"><code>e10db366</code></a><time>17:43</time><span>ST-4: enhance hook — profile-driven source roots, baseline classification</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/c3ae2e34"><code>c3ae2e34</code></a><time>20:51</time><span>ST-5: add gen_report.py, test suite, profile, and baseline</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/38c4ea29"><code>38c4ea29</code></a><time>20:54</time><span>ST-6: generate CODEBASE_MAP.md using map-codebase skill</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2f618b2a"><code>2f618b2a</code></a><time>20:57</time><span>fix: hook summary extraction picks up OK/FAILED before teardown line</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/a3acbc38"><code>a3acbc38</code></a><time>21:03</time><span>cleanup: consolidate generator tests, add PLAN.md, remove duplicate files</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2c7a8636"><code>2c7a8636</code></a><time>21:06</time><span>onramp: save bug report and seal benchmark for webhook-205</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/5f16187e"><code>5f16187e</code></a><time>21:10</time><span>fix: accept all 2xx HTTP status codes in HttpTransport</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/a0340d22"><code>a0340d22</code></a><time>21:12</time><span>onramp: add evidence artefacts and report for webhook-205</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/fa7aae56"><code>fa7aae56</code></a><time>21:15</time><span>onramp: attach upstream patch and add comparison to webhook-205 report</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/4facc4be"><code>4facc4be</code></a><time>21:18</time><span>onramp: support plain unittest output in gen_report; add tests</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/6be32359"><code>6be32359</code></a><time>21:19</time><span>onramp: make kit profile-driven for Flask / plain-unittest portability</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/786c0347"><code>786c0347</code></a><time>21:22</time><span>Pretty-print JSON request bodies in the ping details view</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/e4032c29"><code>e4032c29</code></a><time>21:24</time><span>fix: preserve non-ASCII chars in pretty-printed JSON ping body</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/81655522"><code>81655522</code></a><time>21:28</time><span>fix(onramp): capture error type for plain unittest -v FAIL headers; make map-codebase steps conditional on profile</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/c582176d"><code>c582176d</code></a><time>21:33</time><span>docs: add .github/README.md landing page for judges</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/cda917ad"><code>cda917ad</code></a><time>21:40</time><span>docs: correct README baseline counts, feature #1090 description, portability section, and quick-start instructions</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/703037e2"><code>703037e2</code></a><time>22:03</time><span>docs: add reclassified baseline and fix evidence.md baseline.txt refs</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/5c0b878a"><code>5c0b878a</code></a><time>22:21</time><span>test: add failing tests for correct classify_run behaviour</span></li><li><a href="https://github.com/KnigguKniggu-droid/onramp/commit/2a527f8e"><code>2a527f8e</code></a><time>22:24</time><span>fix: correct classify_run classifier and add robust file reading</span></li></ol></details>
 </div></section>
 
-<section id="how-it-works" class="halo-how" aria-labelledby="how-it-works-title"><div class="wrap"><div class="halo-layout">
-<aside class="halo-label"><span>How OnRamp Works</span></aside>
-<div class="halo-content"><div class="halo-lead"><p id="how-it-works-title">OnRamp makes a code change inspectable before it makes it trustworthy. It starts with a baseline, reproduces the reported failure, then compares the final run with the evidence that existed before the fix.</p></div>
-<div class="halo-steps" aria-label="How OnRamp Works steps">
-<article class="halo-step"><span class="halo-number">1</span><h3>Record the baseline</h3><p>Capture what already fails, where it ran, and which environment produced the result.</p></article>
-<article class="halo-step"><span class="halo-number">2</span><h3>Reproduce before fixing</h3><p>Seal the brief, write the failing test, and keep the first red result attached to the change.</p></article>
-<article class="halo-step"><span class="halo-number">3</span><h3>Compare with proof</h3><p>Classify inherited failures, regressions, fixes, and not-run tests without guessing.</p></article>
-</div>
-<div class="halo-cta-row"><a class="halo-cta" href="#demo"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="0" y="0" width="44" height="44" rx="22" fill="#E5F0C6"/><path d="M17 27.5 26.5 18M26.5 18V26M26.5 18H18.5" fill="none" stroke="#034F46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Run the classifier</span></a><div class="halo-rating"><span class="halo-proof-dot" aria-hidden="true"></span><span>Every verdict keeps its source.</span></div></div>
-</div></div></section>
-<section id="studio" class="lumora-studio" aria-labelledby="studio-title"><div class="lumora-shell"><div class="lumora-head"><div><p class="lumora-eyebrow"><i aria-hidden="true"></i>Evidence studio</p><h2 id="studio-title">Design and engineering, connected by proof.</h2></div><p class="lumora-intro">A compact index of the work behind the page. Each card routes to a real section of the evidence trail.</p></div><div class="lumora-band" aria-label="Evidence workflow"><span>WE</span><span>RECORD</span><span aria-hidden="true">→</span><span>VERIFY</span></div><div class="lumora-work-grid">
-<a class="lumora-work-card" href="#baseline"><div class="lumora-meta"><span>01 / Baseline</span><span class="lumora-arrow" aria-hidden="true">↗</span></div><span class="lumora-mark" aria-hidden="true">✦</span><div class="lumora-card-copy"><h3>Inherited failures</h3><p>Separate the 29 Windows-only failures from anything introduced by the change.</p><div class="lumora-tags"><span>Scope</span><span>Environment</span><span>Source</span></div></div></a>
-<a class="lumora-work-card" href="#blind"><div class="lumora-meta"><span>02 / Blind fix</span><span class="lumora-arrow" aria-hidden="true">↗</span></div><span class="lumora-mark" aria-hidden="true">✦</span><div class="lumora-card-copy"><h3>Failing test first</h3><p>Reproduce the webhook bug before the implementation changes, then compare the fix.</p><div class="lumora-tags"><span>Reproducer</span><span>Diff</span><span>Provenance</span></div></div></a>
-<a class="lumora-work-card" href="#feature"><div class="lumora-meta"><span>03 / Feature</span><span class="lumora-arrow" aria-hidden="true">↗</span></div><span class="lumora-mark" aria-hidden="true">✦</span><div class="lumora-card-copy"><h3>Readable JSON</h3><p>Show the product improvement alongside the evidence that protects non-ASCII request bodies.</p><div class="lumora-tags"><span>Before / after</span><span>QA</span></div></div></a>
-<a class="lumora-work-card" href="#portability"><div class="lumora-meta"><span>04 / Portability</span><span class="lumora-arrow" aria-hidden="true">↗</span></div><span class="lumora-mark" aria-hidden="true">✦</span><div class="lumora-card-copy"><h3>Profile-driven kit</h3><p>Track how the workflow moved from Healthchecks assumptions to a Flask and unittest profile.</p><div class="lumora-tags"><span>TaskFlow</span><span>Profiles</span><span>Runs</span></div></div></a>
-</div></div></section>
+<section id="verify" aria-labelledby="verify-h"><div class="wrap verify">
+<h2 id="verify-h">Check it yourself</h2>
+<p class="take">Every number on this page comes from a file you can open. Start from any of these.</p>
+<ol class="vlist">
+<li><a href="https://github.com/KnigguKniggu-droid/onramp"><b>The kit</b><span>OnRamp applied to Healthchecks, with every Bob commit</span></a></li>
+<li><a href="https://github.com/KnigguKniggu-droid/onramp/actions/runs/38460743005"><b>Linux CI run 38460743005</b><span>The upstream suite passing after the fix</span></a></li>
+<li><a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CLAUDE_CORRECTIONS_2026-10-11.md"><b>Corrections and limitations</b><span>What did not work, stated plainly</span></a></li>
+<li><a href="https://github.com/KnigguKniggu-droid/onramp-evidence"><b>This page's source</b><span>Classifier, fixtures and the parity check against Bob's Python</span></a></li>
+</ol>
+</div></section>
 </main>
 
 <footer><div class="wrap"><span>Built by Claude Code from the repository's evidence files. Healthchecks is an independent BSD-3-Clause project, not affiliated with this submission. OnRamp is an independent hackathon entry and is not endorsed by IBM.</span><span><a href="https://github.com/KnigguKniggu-droid/onramp">Kit on GitHub</a>, <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Deck</a>, <a href="https://github.com/KnigguKniggu-droid/onramp-evidence">Site source</a></span></div></footer>
@@ -749,7 +688,6 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script type="module" src="fx.js"></script>
-<script src="how-it-works-01-halo.js" defer></script>
 <script>
 (function () {
   const $ = id => document.getElementById(id);
