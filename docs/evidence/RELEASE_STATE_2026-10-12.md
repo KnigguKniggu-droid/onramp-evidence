@@ -220,11 +220,11 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 
 ## Update 2026-10-15 (Claude Code): Codex-period review, audit fixes, rework
 
-- **Codex period (2026-10-14 03:3x–04:4x UTC, user-authorized, while Claude was usage-limited):** Codex pushed d057f4f (Preview C promoted, a11y/copy), 00bbbd2 (evidence-console hero), f894f7b (Halo section), an intermediate template-copy pass, 72363d3 (evidence studio, 360° map controls), a213f77 (cinematic hero with hotlinked third-party video, Inter/Instrument Serif, liquid nav pills) and a6235be (AGENTS.md, `docs/design/GITHUB_FRONTEND_SKILLS_AUDIT.md`).
+- **Codex period (2026-10-14 03:3x–04:4x UTC, user-authorized, while Claude was usage-limited):** Codex pushed d057f4f (Preview C promoted, a11y/copy), 00bbbd2 (evidence-console hero), f894f7b (Halo section), an intermediate template-copy pass, e4511b7 (evidence studio, 360° map controls), 2143508 (cinematic hero with hotlinked third-party video, Inter/Instrument Serif, liquid nav pills) and 6346af0 (AGENTS.md, `docs/design/GITHUB_FRONTEND_SKILLS_AUDIT.md`).
 - **Template-text correction:** one intermediate template-copy commit contained placeholder marketing text that does not describe OnRamp. Codex removed it in the next commit. With the participant's approval, the commit was folded into its successor on 2026-10-15. Commit dates were kept and the final tree is unchanged.
-- **Audit:** Claude plus one Haiku 5.5 and one Sonnet 5.5 read-only subagent audited the live site (a6235be). Findings: duplicated/templated sections, unlicensed hotlinked video (13.9 MB autoplay), unused uncredited webfont, contradictory toggle labels, aria-live firing on pointermove, hidden verdict state colours, sticky steps against AGENTS.md, horizontal overflow at 320/375/1024 px (pre-existing at a6235be). All 4 verdicts and counts were correct.
+- **Audit:** Claude plus one Haiku 5.5 and one Sonnet 5.5 read-only subagent audited the live site (6346af0). Findings: duplicated/templated sections, unlicensed hotlinked video (13.9 MB autoplay), unused uncredited webfont, contradictory toggle labels, aria-live firing on pointermove, hidden verdict state colours, sticky steps against AGENTS.md, horizontal overflow at 320/375/1024 px (pre-existing at 6346af0). All 4 verdicts and counts were correct.
 - **Fixes shipped:**
-  - 887e886 (rewritten SHA): a11y/colour/overflow fixes
+  - 887e886: a11y/colour/overflow fixes
   - 3e5d76f: video removed
   - 4384625: rework on a noindex preview
   - fdb77dc: preview promoted after participant approval. Removed the hero eyebrow, avatar rings, serif accent, duplicate stat rail, caps labels, liquid pills, extra fonts, the Halo and studio sections and sticky steps. Added a "Check it yourself" list of four evidence links (all HTTP 200).
