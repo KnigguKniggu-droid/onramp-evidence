@@ -1,12 +1,10 @@
 // OnRamp Evidence Explorer: enhancement layer (Claude Code, 2026-10-13).
 // The page is complete without this file. It adds:
 //   - a Three.js suite map that recolours by classification (reactive scene)
-//   - GSAP ScrollTrigger: a scroll-played blind-fix sequence, section reveals and number tickers
-//   - pointer parallax with a cloth-like tilt on the hero layers
+//   - GSAP ScrollTrigger: a scroll-played blind-fix sequence and a scroll progress bar
 //   - an opt-in WebAudio chime when a run is classified
 // Everything honours prefers-reduced-motion, and nothing here hides or replaces evidence text.
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const finePointer = matchMedia('(pointer: fine)').matches;
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 // ---------- Motion Toggle Pause: decorative motion can be paused (Webflow interactions guidance) ----------
@@ -57,7 +55,7 @@ const sound = (() => {
   return { play };
 })();
 
-// ---------- GSAP: reveals, tickers, scroll-played sequence, parallax ----------
+// ---------- GSAP: scroll progress and the scroll-played blind-fix sequence ----------
 const gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
 if (gsap && ScrollTrigger) {
   document.documentElement.classList.add('fx');
@@ -83,24 +81,7 @@ if (gsap && ScrollTrigger) {
     t.focus({ preventScroll: true });
   });
   const steps = document.getElementById('steps');
-  // Variant B (frontend-design skill): one orchestrated moment only, so no per-section reveals or stat tickers
-  const quiet = document.documentElement.dataset.variant === 'b';
   if (!reduce) {
-    // section reveals: elements start visible in the HTML; GSAP only animates *from* an offset
-    if (!quiet) gsap.utils.toArray('main section .sh, main section .two, main section .strip, main .runs, main .who, main .timeline').forEach(el => {
-      if (el.getBoundingClientRect().top < innerHeight) return;
-      gsap.from(el, { y: 16, opacity: 0, duration: 0.5, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'clamp(top 90%)', once: true } });
-    });
-    // stats ticker: counts up to the exact number in the HTML, then restores the original text
-    if (!quiet) document.querySelectorAll('.stat > b').forEach(b => {
-      const final = b.textContent, n = parseInt(final.replace(/,/g, ''), 10);
-      if (!n) return;
-      const sr = document.createElement('span'); sr.className = 'sr'; sr.textContent = final;
-      b.setAttribute('aria-hidden', 'true'); b.after(sr);
-      const o = { v: 0 };
-      gsap.to(o, { v: n, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: b, start: 'top 95%', once: true },
-        onUpdate: () => { b.textContent = Math.round(o.v).toLocaleString('en-US'); }, onComplete: () => { b.textContent = final; } });
-    });
     // scroll-played sequence: the blind-fix steps light up in order as you scroll (scrubbed, never pinned)
     if (steps) {
       steps.classList.add('seq');
@@ -111,23 +92,6 @@ if (gsap && ScrollTrigger) {
       items.forEach((li, i) => {
         tl.call(() => items.forEach((x, j) => x.classList.toggle('active', j <= i)), null, i + 0.1);
       });
-    }
-    // pointer parallax + cloth-like tilt on the hero layers (fine pointers only)
-    const hero = document.querySelector('.hero');
-    if (hero && finePointer) {
-      const layers = [...hero.querySelectorAll('[data-depth]')].map(el => ({
-        el, d: +el.dataset.depth, t: +(el.dataset.tilt || 0),
-        x: gsap.quickTo(el, 'x', { duration: 0.9, ease: 'power3' }), y: gsap.quickTo(el, 'y', { duration: 0.9, ease: 'power3' }),
-        rx: el.dataset.tilt ? gsap.quickTo(el, 'rotationX', { duration: 1.1, ease: 'power3' }) : null,
-        ry: el.dataset.tilt ? gsap.quickTo(el, 'rotationY', { duration: 1.1, ease: 'power3' }) : null,
-      }));
-      layers.forEach(l => { if (l.t) gsap.set(l.el, { transformPerspective: 900 }); });
-      hero.addEventListener('pointermove', e => {
-        if (motion.still) return;
-        const r = hero.getBoundingClientRect(), nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
-        layers.forEach(l => { l.x(nx * l.d); l.y(ny * l.d); if (l.rx) { l.rx(-ny * l.t); l.ry(nx * l.t); } });
-      });
-      hero.addEventListener('pointerleave', () => layers.forEach(l => { l.x(0); l.y(0); if (l.rx) { l.rx(0); l.ry(0); } }));
     }
   }
 }
