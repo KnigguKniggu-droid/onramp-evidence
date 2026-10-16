@@ -34,7 +34,7 @@ python -m unittest discover -s py -p 'test_*.py' -v
 python py/parity_check.py
 ```
 
-Smoke-test desktop, mobile, keyboard focus, reduced motion, the live video fallback, the classifier states, and the 360° suite map. Verify that the deployed SHA matches the source SHA.
+Smoke-test desktop, mobile, keyboard focus, reduced motion, the classifier states, and the 360° suite map. Verify that the deployed SHA matches the source SHA.
 
 ## Reference repositories
 

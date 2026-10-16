@@ -28,20 +28,6 @@ const motion = (() => {
   return { get still() { return still || reduce; }, on: f => listeners.push(f) };
 })();
 
-// Supplied cinematic hero video is decorative only: keep it in sync with the
-// existing motion contract and leave a truthful black fallback when motion is reduced.
-const heroVideo = document.querySelector('.hero-video');
-if (heroVideo) {
-  const syncHeroVideo = paused => {
-    if (paused) heroVideo.pause();
-    else heroVideo.play().catch(() => { /* autoplay may be blocked; black fallback remains */ });
-  };
-  // never autoplay from markup: start only when motion is allowed and the hero is on screen; pause off-screen
-  let heroVisible = false;
-  new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; syncHeroVideo(motion.still || !heroVisible); }).observe(heroVideo.closest('header') || heroVideo);
-  motion.on(still => syncHeroVideo(still || !heroVisible));
-}
-
 // ---------- sound (off by default; the user turns it on) ----------
 const sound = (() => {
   const btn = document.getElementById('sound');
