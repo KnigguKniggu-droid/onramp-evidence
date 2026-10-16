@@ -19,7 +19,6 @@ const motion = (() => {
     document.documentElement.classList.toggle('still', still);
     if (btn) {
       btn.setAttribute('aria-pressed', String(still));
-      btn.setAttribute('aria-label', still ? 'Decorative motion is paused; activate to resume' : 'Decorative motion is active; activate to pause');
       btn.lastElementChild.textContent = still ? 'Resume motion' : 'Pause motion';
     }
     listeners.forEach(f => f(still));
@@ -37,8 +36,10 @@ if (heroVideo) {
     if (paused) heroVideo.pause();
     else heroVideo.play().catch(() => { /* autoplay may be blocked; black fallback remains */ });
   };
-  motion.on(syncHeroVideo);
-  syncHeroVideo(motion.still);
+  // never autoplay from markup: start only when motion is allowed and the hero is on screen; pause off-screen
+  let heroVisible = false;
+  new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; syncHeroVideo(motion.still || !heroVisible); }).observe(heroVideo.closest('header') || heroVideo);
+  motion.on(still => syncHeroVideo(still || !heroVisible));
 }
 
 // ---------- sound (off by default; the user turns it on) ----------
@@ -46,7 +47,7 @@ const sound = (() => {
   const btn = document.getElementById('sound');
   let on = false, ac = null;
   try { on = localStorage.getItem('onramp-sound') === '1'; } catch (e) { /* storage blocked */ }
-  const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(on)); btn.setAttribute('aria-label', 'Classification chime, ' + (on ? 'on' : 'off')); const lab = btn.querySelector('span[aria-hidden]'); if (lab) lab.textContent = on ? 'Sound on' : 'Sound off'; };
+  const paint = () => { if (!btn) return; btn.setAttribute('aria-pressed', String(on)); btn.setAttribute('aria-label', 'Classification chime'); const lab = btn.querySelector('span[aria-hidden]'); if (lab) lab.textContent = on ? 'Sound on' : 'Sound off'; };
   paint();
   btn?.addEventListener('click', () => {
     on = !on; paint();

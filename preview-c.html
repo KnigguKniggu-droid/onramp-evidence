@@ -23,7 +23,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://db.onlinewebfonts.com/c/8cb707a9b8a73f8a7403336b861c3074?family=BubbledotICG-FinePos" rel="stylesheet">
 <style>
 :root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
  --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent);--info-bg:color-mix(in srgb,var(--info) 14%,transparent)}
@@ -118,7 +117,7 @@ figcaption{font-size:14px;margin-top:8px;color:var(--muted)}figcaption b{color:v
 .timeline time{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:13px;padding-top:2px}
 footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}footer .wrap{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
 @media (max-width:900px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.cards{grid-template-columns:repeat(4,minmax(0,1fr))}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.runs{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.scen{grid-template-columns:repeat(2,minmax(0,1fr))}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.two,.who{grid-template-columns:minmax(0,1fr)}.steps{grid-template-columns:minmax(0,1fr)}.timeline li{grid-template-columns:1fr;gap:2px}.hero{padding-top:36px}section{padding:40px 0}.rgrid{font-size:12px}.cell{padding:8px 6px}}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.scen{grid-template-columns:repeat(2,minmax(0,1fr))}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.two,.who{grid-template-columns:minmax(0,1fr)}.steps{grid-template-columns:minmax(0,1fr)}.timeline li{grid-template-columns:minmax(0,1fr);gap:2px}.hero{padding-top:36px}section{padding:40px 0}.rgrid{font-size:12px}.cell{padding:8px 6px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition-property:opacity,color,background-color,border-color!important;transition-duration:.15s!important}}
 
 /* ===== enhancement layer (Claude Code, 2026-10-13). Page is complete without fx.js; motion respects reduced-motion. ===== */
@@ -272,7 +271,7 @@ h1{font-size:clamp(44px,7vw,78px);letter-spacing:-.065em;line-height:.98;max-wid
 .context{max-width:60ch}.hero-signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:34px;border-top:1px solid color-mix(in srgb,var(--text) 14%,transparent);border-bottom:1px solid color-mix(in srgb,var(--text) 14%,transparent);background:color-mix(in srgb,var(--text) 12%,transparent)}.hero-signal{padding:14px 14px 13px 0;background:transparent}.hero-signal b{display:block;font:600 24px/1.1 "IBM Plex Mono",ui-monospace,monospace;color:var(--hero-ink)}.hero-signal span{display:block;margin-top:5px;color:var(--hero-muted);font-size:12px}
 .rules{border-radius:22px;padding:24px;background:linear-gradient(150deg,color-mix(in srgb,var(--panel) 95%,var(--accent)),color-mix(in srgb,var(--panel) 90%,var(--info)));border-color:color-mix(in srgb,var(--accent) 30%,var(--line));box-shadow:0 28px 70px -34px color-mix(in srgb,var(--accent) 80%,transparent),inset 0 1px 0 color-mix(in srgb,#fff 10%,transparent)}.rules::before{content:"CLASSIFICATION ENGINE / 01";display:block;margin-bottom:20px;color:var(--cyan);font:600 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.14em}.rules h2{font-size:20px;letter-spacing:-.02em}.rules p{max-width:42ch;line-height:1.5}.rgrid{gap:8px}.rgrid .h{font-size:11px;text-transform:uppercase;letter-spacing:.06em}.rgrid .rh{font-size:12px}.cell{min-height:66px;display:grid;place-content:center;border:1px solid color-mix(in srgb,var(--text) 6%,transparent);border-radius:14px}.c-inh{background:linear-gradient(145deg,color-mix(in srgb,var(--warn) 24%,transparent),var(--warn-bg))}.c-fix{background:linear-gradient(145deg,color-mix(in srgb,var(--ok) 25%,transparent),var(--ok-bg))}.c-reg{background:linear-gradient(145deg,color-mix(in srgb,var(--bad) 25%,transparent),var(--bad-bg))}.c-ok{background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 18%,transparent),var(--panel2))}.c-nr{background:linear-gradient(145deg,color-mix(in srgb,var(--info) 25%,transparent),var(--info-bg))}
 @media (max-width:900px){.hero{min-height:auto;padding:68px 0 56px}.hero .wrap{grid-template-columns:minmax(0,1fr);gap:42px}.rules{max-width:680px}.hero-signals{max-width:680px}}
-@media (max-width:640px){.hero{padding-top:48px}.eyebrow{font-size:10px}.eyebrow-tag{display:none}h1{font-size:clamp(42px,13vw,62px)}.hero-signals{grid-template-columns:repeat(3,1fr)}.hero-signal b{font-size:20px}.hero-signal{padding-right:8px}.rules{border-radius:16px;padding:18px}}
+@media (max-width:640px){.hero{padding-top:48px}.eyebrow{font-size:10px}.eyebrow-tag{display:none}h1{font-size:clamp(42px,13vw,62px)}.hero-signals{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-signal b{font-size:20px}.hero-signal{padding-right:8px}.rules{border-radius:16px;padding:18px}}
 
 /* ===== How it works / Halo adaptation ===== */
 .halo-how{--halo-paper:#f3f0e7;--halo-ink:#1a1a1a;--halo-sub:#5c5c5c;--halo-forest:#034f46;--halo-line:#5c5c5c;--halo-lime:#e5f0c6;background:var(--halo-paper);color:var(--halo-ink);border-top:0;padding:96px 0 104px}
@@ -280,7 +279,7 @@ h1{font-size:clamp(44px,7vw,78px);letter-spacing:-.065em;line-height:.98;max-wid
 .halo-layout{display:flex;align-items:flex-start;gap:64px}.halo-label{width:22%;flex:0 0 22%;font-size:18px;line-height:24px;font-weight:400}.halo-content{width:75%;flex:1;min-width:0}.halo-lead{max-width:900px;margin:0 0 80px;opacity:0;transform:translateY(12px);transition:opacity .6s .1s cubic-bezier(.215,.61,.355,1),transform .6s .1s cubic-bezier(.215,.61,.355,1)}.halo-lead p{color:var(--halo-ink);font-size:30px;line-height:36px;font-weight:400;max-width:none;margin:0}.halo-label{opacity:0;transform:translateY(12px);transition:opacity .6s .1s cubic-bezier(.215,.61,.355,1),transform .6s .1s cubic-bezier(.215,.61,.355,1)}
 .halo-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:90px;margin:0 0 56px}.halo-step{border-left:1px solid var(--halo-line);padding:0 0 0 25px;height:280px;opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.215,.61,.355,1),transform .6s cubic-bezier(.215,.61,.355,1)}.halo-label.is-visible,.halo-lead.is-visible,.halo-step.is-visible,.halo-cta-row.is-visible{opacity:1;transform:none}.halo-step:nth-child(1){transition-delay:.2s}.halo-step:nth-child(2){transition-delay:.3s}.halo-step:nth-child(3){transition-delay:.4s}.halo-number{display:flex;width:46px;height:46px;align-items:center;justify-content:center;border-radius:50%;background:var(--halo-forest);color:#fff;font:400 24px/32px "IBM Plex Sans",system-ui,sans-serif}.halo-step h3{color:var(--halo-ink);font-size:20px;line-height:28px;font-weight:400;margin:32px 0 16px;white-space:nowrap}.halo-step p{color:var(--halo-sub);font-size:16px;line-height:24px;font-weight:400;max-width:280px;margin:0}
 .halo-cta-row{display:flex;flex-direction:column;align-items:flex-start;gap:16px;opacity:0;transform:translateY(12px);transition:opacity .6s .5s cubic-bezier(.215,.61,.355,1),transform .6s .5s cubic-bezier(.215,.61,.355,1)}.halo-cta-row.is-visible{opacity:1;transform:none}.halo-cta{display:inline-flex;align-items:center;gap:10px;border-radius:999px;background:var(--halo-forest);padding:4px 20px 4px 4px;color:#fdfdfd;font-size:16px;line-height:24px;font-weight:400;text-decoration:none;transition:opacity .18s ease}.halo-cta:hover{opacity:.9;text-decoration:none}.halo-cta svg{width:44px;height:44px;flex:0 0 44px}.halo-rating{display:flex;align-items:center;gap:8px;color:#000;font-size:16px;line-height:24px;font-weight:400}.halo-rating svg{width:32px;height:32px;flex:0 0 32px}
-@media (max-width:900px){.halo-how{padding:72px 0}.halo-how .wrap{padding-left:40px;padding-right:40px}.halo-layout{flex-direction:column;gap:32px}.halo-label,.halo-content{width:100%}.halo-lead{margin-bottom:56px}.halo-steps{gap:0;grid-template-columns:1fr}.halo-step{height:auto;padding:0 0 48px 25px}.halo-step h3{white-space:normal}}
+@media (max-width:900px){.halo-how{padding:72px 0}.halo-how .wrap{padding-left:40px;padding-right:40px}.halo-layout{flex-direction:column;gap:32px}.halo-label,.halo-content{width:100%}.halo-lead{margin-bottom:56px}.halo-steps{gap:0;grid-template-columns:minmax(0,1fr)}.halo-step{height:auto;padding:0 0 48px 25px}.halo-step h3{white-space:normal}}
 @media (max-width:640px){.halo-how .wrap{padding-left:40px;padding-right:40px}.halo-lead p{font-size:26px;line-height:32px}}
 @media (prefers-reduced-motion:reduce){.halo-label,.halo-lead,.halo-step,.halo-cta-row{opacity:1;transform:none;transition:none}}
 /* ===== forensic editorial redesign: evidence is the visual system ===== */
@@ -371,7 +370,7 @@ section .sh h2{max-width:15ch;color:var(--text);font-size:clamp(34px,5.5vw,78px)
 section .sh .take{max-width:48ch;padding-top:10px;color:#93a199;font-size:clamp(16px,1.5vw,20px);line-height:1.55}
 .num{color:var(--accent);font-size:11px;letter-spacing:.14em}
 .scope{border:1px solid var(--line);border-radius:20px;gap:1px;background:var(--line);overflow:hidden}
-.scope div{background:#121a16;padding:20px 22px}.scope dt{color:#73847a;font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}.scope dd{color:var(--text);font-size:14px;line-height:1.45}
+.scope div{background:#121a16;padding:20px 22px}.scope dt{color:var(--muted);font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}.scope dd{color:var(--text);font-size:14px;line-height:1.45}
 .two{gap:24px}.panel{border:1px solid var(--line);border-radius:22px;padding:24px;background:#111917}
 table{font-size:14px}th,td{padding:14px 12px;border-bottom:1px solid var(--line)}th{color:#8e9d94}
 .pill,.tag{border-radius:999px}.pill{background:rgba(245,196,81,.13);color:#f5d477}
@@ -382,7 +381,7 @@ table{font-size:14px}th,td{padding:14px 12px;border-bottom:1px solid var(--line)
 .scen label:has(input:checked){border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset;background:#1a261f}
 .scen b{color:var(--text);font-size:14px}.scen span{color:#87988d}
 .tag.real{background:rgba(126,226,143,.12);color:#9bf0a8}.tag.syn{background:rgba(245,196,81,.12);color:#f5d477}
-.verdict{border-radius:16px;padding:16px 18px;background:#18231f}
+.verdict{border-radius:16px;padding:16px 18px}
 .cards{gap:10px}.card{border:1px solid #35483d;border-radius:16px;background:#121a16;padding:14px}
 .card:hover{border-color:var(--accent);background:#1a261f}.card[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
 .card b{color:var(--text);font-size:27px}.card span{color:#85968b}
@@ -429,9 +428,9 @@ footer{border-top:1px solid var(--line);background:#080b0a;padding:34px 0;color:
 .lumora-mark{position:absolute;top:48%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,.07);font-size:110px;pointer-events:none}
 .lumora-card-copy{position:relative;z-index:1;max-width:33rem}.lumora-card-copy h3{margin:0;color:#fff;font-size:clamp(28px,3.7vw,48px);line-height:.95;letter-spacing:-.06em;font-weight:500}.lumora-card-copy p{max-width:29rem;margin:14px 0 20px;color:#a6b2aa;font-size:14px;line-height:1.55}
 .lumora-tags{display:flex;flex-wrap:wrap;gap:7px}.lumora-tags span{border:1px solid #405247;border-radius:999px;padding:7px 11px;color:#dbe5dd;font-size:11px}
-@media (max-width:1000px){.hero .wrap{grid-template-columns:1fr}.hero{min-height:auto}.rules{max-width:700px}section .sh{grid-template-columns:1fr}.section .sh h2,section .sh h2{max-width:18ch}.lumora-head{align-items:start;flex-direction:column}}
-@media (max-width:900px){.wrap{padding-inline:24px}.demo-grid{grid-template-columns:1fr}.lumora-work-grid{grid-template-columns:1fr}.lumora-work-card{min-height:20rem}}
-@media (max-width:640px){.wrap{padding-inline:18px}nav .wrap{gap:16px}.hero{padding-top:70px}.hero::after{display:none}h1{font-size:clamp(54px,15vw,84px)}.hero-signals{grid-template-columns:repeat(3,1fr)}.hero-signal+ .hero-signal{padding-left:12px}.hero-signal{padding-right:10px}.hero-signal b{font-size:22px}.rules{padding:20px;border-radius:22px}.rgrid .rh{font-size:10px}.scope{grid-template-columns:1fr}section .sh{gap:16px;margin-bottom:34px}.two{grid-template-columns:1fr}.scen{grid-template-columns:1fr 1fr}.suite{padding:16px;border-radius:22px}.suite canvas{max-height:330px}.lumora-shell{padding-inline:18px}.lumora-head{padding-top:80px}.lumora-band{grid-template-columns:1fr 1fr;gap:20px;padding:22px;border-radius:20px}.lumora-band span:nth-child(3),.lumora-band span:last-child{text-align:left}.lumora-work-card{border-radius:22px;padding:22px}}
+@media (max-width:1000px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.hero{min-height:auto}.rules{max-width:700px}section .sh{grid-template-columns:minmax(0,1fr)}.section .sh h2,section .sh h2{max-width:18ch}.lumora-head{align-items:start;flex-direction:column}}
+@media (max-width:900px){.wrap{padding-inline:24px}.demo-grid{grid-template-columns:minmax(0,1fr)}.lumora-work-grid{grid-template-columns:minmax(0,1fr)}.lumora-work-card{min-height:20rem}}
+@media (max-width:640px){.wrap{padding-inline:18px}nav .wrap{gap:16px}.hero{padding-top:70px}.hero::after{display:none}h1{font-size:clamp(54px,15vw,84px)}.hero-signals{grid-template-columns:repeat(3,minmax(0,1fr))}.hero-signal+ .hero-signal{padding-left:12px}.hero-signal{padding-right:10px}.hero-signal b{font-size:22px}.rules{padding:20px;border-radius:22px}.rgrid .rh{font-size:10px}.scope{grid-template-columns:minmax(0,1fr)}section .sh{gap:16px;margin-bottom:34px}.two{grid-template-columns:minmax(0,1fr)}.scen{grid-template-columns:1fr 1fr}.suite{padding:16px;border-radius:22px}.suite canvas{max-height:330px}.lumora-shell{padding-inline:18px}.lumora-head{padding-top:80px}.lumora-band{grid-template-columns:1fr 1fr;gap:20px;padding:22px;border-radius:20px}.lumora-band span:nth-child(3),.lumora-band span:last-child{text-align:left}.lumora-work-card{border-radius:22px;padding:22px}}
 @media (prefers-reduced-motion:reduce){.lumora-work-card,.lumora-arrow,.run{transition:none}.lumora-work-card:hover,.run:hover{transform:none}}
 /* GitHub frontend-skill hardening: explicit state, targets, numbers, and anchors. */
 html{color-scheme:dark;scroll-padding-top:92px}
@@ -569,7 +568,7 @@ h1{
   nav .wrap{min-height:62px;padding-inline:18px}
   nav .wrap>a{padding-inline:11px}
   .hero{min-height:auto;padding:74px 0 60px}
-  .hero .wrap{grid-template-columns:1fr;gap:42px}
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:42px}
   .hero-video{opacity:.48}
   h1{font-size:clamp(54px,13vw,88px);max-width:12ch}
   .rules{max-width:700px}
@@ -587,7 +586,7 @@ h1{
   .hero-trust-label{min-height:34px;padding:9px 10px 9px 15px;font-size:10px}
   h1{font-size:clamp(52px,15vw,84px);letter-spacing:-.09em}
   .lede{font-size:16px}
-  .hero-signals{grid-template-columns:repeat(3,1fr)}
+  .hero-signals{grid-template-columns:repeat(3,minmax(0,1fr))}
   .hero-signal{padding-right:8px}.hero-signal+.hero-signal{padding-left:10px}
   .hero-signal b{font-size:22px}.hero-signal span{font-size:9px;letter-spacing:.06em}
 }
@@ -597,11 +596,12 @@ h1{
   .hero-trust-ring,.btn,nav a{transition:none}
 }
 
+html,body{overflow-x:clip}
 </style></head><body>
 <a class="skip" href="#demo">Skip to the classifier demo</a>
 <nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b><span class="brand-mark" aria-hidden="true"></span>OnRamp <span class="nav-kicker">/ Evidence Explorer</span></b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="#studio">Studio</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
 
-<header class="hero"><video class="hero-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260809_012548_ef22562c-c0ae-4816-ad9d-f8922af4e6a7.mp4" type="video/mp4"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260818_072341_50851634-bbc3-4c33-9acc-7647d4db44aa.mp4" type="video/mp4"></video><div class="hero-video-scrim" aria-hidden="true"></div><div class="liquid" aria-hidden="true"><span></span><span></span><span></span></div><div class="wrap">
+<header class="hero"><video class="hero-video" muted loop playsinline preload="metadata" aria-hidden="true"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260809_012548_ef22562c-c0ae-4816-ad9d-f8922af4e6a7.mp4" type="video/mp4"><source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260818_072341_50851634-bbc3-4c33-9acc-7647d4db44aa.mp4" type="video/mp4"></video><div class="hero-video-scrim" aria-hidden="true"></div><div class="liquid" aria-hidden="true"><span></span><span></span><span></span></div><div class="wrap">
 <div>
 <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span>OPERATIONAL EVIDENCE INFRASTRUCTURE</span><span class="eyebrow-tag">IBM BOB KIT</span></p>
 <div class="hero-trust" aria-label="Evidence contexts"><span class="hero-trust-ring">WIN</span><span class="hero-trust-ring">CI</span><span class="hero-trust-ring">FLASK</span><span class="hero-trust-label">One workflow · three proof contexts</span></div>
@@ -654,7 +654,7 @@ h1{
 <div class="cards" id="cards"></div>
 <div class="list" id="list" hidden></div>
 </div>
-<figure class="suite" id="suite"><h3>Fig. 1, suite map</h3><p>Live visual index of outcomes, not a dependency graph: every dot is one Healthchecks test, placed in test-id order and coloured by the selected run. Position carries no test meaning; the counts and test details remain authoritative.</p><p id="suite-help" class="suite-help">Drag to rotate through 360°. Use the arrow controls or keyboard arrows for the same view changes. Pick a dot to inspect its test.</p><div class="suite-controls" aria-label="Suite map controls"><button type="button" data-suite-rotate="left" aria-label="Rotate suite map left">←</button><button type="button" data-suite-rotate="right" aria-label="Rotate suite map right">→</button><button type="button" data-suite-rotate="up" aria-label="Tilt suite map up">↑</button><button type="button" data-suite-rotate="down" aria-label="Tilt suite map down">↓</button><button type="button" data-suite-rotate="reset" aria-label="Reset suite map view">Reset</button></div><div class="suite-status sr" aria-live="polite"></div><canvas tabindex="0" role="img" aria-describedby="suite-help" aria-label="Interactive 3D suite map"></canvas><div class="suite-fallback">The 3D suite map needs WebGL. The counts on the left carry the same information.</div>
+<figure class="suite" id="suite"><h3>Fig. 1, suite map</h3><p>Live visual index of outcomes, not a dependency graph: every dot is one Healthchecks test, placed in test-id order and coloured by the selected run. Position carries no test meaning; the counts and test details remain authoritative.</p><p id="suite-help" class="suite-help">Drag to rotate through 360°. Use the arrow controls or keyboard arrows for the same view changes. Pick a dot to inspect its test.</p><div class="suite-controls" aria-label="Suite map controls"><button type="button" data-suite-rotate="left" aria-label="Rotate suite map left">←</button><button type="button" data-suite-rotate="right" aria-label="Rotate suite map right">→</button><button type="button" data-suite-rotate="up" aria-label="Tilt suite map up">↑</button><button type="button" data-suite-rotate="down" aria-label="Tilt suite map down">↓</button><button type="button" data-suite-rotate="reset" aria-label="Reset suite map view">Reset</button></div><div class="suite-status sr"></div><canvas tabindex="0" role="img" aria-describedby="suite-help" aria-label="Interactive 3D suite map"></canvas><div class="suite-fallback">The 3D suite map needs WebGL. The counts on the left carry the same information.</div>
 <ul class="legend"><li style="--c:var(--muted)">unchanged</li><li style="--c:var(--warn)">inherited</li><li style="--c:var(--bad)">regression / new failing</li><li style="--c:var(--ok)">fixed / new passing</li><li style="--c:var(--info)">not run</li></ul></figure>
 </div>
 <details><summary>How this demo works</summary>
@@ -751,7 +751,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 </main>
 
 <footer><div class="wrap"><span>Built by Claude Code from the repository's evidence files. Healthchecks is an independent BSD-3-Clause project, not affiliated with this submission. OnRamp is an independent hackathon entry and is not endorsed by IBM.</span><span><a href="https://github.com/KnigguKniggu-droid/onramp">Kit on GitHub</a>, <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/deck/OnRamp-pitch-deck.pdf">Deck</a>, <a href="https://github.com/KnigguKniggu-droid/onramp-evidence">Site source</a></span></div></footer>
-<button type="button" class="motionbtn" id="motionbtn" aria-pressed="false" aria-label="Decorative motion is active; activate to pause" title="Toggle decorative motion"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z" fill="currentColor"/></svg><span>Pause motion</span></button>
+<button type="button" class="motionbtn" id="motionbtn" aria-pressed="false" aria-label="Pause decorative motion" title="Toggle decorative motion"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 3h3v10H4zM9 3h3v10H9z" fill="currentColor"/></svg><span>Pause motion</span></button>
 <script src="classifier.js"></script>
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
