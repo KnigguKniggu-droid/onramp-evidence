@@ -28,7 +28,6 @@ Run before publishing:
 
 ```text
 node --check fx.js
-node --check how-it-works-01-halo.js
 git diff --check
 python -m unittest discover -s py -p 'test_*.py' -v
 python py/parity_check.py
