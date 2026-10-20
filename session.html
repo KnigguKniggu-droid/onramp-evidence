@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bob Session Replay</title>
+<meta name="description" content="Step-by-step replay of IBM Bob's recorded session on task d2fe2053: 107 steps from failing test to fix to evidence report.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232563eb'/><path d='M8 22 L15 10 L18 15 L21 11 L25 22 Z' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
+<style>
+:root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
+ --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent);--info-bg:color-mix(in srgb,var(--info) 14%,transparent);
+ --m-agent:var(--accent);--m-reproducer:var(--warn);--m-verifier:var(--info)}
+@media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f6f7f9;--band:#eef1f5;--panel:#fff;--panel2:#f7f8fa;--line:#dfe3ea;--text:#161a22;--muted:#525c6e;--accent:#0050e6;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:16px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:.86em}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px 64px}
+header h1{font-size:clamp(1.6rem,4vw,2.3rem);line-height:1.2;margin:.2em 0 .3em}
+.kicker{color:var(--muted);font-size:.9rem;margin:0}
+.kicker a{color:var(--muted)}
+.note{border:1px solid var(--line);border-left:4px solid var(--warn);background:var(--warn-bg);padding:10px 14px;border-radius:8px;margin:14px 0 20px;font-size:.95rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px;min-width:0}
+h2{font-size:1.05rem;margin:0 0 10px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.btn{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:.9rem;text-align:left}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--btn);border-color:var(--btn);color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.85rem;color:var(--muted);margin:8px 0 0}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+.track{position:relative;height:44px;margin-top:22px}
+.band{display:flex;height:18px;border-radius:5px;overflow:hidden;position:absolute;left:0;right:0;bottom:0}
+.seg{flex:1 1 0;min-width:0;opacity:.75;cursor:pointer;border-right:1px solid color-mix(in srgb,var(--bg) 40%,transparent)}
+.seg:hover,.seg.cur{opacity:1}
+.seg.cur{box-shadow:inset 0 0 0 2px var(--text)}
+.m-agent{background:var(--m-agent)}.m-reproducer{background:var(--m-reproducer)}.m-verifier{background:var(--m-verifier)}
+.pin{position:absolute;bottom:18px;transform:translateX(-50%);width:20px;height:22px;padding:0;border:0;background:none;display:flex;flex-direction:column;align-items:center}
+.pin i{display:block;width:10px;height:10px;border-radius:50%;border:2px solid var(--panel);background:var(--text)}
+.pin.skill i{background:var(--ok);border-radius:2px;transform:rotate(45deg)}
+.pin::after{content:"";width:2px;flex:1;background:var(--muted)}
+.ticks{display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-top:4px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.status{font-size:.9rem;color:var(--muted)}
+.jumps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+.jumps .btn{display:block;width:100%;min-width:0;overflow-wrap:anywhere}
+.jumps b{display:block;font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--accent)}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.counts{list-style:none;margin:0;padding:0;font-size:.88rem}
+.counts li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:3px 0;border-bottom:1px solid var(--line)}
+.counts .bar{grid-column:1/-1;height:4px;background:var(--panel2);border-radius:2px;overflow:hidden}
+.counts .bar span{display:block;height:100%;background:var(--accent);transition:width .3s}
+.counts .num{font-family:"IBM Plex Mono",monospace}
+.search{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.search input{flex:1 1 200px;min-width:0;font:inherit;padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel2);color:var(--text)}
+ol.steps{list-style:none;margin:0;padding:0}
+.step{border:1px solid var(--line);border-left:4px solid var(--c);border-radius:8px;margin-bottom:6px;background:var(--panel2);min-width:0}
+.step.cur{outline:2px solid var(--c)}
+.step.future{opacity:.45}
+.step>h3{margin:0;font-size:inherit}
+.step .hd{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:10px;align-items:baseline;width:100%;padding:8px 10px;background:none;border:0;text-align:left}
+.n{font-family:"IBM Plex Mono",monospace;font-weight:500;color:var(--muted);font-size:.85rem}
+.mode{font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;padding:1px 6px;border-radius:4px;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--text)}
+.sum{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.92rem}
+.sum .t{font-family:"IBM Plex Mono",monospace;color:var(--muted);font-size:.82rem}
+.bd{padding:0 12px 12px;font-size:.92rem}
+.bd p{margin:.3em 0 .6em;white-space:pre-wrap;overflow-wrap:anywhere}
+.bd .ts{color:var(--muted);font-size:.8rem}
+.tool{font-family:"IBM Plex Mono",monospace;font-size:.8rem;background:var(--band);border:1px solid var(--line);border-radius:6px;padding:6px 8px;margin:4px 0;overflow-wrap:anywhere}
+.tool b{color:var(--accent);font-weight:500}
+mark{background:var(--warn-bg);color:inherit;outline:1px solid var(--warn)}
+.empty{color:var(--muted)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+footer{color:var(--muted);font-size:.85rem;margin-top:24px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style></head>
+<body>
+<div class="wrap">
+<header>
+<p class="kicker"><a href="./">OnRamp Evidence Explorer</a> · session replay</p>
+<h1>Watch IBM Bob fix the webhook bug, step by step</h1>
+<p>Task <code>d2fe2053</code>: Bob takes a real bug report (webhooks that answer HTTP 205 get retried), writes a failing test, fixes it, catches its own regression, and only then compares the fix with the maintainer's patch <code>0a9bff9</code>.</p>
+<p class="note" role="note"><strong>Recorded log from IBM Bob IDE's task database, exported read-only; replay, not live footage.</strong> Bob's messages are shown verbatim. Tool arguments are cut to 160 characters, and local home paths show as <code>~</code>.</p>
+</header>
+
+<section class="panel" aria-labelledby="tl-h">
+<h2 id="tl-h">Timeline</h2>
+<div class="legend" aria-hidden="true">
+<span><span class="sw m-agent"></span>Agent (Code) mode</span>
+<span><span class="sw m-reproducer"></span>Reproducer mode</span>
+<span><span class="sw m-verifier"></span>Verifier mode</span>
+<span><span class="sw" style="background:var(--text);border-radius:50%"></span>switch_mode</span>
+<span><span class="sw" style="background:var(--ok)"></span>use_skill</span>
+</div>
+<div class="track" id="track"><div class="band" id="band" aria-hidden="true"></div></div>
+<div class="ticks" aria-hidden="true"><span>Step 1</span><span id="tick-mid"></span><span id="tick-end"></span></div>
+<div class="controls">
+<button class="btn primary" id="play" type="button" aria-pressed="false">Play replay</button>
+<button class="btn" id="prev" type="button">Previous step</button>
+<button class="btn" id="next" type="button">Next step</button>
+<button class="btn" id="all" type="button">Show all steps</button>
+<span class="status" id="status" aria-live="polite"></span>
+</div>
+</section>
+
+<section class="panel" aria-labelledby="j-h">
+<h2 id="j-h">Key moments</h2>
+<div class="jumps" id="jumps"></div>
+</section>
+
+<div class="grid">
+<section class="panel" aria-labelledby="s-h">
+<h2 id="s-h">Steps</h2>
+<div class="search">
+<label for="q" class="sr">Search steps</label>
+<input id="q" type="search" placeholder="Search messages and tool calls (e.g. 205, apply_diff)" autocomplete="off">
+<button class="btn" id="expand" type="button">Expand all</button>
+<button class="btn" id="collapse" type="button">Collapse all</button>
+</div>
+<p class="status" id="qstatus" aria-live="polite"></p>
+<ol class="steps" id="steps"><li class="empty">Loading the recorded session…</li></ol>
+</section>
+<aside class="panel" aria-labelledby="c-h">
+<h2 id="c-h">Tool calls so far</h2>
+<p class="status" id="cstatus"></p>
+<ul class="counts" id="counts"></ul>
+</aside>
+</div>
+
+<footer>Data: <a href="data/bob_session_d2fe2053.json">data/bob_session_d2fe2053.json</a> (generated from the exported Bob trace). Timestamps are UTC. Work outside Bob, such as the export, was done by the team.</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+var KEY=[
+ {n:19,to:19,t:"Failing test",d:"FAIL for the right reason: AssertionError: 3 != 1 (webhook retried 3 times)"},
+ {n:22,to:22,t:"First fix",d:"Accept all 2xx codes in hc/api/transports.py:161"},
+ {n:40,to:40,t:"Bob flags its own regression",d:"“These 22 errors are regressions introduced by my fix!”"},
+ {n:43,to:46,t:"Revised fix",d:"Switch to range(200, 300); Verifier mode refuses the production edit, Bob switches to Agent at 45 and applies it at 46"},
+ {n:68,to:68,t:"Maintainer patch opened",d:"Reads reference_upstream_0a9bff9.patch only after the fix and report"}
+];
+var MODES={agent:"Agent",reproducer:"Reproducer",verifier:"Verifier"};
+var S=[],cur=0,timer=null,showAll=true;
+var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var $=function(id){return document.getElementById(id)};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function hl(s,q){var e=esc(s);if(!q)return e;var qe=esc(q).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");return e.replace(new RegExp(qe,"gi"),function(m){return"<mark>"+m+"</mark>"})}
+function modeVar(m){return"var(--m-"+(MODES[m]?m:"agent")+")"}
+function summary(s){
+ if(s.text)return esc(s.text.split("\n")[0]);
+ return'<span class="t">'+esc(s.tools.map(function(t){return t.name}).join(", ")||"(no message)")+"</span>";
+}
+function build(){
+ var band=$("band"),track=$("track"),list=$("steps"),N=S.length;
+ $("tick-end").textContent="Step "+N;$("tick-mid").textContent="Step "+Math.round(N/2);
+ band.innerHTML="";list.innerHTML="";
+ S.forEach(function(s,i){
+  var seg=document.createElement("div");seg.className="seg m-"+(MODES[s.mode]?s.mode:"agent");seg.title="Step "+s.n+" · "+(MODES[s.mode]||s.mode);
+  seg.addEventListener("click",function(){go(i,true)});band.appendChild(seg);
+  s.tools.forEach(function(t){
+   if(t.name!=="switch_mode"&&t.name!=="use_skill")return;
+   var b=document.createElement("button");b.type="button";b.className="pin"+(t.name==="use_skill"?" skill":"");
+   b.style.left=((i+.5)/N*100)+"%";
+   var lbl=t.name==="use_skill"?"use_skill "+t.args:"switch_mode to "+t.args;
+   b.setAttribute("aria-label","Step "+s.n+": "+lbl);b.title="Step "+s.n+": "+lbl;b.innerHTML="<i></i>";
+   b.addEventListener("click",function(){go(i,true)});track.appendChild(b);
+  });
+  var li=document.createElement("li");li.className="step";li.id="step-"+s.n;li.style.setProperty("--c",modeVar(s.mode));
+  li.innerHTML='<h3><button type="button" class="hd" aria-expanded="false" aria-controls="bd-'+s.n+'"><span class="n">#'+s.n+'</span><span class="mode">'+esc(MODES[s.mode]||s.mode)+'</span><span class="sum">'+summary(s)+'</span></button></h3><div class="bd" id="bd-'+s.n+'" hidden></div>';
+  li.querySelector(".hd").addEventListener("click",function(){toggle(li,s)});
+  list.appendChild(li);
+ });
+ var j=$("jumps");
+ KEY.forEach(function(k){
+  if(k.n>N)return;
+  var b=document.createElement("button");b.type="button";b.className="btn";
+  b.innerHTML="<b>Step "+k.n+(k.to!==k.n?"–"+k.to:"")+"</b>"+esc(k.t)+'<span class="status" style="display:block">'+esc(k.d)+"</span>";
+  b.addEventListener("click",function(){stop();go(k.n-1,true);for(var x=k.n;x<=k.to;x++)openStep(x)});
+  j.appendChild(b);
+ });
+}
+function bodyHtml(s,q){
+ var h='<div class="ts">'+esc(s.ts.replace("T"," ").replace("Z"," UTC"))+" · mode: "+esc(MODES[s.mode]||s.mode)+"</div>";
+ h+=s.text?"<p>"+hl(s.text,q)+"</p>":'<p class="empty">(no message text; tool call only)</p>';
+ s.tools.forEach(function(t){h+='<div class="tool"><b>'+hl(t.name,q)+"</b> "+hl(t.args,q)+"</div>"});
+ return h;
+}
+function setOpen(li,s,open){var bd=li.querySelector(".bd"),btn=li.querySelector(".hd");if(open)bd.innerHTML=bodyHtml(s,$("q").value.trim());bd.hidden=!open;btn.setAttribute("aria-expanded",String(open))}
+function toggle(li,s){setOpen(li,s,li.querySelector(".bd").hidden)}
+function openStep(n){var li=$("step-"+n);if(li)setOpen(li,S[n-1],true)}
+function counts(upto){
+ var c={},tot={};S.forEach(function(s,i){s.tools.forEach(function(t){tot[t.name]=(tot[t.name]||0)+1;if(i<=upto)c[t.name]=(c[t.name]||0)+1})});
+ var names=Object.keys(tot).sort(function(a,b){return tot[b]-tot[a]||a.localeCompare(b)});
+ var sum=0,all=0;names.forEach(function(n){sum+=c[n]||0;all+=tot[n]});
+ $("cstatus").textContent=sum+" of "+all+" calls, through step "+(upto+1)+" of "+S.length;
+ $("counts").innerHTML=names.map(function(n){var v=c[n]||0;return'<li><span class="mono">'+esc(n)+'</span><span class="num">'+v+" / "+tot[n]+'</span><span class="bar" aria-hidden="true"><span style="width:'+(v/tot[n]*100)+'%"></span></span></li>'}).join("");
+}
+function render(){
+ var segs=$("band").children;
+ for(var i=0;i<S.length;i++){segs[i].classList.toggle("cur",i===cur);var li=$("step-"+S[i].n);li.classList.toggle("cur",i===cur);li.classList.toggle("future",!showAll&&i>cur)}
+ counts(cur);
+ var s=S[cur];$("status").textContent="Step "+s.n+" of "+S.length+" · "+(MODES[s.mode]||s.mode)+" mode · "+s.ts.slice(11,19)+" UTC";
+}
+function go(i,scroll){
+ cur=Math.max(0,Math.min(S.length-1,i));
+ if(!showAll){}
+ openStep(S[cur].n);render();
+ if(scroll){var li=$("step-"+S[cur].n);li.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"})}
+}
+function stop(){if(timer){clearInterval(timer);timer=null}var p=$("play");p.textContent="Play replay";p.setAttribute("aria-pressed","false")}
+function play(){
+ if(timer){stop();return}
+ showAll=false;if(cur>=S.length-1)cur=-1;
+ var p=$("play");p.textContent="Pause replay";p.setAttribute("aria-pressed","true");
+ var tick=function(){if(cur>=S.length-1){stop();return}var prev=$("step-"+S[Math.max(cur,0)].n);if(cur>=0)setOpen(prev,S[cur],false);go(cur+1,true)};
+ tick();timer=setInterval(tick,reduce?2600:1400);
+}
+function filter(){
+ var q=$("q").value.trim().toLowerCase(),shown=0;
+ S.forEach(function(s){
+  var hay=(s.text+" "+s.tools.map(function(t){return t.name+" "+t.args}).join(" ")).toLowerCase();
+  var ok=!q||hay.indexOf(q)>=0;var li=$("step-"+s.n);li.hidden=!ok;if(ok)shown++;
+  if(!li.querySelector(".bd").hidden)li.querySelector(".bd").innerHTML=bodyHtml(s,q);
+ });
+ $("qstatus").textContent=q?shown+" of "+S.length+" steps match “"+q+"”":"";
+}
+$("play").addEventListener("click",play);
+$("prev").addEventListener("click",function(){stop();go(cur-1,true)});
+$("next").addEventListener("click",function(){stop();go(cur+1,true)});
+$("all").addEventListener("click",function(){stop();showAll=true;render()});
+$("expand").addEventListener("click",function(){S.forEach(function(s){var li=$("step-"+s.n);if(!li.hidden)setOpen(li,s,true)})});
+$("collapse").addEventListener("click",function(){S.forEach(function(s){setOpen($("step-"+s.n),s,false)})});
+var qt;$("q").addEventListener("input",function(){clearTimeout(qt);qt=setTimeout(filter,120)});
+fetch("data/bob_session_d2fe2053.json").then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(d){
+ S=d.steps;build();render();
+ var m=location.hash.match(/^#step-(\d+)$/);if(m)go(+m[1]-1,true);
+}).catch(function(e){$("steps").innerHTML='<li class="empty">Could not load data/bob_session_d2fe2053.json ('+esc(e.message)+'). Open this page from the site server.</li>'});
+})();
+</script>
+</body></html>
