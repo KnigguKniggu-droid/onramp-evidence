@@ -881,6 +881,16 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 <ol class="runs"><li class="run run-gaps"><div class="run-h"><b>Run 1</b><span>kit <code>a3acbc3</code></span></div><p class="run-k">7 kinds of Django assumptions found</p><p class="run-d">Loaded unchanged; exposed 7 kinds of Django assumptions (hardcoded hc/, Django-only output parsing, baseline.txt vs baseline.json, Reproducer edit scope, Django-specific skill steps).</p><p class="run-m">4 tests · failure type recorded: <b>Unknown</b></p></li><li class="run run-partial"><div class="run-h"><b>Run 2</b><span>kit <code>e4032c2</code></span></div><p class="run-k">1 parser gap found</p><p class="run-d">After Bob made the kit profile-driven: worked, but recorded the unittest failure type as &quot;Unknown&quot;.</p><p class="run-m">4 tests · failure type recorded: <b>Unknown</b> (the bug this run exposed)</p></li><li class="run run-ok"><div class="run-h"><b>Run 3</b><span>kit <code>8165552</code></span></div><p class="run-k">worked unchanged</p><p class="run-d">After Bob&#x27;s parser fix: profile, baseline and map produced, failure classified as AssertionError.</p><p class="run-m">4 tests · failure type recorded: <b>AssertionError</b></p></li></ol>
 </div></section>
 
+<section id="playbooks" aria-labelledby="playbooks-h"><div class="wrap">
+<div class="sh"><h2 id="playbooks-h">How a team uses it</h2>
+<p class="take">Three roles, the kit's real commands and modes, and the files each step leaves behind.</p></div>
+<div class="two">
+<div class="panel"><h3>New developer</h3><p>Run <code>/onramp</code> in Bob. Explorer mode (read-only) answers "where does X live?".</p><p>Leaves: <code>docs/onramp/CODEBASE_MAP.md</code>, <code>baseline.json</code> (which tests already fail).</p></div>
+<div class="panel"><h3>Bug-fixing engineer</h3><p>Switch to Reproducer mode: a failing test first, then the fix. Verifier mode compares the new run with the baseline.</p><p>Leaves: <code>pre_fix_&lt;slug&gt;.txt</code>, <code>post_fix_&lt;slug&gt;.txt</code>, <code>diff_&lt;slug&gt;.txt</code>.</p></div>
+<div class="panel"><h3>Tech lead / reviewer</h3><p>Run <code>/evidence &lt;slug&gt;</code>, then paste the before and after logs into the <a href="verdict.html">verdict tool</a> for a pull-request comment.</p><p>Leaves: <code>REPORT_&lt;slug&gt;.md</code> and a JSON verdict.</p></div>
+</div>
+<p class="sub">Setup for your repo: <a href="profile.html">profile builder</a>. Supported today: Django and plain unittest.</p>
+</div></section>
 <section id="limits" class="band" aria-labelledby="limits-h"><div class="wrap">
 <div class="sh"><h2 id="limits-h">What OnRamp catches, and what it doesn't</h2>
 <p class="take">Three real cases from the evidence. Each links to its source.</p></div>
