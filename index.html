@@ -842,6 +842,15 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 <ol class="runs"><li class="run run-gaps"><div class="run-h"><b>Run 1</b><span>kit <code>a3acbc3</code></span></div><p class="run-k">7 kinds of Django assumptions found</p><p class="run-d">Loaded unchanged; exposed 7 kinds of Django assumptions (hardcoded hc/, Django-only output parsing, baseline.txt vs baseline.json, Reproducer edit scope, Django-specific skill steps).</p><p class="run-m">4 tests · failure type recorded: <b>Unknown</b></p></li><li class="run run-partial"><div class="run-h"><b>Run 2</b><span>kit <code>e4032c2</code></span></div><p class="run-k">1 parser gap found</p><p class="run-d">After Bob made the kit profile-driven: worked, but recorded the unittest failure type as &quot;Unknown&quot;.</p><p class="run-m">4 tests · failure type recorded: <b>Unknown</b> (the bug this run exposed)</p></li><li class="run run-ok"><div class="run-h"><b>Run 3</b><span>kit <code>8165552</code></span></div><p class="run-k">worked unchanged</p><p class="run-d">After Bob&#x27;s parser fix: profile, baseline and map produced, failure classified as AssertionError.</p><p class="run-m">4 tests · failure type recorded: <b>AssertionError</b></p></li></ol>
 </div></section>
 
+<section id="limits" class="band" aria-labelledby="limits-h"><div class="wrap">
+<div class="sh"><h2 id="limits-h">What OnRamp catches, and what it doesn't</h2>
+<p class="take">Three real cases from the evidence. Each links to its source.</p></div>
+<div class="two">
+<div class="panel"><h3>Caught: Bob's own regression</h3><p>Bob's first fix broke 22 tests in the 48-test webhook suite. Bob saw it in Verifier mode and revised the line before the final commit. <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/BOB_SESSION_webhook-205.md">Session log, step 40</a>.</p></div>
+<div class="panel"><h3>Missed: the per-app hook</h3><p>The post-edit hook tests only the edited file's app. For an edit in <code>hc/api</code> it runs <code>hc.api</code>, not <code>hc.integrations.webhook</code>, where the 22 errors were. <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/.github/README.md#known-limitations">Known limitations</a>.</p></div>
+<div class="panel"><h3>Withheld: a crashed run</h3><p>A run with no "Ran N tests" line and no OK/FAILED line gets no verdict ("Inconclusive"), never "0 regressions". Try the synthetic crashed run in the <a href="#demo">classifier above</a>.</p></div>
+</div>
+</div></section>
 <section id="provenance"><div class="wrap">
 <div class="sh"><h2>Who did what</h2></div>
 <div class="who">
