@@ -1,4 +1,4 @@
-// OnRamp classifier, browser edition (Claude Code).
+// OnRamp classifier, browser edition.
 // Classifies runs that the Python normalizer (py/onramp_normalize.py) already turned into versioned JSON.
 // It does not parse raw test logs itself: Python is the authority, and CI checks that both agree.
 (function (root) {

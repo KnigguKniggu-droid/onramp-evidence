@@ -1,4 +1,4 @@
-// OnRamp Evidence Explorer: enhancement layer (Claude Code, 2026-10-13).
+// OnRamp Evidence Explorer: enhancement layer (2026-10-13).
 // The page is complete without this file. It adds:
 //   - a Three.js suite map that recolours by classification (reactive scene)
 //   - GSAP ScrollTrigger: a scroll-played blind-fix sequence and a scroll progress bar
