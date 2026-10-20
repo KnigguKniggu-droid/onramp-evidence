@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OnRamp · Verify the seal yourself</title>
+<meta name="description" content="Recompute the SHA-256 of the OnRamp blind-test brief in your browser and compare it with the sealed record. Or seal your own brief.">
+<meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232563eb'/><path d='M8 22 L15 10 L18 15 L21 11 L25 22 Z' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
+<style>
+:root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
+ --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent)}
+@media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f6f7f9;--band:#eef1f5;--panel:#fff;--panel2:#f7f8fa;--line:#dfe3ea;--text:#161a22;--muted:#525c6e;--accent:#0050e6;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+.skip{position:absolute;left:8px;top:-60px;z-index:10;background:var(--btn);color:#fff;padding:10px 14px;border-radius:8px;font-weight:600}.skip:focus{top:8px}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:18px;align-items:center;padding-top:8px;padding-bottom:8px}
+nav b{margin-right:auto}nav a{color:var(--muted);font-size:14px;padding:6px 2px}
+.kicker{color:var(--accent);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:12px;margin:32px 0 0}
+h1{font-size:clamp(28px,6vw,46px);line-height:1.08;margin:10px 0 12px;letter-spacing:-.025em}
+.lede{color:var(--muted);margin:0 0 8px}
+.scope{border-left:3px solid var(--warn);background:var(--warn-bg);padding:10px 14px;border-radius:0 12px 12px 0;font-size:14px;margin:16px 0 24px}
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap}
+.tabs button{font:inherit;font-weight:600;font-size:15px;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:10px 12px;min-height:44px;cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--accent)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px}
+.panel h2{font-size:18px;margin:0 0 8px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 10px}
+.row{display:grid;grid-template-columns:140px minmax(0,1fr);gap:4px 12px;font-size:14px;margin:6px 0}
+.row dt{color:var(--muted)}.row dd{margin:0}
+.verdict{font-weight:700;font-size:20px;border-radius:12px;padding:12px 14px;margin:12px 0}
+.verdict.ok{background:var(--ok-bg);color:var(--ok)}.verdict.bad{background:var(--bad-bg);color:var(--bad)}.verdict.wait{background:var(--panel2);color:var(--muted)}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
+textarea,input[type=text]{width:100%;font:14px/1.5 "IBM Plex Mono",ui-monospace,Consolas,monospace;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}
+textarea{min-height:180px;resize:vertical}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font:inherit;font-weight:600;font-size:15px;min-height:44px;cursor:pointer;margin:10px 8px 0 0}
+.btn.primary{background:var(--btn);border-color:var(--btn);color:#fff}
+pre{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;font:13px/1.5 "IBM Plex Mono",ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+footer{color:var(--muted);font-size:13px;padding:24px 0 40px}
+@media (max-width:520px){.row{grid-template-columns:minmax(0,1fr)}.row dt{margin-top:6px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Site"><div class="wrap"><b>OnRamp</b><a href="index.html">Home</a><a href="verdict.html">Verdict</a></div></nav>
+<main id="main" class="wrap">
+<p class="kicker">Blind test · webhook-205</p>
+<h1>Verify the seal yourself</h1>
+<p class="lede">Before the blind test started, the team sealed the bug brief: Bob's <code>gen_report.py seal-benchmark</code> recorded the SHA-256 of the brief file's raw bytes and the UTC time. Your browser recomputes that hash here. Nothing is sent anywhere.</p>
+<p class="scope"><b>What the seal proves:</b> this exact brief text existed when the seal record was written, and any later edit changes the hash.<br><b>What it does not prove:</b> that the solver was isolated from other information, or that the timestamp was not set by a local clock the team controls.</p>
+
+<div class="tabs" role="tablist" aria-label="Seal tools">
+<button role="tab" id="t1" aria-controls="p1" aria-selected="true">Check our seal</button>
+<button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">Seal your own brief</button>
+</div>
+
+<section id="p1" role="tabpanel" aria-labelledby="t1">
+<div class="panel">
+<h2>Recorded seal</h2>
+<dl>
+<div class="row"><dt>Record</dt><dd><code>docs/onramp/evidence/benchmark_webhook-205.json</code></dd></div>
+<div class="row"><dt>sealed_at</dt><dd><code id="sealedAt"></code></dd></div>
+<div class="row"><dt>brief_sha256</dt><dd><code id="recHash"></code></dd></div>
+<div class="row"><dt>Hashed bytes</dt><dd>Raw file bytes, UTF-8, LF line endings, one trailing newline. No other normalization.</dd></div>
+</dl>
+</div>
+<div class="panel">
+<h2>Recomputed in your browser</h2>
+<dl>
+<div class="row"><dt>Brief source</dt><dd id="src">Loading…</dd></div>
+<div class="row"><dt>Computed sha256</dt><dd><code id="gotHash">…</code></dd></div>
+</dl>
+<div id="verdict" class="verdict wait" role="status" aria-live="polite">Computing…</div>
+<label for="brief">Brief text (edit it and watch the hash change)</label>
+<textarea id="brief" spellcheck="false"></textarea>
+<button class="btn" id="reset" type="button">Restore original text</button>
+</div>
+</section>
+
+<section id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+<div class="panel">
+<h2>Seal a brief before work starts</h2>
+<p class="sub">Paste your brief, or choose the file. A chosen file is hashed as raw bytes, which is what <code>seal-benchmark</code> does. Pasted text is hashed as UTF-8 with LF line endings, so a CRLF file gives a different hash.</p>
+<label for="slug">Slug</label><input type="text" id="slug" value="my-bug" autocomplete="off">
+<label for="commit">Baseline commit (optional; <code>seal-benchmark</code> reads it from git)</label><input type="text" id="commit" autocomplete="off">
+<label for="allowed">Allowed information</label><input type="text" id="allowed" autocomplete="off">
+<label for="withheld">Withheld information</label><input type="text" id="withheld" autocomplete="off">
+<label for="file">Brief file (optional)</label><input type="file" id="file">
+<label for="mine">Brief text</label>
+<textarea id="mine" spellcheck="false" placeholder="Describe the bug the solver will get…"></textarea>
+<button class="btn primary" id="seal" type="button">Seal now (current UTC time)</button>
+<button class="btn" id="dl" type="button" disabled>Download JSON</button>
+<p class="sub" id="sealMsg" role="status" aria-live="polite"></p>
+<pre id="out" aria-label="Benchmark JSON"></pre>
+<p class="sub">A browser seal is only as trustworthy as where you publish it. Commit the JSON or post it somewhere timestamped before work starts.</p>
+</div>
+</section>
+</main>
+<footer class="wrap">The brief is fetched from <a href="https://raw.githubusercontent.com/KnigguKniggu-droid/onramp/main/docs/onramp/evidence/brief_webhook-205.md">GitHub raw</a>. If the fetch fails, the page uses a copy embedded in this file and says so.</footer>
+<script>
+(function(){
+var RAW="https://raw.githubusercontent.com/KnigguKniggu-droid/onramp/main/docs/onramp/evidence/brief_webhook-205.md";
+var SEAL={"sealed_at": "2026-10-11T21:05:38.561200+00:00", "brief_sha256": "12c482dc2578402a5c77c5ae60bca4f5d61e97d7eb0b030d89454ad67342da15"};
+var EMBED="While testing Healthchecks with a personal project, I set up a webhook integration whose endpoint answers with HTTP 205 (Reset Content). When a check changes state, my endpoint receives three identical requests, and the integration is marked as failed with \"Received status code 205\".\n\nI reproduced it locally: the integration's \"Test\" button also reports an error for the same endpoint, although it only sends one request.\n\nExpected: a 2xx response such as 205 means the notification was delivered; it should not be retried or reported as a failure.\n";
+var $=function(i){return document.getElementById(i)};
+$("sealedAt").textContent=SEAL.sealed_at;$("recHash").textContent=SEAL.brief_sha256;
+function hex(buf){return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("")}
+function sha(bytes){return crypto.subtle.digest("SHA-256",bytes).then(hex)}
+var original=EMBED, seq=0;
+function check(){
+  var n=++seq, bytes=new TextEncoder().encode($("brief").value);
+  sha(bytes).then(function(h){
+    if(n!==seq)return;
+    $("gotHash").textContent=h;
+    var v=$("verdict"), ok=h===SEAL.brief_sha256;
+    v.className="verdict "+(ok?"ok":"bad");
+    v.textContent=ok?"MATCH: this text is the brief sealed at "+SEAL.sealed_at+".":"MISMATCH: this text is not the sealed brief ("+bytes.length+" bytes).";
+  });
+}
+function load(text,srcHtml){original=text;$("brief").value=text;$("src").innerHTML=srcHtml;check()}
+fetch(RAW,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.arrayBuffer()})
+.then(function(buf){
+  var text=new TextDecoder("utf-8",{fatal:true}).decode(buf);
+  sha(buf).then(function(h){
+    var note=h===SEAL.brief_sha256?"":" (raw download hash "+h+")";
+    load(text.replace(/\r\n?/g,"\n"),'Fetched from <a href="'+RAW+'">GitHub raw</a>'+note);
+  });
+})
+.catch(function(e){load(EMBED,"Copy embedded in this page (GitHub fetch failed: "+String(e.message||e).replace(/[<>&]/g,"")+")")});
+$("brief").addEventListener("input",check);
+$("reset").addEventListener("click",function(){$("brief").value=original;check()});
+
+// tabs
+var tabs=[$("t1"),$("t2")];
+function sel(t){tabs.forEach(function(b){var on=b===t;b.setAttribute("aria-selected",on);b.tabIndex=on?0:-1;$(b.getAttribute("aria-controls")).hidden=!on})}
+tabs.forEach(function(b,i){
+  b.addEventListener("click",function(){sel(b)});
+  b.addEventListener("keydown",function(e){var k=e.key;if(k==="ArrowRight"||k==="ArrowLeft"){var t=tabs[(i+(k==="ArrowRight"?1:tabs.length-1))%tabs.length];sel(t);t.focus();e.preventDefault()}});
+});
+
+// seal your own
+var fileBytes=null, json="";
+$("file").addEventListener("change",function(){
+  var f=this.files[0];if(!f){fileBytes=null;return}
+  f.arrayBuffer().then(function(b){fileBytes=b;try{$("mine").value=new TextDecoder().decode(b)}catch(e){}$("sealMsg").textContent="File loaded: "+f.name+" ("+b.byteLength+" bytes). Its raw bytes will be hashed."});
+});
+$("mine").addEventListener("input",function(){if(fileBytes){fileBytes=null;$("file").value="";$("sealMsg").textContent="Text edited: the pasted text will be hashed, not the file."}});
+function pyIso(d){return d.toISOString().replace(/\.(\d{3})Z$/,".$1000+00:00")}
+$("seal").addEventListener("click",function(){
+  var text=$("mine").value;
+  if(!fileBytes&&!text){$("sealMsg").textContent="Paste a brief or choose a file first.";return}
+  var bytes=fileBytes||new TextEncoder().encode(text.replace(/\r\n?/g,"\n"));
+  sha(bytes).then(function(h){
+    var rec={slug:$("slug").value.trim()||"my-bug",sealed_at:pyIso(new Date()),baseline_commit:$("commit").value.trim(),brief_sha256:h,
+      allowed_information:$("allowed").value,withheld_information:$("withheld").value,patch_attached:false,patch_stats:null};
+    json=JSON.stringify(rec,null,2);$("out").textContent=json;$("dl").disabled=false;
+    $("sealMsg").textContent="Sealed "+bytes.byteLength+" bytes. Download the JSON and publish it before work starts.";
+  });
+});
+$("dl").addEventListener("click",function(){
+  var slug=($("slug").value.trim()||"my-bug").replace(/[^\w.-]/g,"_");
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([json],{type:"application/json"}));
+  a.download="benchmark_"+slug+".json";document.body.appendChild(a);a.click();a.remove();
+});
+})();
+</script>
+</body></html>

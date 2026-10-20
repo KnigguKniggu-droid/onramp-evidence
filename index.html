@@ -816,6 +816,7 @@ h1{font-weight:600;letter-spacing:-.06em;max-width:10ch}
 </ol>
 <p class="sub" style="margin-top:8px">Terminal panels are excerpts copied from the evidence files named in each panel (whitespace collapsed; the line starting with # is our annotation). They are not a live session.</p>
 <p class="sub" style="margin-top:14px">Our brief said "a 2xx response such as 205" should succeed, and Bob accepted every 2xx; the maintainer added only 205, because <code>HttpTransport</code> is shared by about 25 integrations. <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CORRECTED_REPORT_webhook-205_2026-10-12.md">Corrected evidence report</a>, <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/REPORT_webhook-205.md">historical report</a> (superseded: it counted 29 never-run tests as fixed).</p>
+<p class="sub"><a class="btn" href="seal.html">Verify the seal yourself (SHA-256 in your browser)</a></p>
 <details><summary>Read the sealed brief and what the seal proves</summary>
 <blockquote>While testing Healthchecks with a personal project, I set up a webhook integration whose endpoint answers with HTTP 205 (Reset Content). When a check changes state, my endpoint receives three identical requests, and the integration is marked as failed with &quot;Received status code 205&quot;.
 
