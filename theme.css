@@ -1,0 +1,145 @@
+/* OnRamp theme layer.
+   Additive. Load after every other stylesheet.
+   Style derived from the Impeccable anti-slop principles (Apache-2.0,
+   github.com/pbakaus/impeccable): tinted neutrals, hierarchy before effects,
+   flat panels, purposeful motion only. No code copied.
+   Rules: does not hide, move or reorder content. Transitions name explicit properties only. */
+
+:root{
+  /* tinted neutrals (no pure black or gray) */
+  --bg:#0b0e0d;
+  --band:#101614;
+  --panel:#111816;
+  --panel2:#16201d;
+  --line:#26332e;
+  --line-strong:#3a4a43;
+  --text:#f2f1ea;
+  --muted:#aab5ae;         /* 8.9:1 on --bg, 8.3:1 on --panel */
+  --accent:#d9f05b;        /* 15:1 on --bg */
+  --on-accent:#111810;
+  /* scale */
+  --t-xs:.8125rem; --t-sm:.875rem; --t-md:1rem; --t-lg:1.1875rem; --t-xl:1.5rem;
+  --t-2xl:clamp(1.75rem,1.2rem + 2.2vw,2.5rem);
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px;
+  --r-sm:6px; --r-md:10px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+
+/* ---------- base ---------- */
+html,body{overflow-x:clip}
+body{
+  background:var(--bg);
+  color:var(--text);
+  text-rendering:optimizeLegibility;
+  font-feature-settings:"kern" 1;
+}
+::selection{background:color-mix(in srgb,var(--accent) 32%,transparent);color:var(--text)}
+img,svg,video,canvas{max-width:100%}
+pre{max-width:100%;overflow-x:auto}
+
+/* ---------- typography (low specificity: page rules still win) ---------- */
+:where(h1,h2,h3,h4){letter-spacing:-.015em;text-wrap:balance}
+:where(.wrap) > :where(header) :where(h1){font-size:var(--t-2xl);line-height:1.12;letter-spacing:-.025em}
+:where(.wrap) :where(h2){font-size:var(--t-xl);line-height:1.25}
+:where(.panel,.card) :where(h2){font-size:var(--t-lg);line-height:1.3}
+:where(.panel,.card) :where(h3){font-size:var(--t-md)}
+:where(p,li){text-wrap:pretty}
+:where(p,li,dd){max-width:75ch}
+:where(.kicker,.hint,.sub,footer){color:var(--muted)}
+:where(.hint){font-size:var(--t-sm)}
+:where(code,kbd,samp,.mono){font-family:var(--mono)}
+:where(:not(pre)) > :where(code){
+  padding:.08em .32em;border-radius:4px;
+  background:color-mix(in srgb,var(--text) 7%,transparent);
+  overflow-wrap:anywhere;
+}
+/* comparable numbers line up */
+:where(table,td,th,.n,.ts,.status,.meta,.v,output,.count,.num){font-variant-numeric:tabular-nums}
+
+/* ---------- links ---------- */
+:where(main,.wrap,footer) :where(a:not(.btn)){
+  text-decoration-thickness:1px;
+  text-underline-offset:.2em;
+  text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);
+}
+:where(main,.wrap,footer) :where(a:not(.btn)):hover{text-decoration-color:currentColor}
+
+/* ---------- panels: flat surfaces, hairline borders, no glow ---------- */
+.panel{
+  border-color:var(--line);
+  border-radius:var(--r-md);
+  box-shadow:none;
+}
+/* a panel inside a panel reads as a section, not a nested card */
+.panel .panel,.panel .card{background:transparent;border-radius:var(--r-sm)}
+.note,.notice{border-radius:var(--r-sm)}
+
+/* ---------- buttons ---------- */
+.btn,button.primary{
+  min-height:40px;
+  border-radius:var(--r-sm);
+  font-weight:500;
+  line-height:1.25;
+  touch-action:manipulation;
+}
+.btn{border-color:var(--line-strong)}
+.btn:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,var(--panel2))}
+.btn.primary,button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn:disabled,button:disabled{cursor:not-allowed;opacity:.6}
+:where(input[type=file])::file-selector-button{
+  font:inherit;font-size:var(--t-sm);color:var(--text);
+  background:var(--panel2);border:1px solid var(--line-strong);
+  border-radius:var(--r-sm);padding:4px 10px;margin-right:8px;cursor:pointer;
+}
+
+/* ---------- form fields ---------- */
+:where(textarea,input[type=text],input[type=search],input:not([type]),select){
+  border-color:var(--line-strong);
+  border-radius:var(--r-sm);
+}
+:where(textarea,input,select)::placeholder{color:color-mix(in srgb,var(--muted) 85%,transparent)}
+
+/* ---------- nav ---------- */
+nav.sitenav{border-bottom-color:var(--line)}
+nav.sitenav a[aria-current="page"]{box-shadow:inset 0 -2px 0 var(--accent)}
+
+/* ---------- tables and details ---------- */
+:where(table){border-collapse:collapse}
+:where(th){text-align:left;font-weight:600;color:var(--muted);font-size:var(--t-sm)}
+:where(th,td){border-bottom:1px solid var(--line)}
+:where(details) > :where(summary){cursor:pointer}
+
+/* ---------- focus: one visible ring everywhere ---------- */
+:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+:where(.btn,button,a,summary,input,textarea,select):focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent);
+}
+
+/* ---------- motion: only when the user allows it, explicit properties ---------- */
+@media (prefers-reduced-motion: no-preference){
+  .btn,button.primary,nav.sitenav a,.panel,:where(main,.wrap,footer) :where(a:not(.btn)){
+    transition:
+      background-color .16s var(--ease),
+      border-color .16s var(--ease),
+      color .16s var(--ease),
+      text-decoration-color .16s var(--ease),
+      box-shadow .16s var(--ease),
+      transform .16s var(--ease);
+  }
+  .btn:active,button.primary:active{transform:translateY(1px)}
+}
+@media (prefers-reduced-motion: reduce){
+  .btn:active,button.primary:active{transform:none}
+}
+
+/* ---------- small screens ---------- */
+@media (max-width:640px){
+  .panel{padding:var(--s-3)}
+  .btn,button.primary{min-height:44px}
+}
