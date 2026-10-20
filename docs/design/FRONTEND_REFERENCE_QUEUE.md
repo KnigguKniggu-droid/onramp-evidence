@@ -2,7 +2,7 @@
 
 > **Revision, 2026-10-13 (evening).** At the participant's direction, the previously rejected families are now implemented: 3D (Three.js suite map), liquid gradient, scroll-played sequence (GSAP ScrollTrigger), cloth/parallax/chime, cinematic reveals and Magic UI-style beams and tickers. Each serves a stated purpose with a fallback; see `REFERENCE_REGISTRY.md` § Revision and the design brief. The table below is the earlier record.
 
-Claude Code, 2026-10-13. Each candidate family was evaluated against one question: does it help a judge **explain, orient, prove, compare or guide**? The default was no new dependency. Four families were implemented and the rest rejected, with reasons.
+The team, 2026-10-13. Each candidate family was evaluated against one question: does it help a judge **explain, orient, prove, compare or guide**? The default was no new dependency. Four families were implemented and the rest rejected, with reasons.
 
 | Candidate family | Serves | Decision | What was built, or why not | Static fallback / reduced motion | Evidence |
 |---|---|---|---|---|---|

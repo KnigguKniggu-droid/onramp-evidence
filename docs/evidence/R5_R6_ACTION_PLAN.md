@@ -3,7 +3,7 @@
 **Status:** In progress  
 **Phase:** Frontend reference (R5) and browser QA (R6)  
 **Deadline:** October 18, 2026, 11:59 PM EDT (6 days)  
-**Owner:** Claude Code (frontend/QA) + human (browser automation/final approval)  
+**Owner:** the team (frontend/QA) + human (browser automation/final approval)\
 
 ---
 
@@ -289,7 +289,7 @@ Line 105:
 1. Human opens Chrome/Playwright with automation
 2. Follows step-by-step instructions from Phase 2 above
 3. Captures real screenshots and records results
-4. Returns findings to Claude for iteration
+4. Returns findings to the team for iteration
 
 **Escalation points:**
 - If parity check fails: escalate to Bob (kit issue, not UI issue)

@@ -1,4 +1,4 @@
-# Design-variant test bench (Claude Code). Renders one page at several widths in headless Edge and records
+# Design-variant test bench (the team). Renders one page at several widths in headless Edge and records
 # overflow, rendered contrast (qa_contrast.js) and anti-slop metrics (qa_slop.js), plus a screenshot per width.
 # Usage: qa_variant.ps1 -SiteDir <dir> -Page index.html -Label A
 param([Parameter(Mandatory)][string]$SiteDir, [Parameter(Mandatory)][string]$Page, [Parameter(Mandatory)][string]$Label,

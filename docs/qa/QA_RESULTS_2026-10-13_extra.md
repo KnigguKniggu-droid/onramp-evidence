@@ -1,4 +1,4 @@
-# R6 remaining checks, 2026-10-13 (Claude Code)
+# R6 remaining checks, 2026-10-13 (the team)
 
 ## Rendered contrast (`tools/qa_extra.ps1` + `tools/qa_contrast.js`)
 - **Method:** with every `<details>` opened, all 327 visible text-owning elements were checked. For each one the script computes its text colour against its effective background, compositing alpha up the ancestor chain, using the WCAG 2.x formula. Large text must reach 3:1; everything else 4.5:1.

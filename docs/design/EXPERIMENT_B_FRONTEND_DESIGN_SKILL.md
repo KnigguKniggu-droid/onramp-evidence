@@ -1,6 +1,6 @@
-# Experiment B: Anthropic `frontend-design` skill applied to the Evidence Explorer
+# Experiment B: the open-source `frontend-design` skill applied to the Evidence Explorer
 
-**Prompt used:** https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md (Apache-2.0, last commit 2026-09-03). It was found by the web/GitHub research agent, and its process was followed as written: plan, review against the brief, build, critique screenshots, remove one accessory.
+**Prompt used:** (external skills repository) (Apache-2.0, last commit 2026-09-03). It was found by the web/GitHub research agent, and its process was followed as written: plan, review against the brief, build, critique screenshots, remove one accessory.
 
 Variant **A** is the page as deployed at f2414fd. Variant **B** is the same page rebuilt from the plan below. Both are measured by the same bench (`tools/qa_variant.ps1`: overflow, rendered contrast, anti-slop metrics; plus `qa_capture.ps1` for the demo verdicts).
 
@@ -71,8 +71,8 @@ Tools: `tools/qa_variant.ps1` with `qa_slop.js` and `qa_contrast.js`; `qa_captur
 - The 3D suite map, scroll-played steps and opt-in chime stay. They answer the user or explain an order, which the skill allows.
 - Bordered containers (~33) remain the main open taste item. Most are real UI fragments (scenario options, result counts, run cards, diff panes) rather than decoration.
 
-## Second opinion: ChatGPT consultation, 2026-10-13
-**Question asked:** should the effects removed in B (haze, parallax/tilt, section fade-ins, count-up tickers) come back? ChatGPT inspected the public commit 754caeb.
+## Second opinion: external AI assistant consultation, 2026-10-13
+**Question asked:** should the effects removed in B (haze, parallax/tilt, section fade-ins, count-up tickers) come back? The assistant inspected the public commit 754caeb.
 
 **Recommendation:** keep B, and keep all four effects removed:
 - **Haze:** the truth table is the better hero visual.
@@ -92,8 +92,8 @@ It found these issues, all fixed in this commit:
 
 **Process note it raised:** B was promoted before the participant approved it. Future design swaps go to a preview first, with screenshots and approval. The A rollback is kept.
 
-## Third opinion: Codex consultation, 2026-10-13
-The Codex desktop thread that wrote the master prompt was asked the same questions. The message was typed into its visible window and the reply read from its thread.
+## Third opinion: second AI assistant consultation, 2026-10-13
+The desktop assistant thread that wrote the master prompt was asked the same questions. The message was typed into its visible window and the reply read from its thread.
 
 **Verdict:** keep variant B; add no more libraries or effects. The remaining work is release proof and the human gates: the video first, then the manual a11y passes. Its credibility fixes are applied in this commit:
 - **Section heading:** "29 inherited Windows failures, zero regressions". Its takeaway says Linux CI passes and that the 29 are Windows-only.

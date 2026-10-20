@@ -1,4 +1,4 @@
-# UI state and accessibility matrix: results (Claude Code, 2026-10-13)
+# UI state and accessibility matrix: results (the team, 2026-10-13)
 
 Site SHA c42070f, unless a row says otherwise.
 

@@ -1,4 +1,4 @@
-# Claim risk register (Claude Code, 2026-10-13)
+# Claim risk register (the team, 2026-10-13)
 
 Release verdict: **NOT_SUBMISSION_CLEAN.**
 
@@ -10,7 +10,7 @@ Release verdict: **NOT_SUBMISSION_CLEAN.**
 | CR-04 | Empty allowed/withheld seal fields | HIGH | Disclosed on the site (inside `<details>`) and in the corrections. The historical JSON is unchanged. | MITIGATED |
 | CR-05 | Bob's fix described as identical to the maintainer's | HIGH | The strip reads "≠ different accepted-status policy", and both diffs are shown | MITIGATED |
 | CR-06 | Kit commit and upstream pin conflated | HIGH | Since 63e1499 (site) and 30bb017 (README), e10db36 is named as the kit commit and its app code is shown to equal upstream 0968fa2 | MITIGATED |
-| CR-07 | "All software written by IBM Bob" | HIGH | Who-did-what panel, README "How it was built", and "Written by Claude Code" in commit messages | MITIGATED |
+| CR-07 | "All software written by IBM Bob" | HIGH | Who-did-what panel, README "How it was built", and the team attribution line in commit messages | MITIGATED |
 | CR-08 | Reproducer mode described as enforced | MED | README: "an instruction, not a tool restriction" | MITIGATED |
 | CR-09 | Hook described as a regression gate | MED | README states it is runner feedback only and always exits 0 (30bb017) | MITIGATED |
 | CR-10 | Saved-reel review overstated | HIGH | No public material claims a reel count or review depth. Reel IDs stay private. | MITIGATED |

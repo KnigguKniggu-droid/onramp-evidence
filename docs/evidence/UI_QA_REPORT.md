@@ -1,4 +1,4 @@
-# UI QA report: Evidence Explorer (Claude Code, 2026-10-13)
+# UI QA report: Evidence Explorer (the team, 2026-10-13)
 
 **Status:** R5/R6 pass on automated and programmatic evidence. The human screen-reader pass is open. The release verdict stays **NOT_SUBMISSION_CLEAN**.
 
@@ -10,7 +10,7 @@
 | Deployed SHA | `c42070f`: Pages deploy run 38461455845 succeeded for this SHA |
 | Parity CI | Run 38461456091, success at `c42070f` |
 | Kit SHA | `30bb017`: Tests, Mypy and Coverage all succeeded |
-| Browsers | Chrome 154 (live checks via Claude in Chrome); Microsoft Edge headless on Windows 11 (captures) |
+| Browsers | Chrome 154 (live checks via a browser-automation extension); Microsoft Edge headless on Windows 11 (captures) |
 | Timestamps | 2026-10-13, 18:49–20:20 UTC |
 | Rollback target | `b717ce8`, the last pre-redesign site commit: `git revert` the range, or redeploy that commit |
 
@@ -23,13 +23,13 @@
 | Classifier verdicts | Clicked all four scenarios | Full: green, 0 regressions. Targeted: amber, not full-suite. Synthetic: 1 regression. Crashed: inconclusive. | Metrics jsonl; live check |
 | Python/JS parity | `py/parity_check.py` locally, plus CI | All golden cases ok | CI run above |
 | Keyboard / focus | Programmatic `focus()` on every control (2026-10-12) | All visible; skip link works | `QA_RESULTS_2026-10-12.md` |
-| Accessibility tree | Claude in Chrome, DOM inspection | Named landmarks; headings without skipped levels; labelled radios; `aria-pressed`; live region; no unnamed links or images; `lang=en`; no duplicate ids | `QA_RESULTS_2026-10-13_extra.md` |
+| Accessibility tree | Browser-automation extension, DOM inspection | Named landmarks; headings without skipped levels; labelled radios; `aria-pressed`; live region; no unnamed links or images; `lang=en`; no duplicate ids | `QA_RESULTS_2026-10-13_extra.md` |
 | Reduced motion | CSS inspection | No animations or transitions; smooth scroll disabled | `template` CSS |
 | Loading / slow | Local server delaying data by 4 s (`tools/qa_netserver.py`) | Loading text plus `aria-busy`; the last selection wins | extra QA doc |
 | Error / offline | Data connection dropped | Amber, cause stated, no cards drawn | extra QA doc |
 | No JavaScript | `noscript` | Message explains that nothing is classified and points to the raw logs | Page source |
 | Fonts blocked | Edge `--host-resolver-rules` | Fallback renders cleanly | `r6-extra-fonts-blocked-1280.png` |
-| Console | Claude in Chrome, live | 0 errors or exceptions | Live check at 63e1499 |
+| Console | Browser-automation extension, live | 0 errors or exceptions | Live check at 63e1499 |
 | Network | Resource timing, live | 0 failed requests; same-origin plus Google Fonts only | Live check |
 | Performance | PerformanceObserver, 3 live loads | LCP 124 / 100 / 88 ms. CLS 0 (0.1085 before 9121f3d). | `MOTION_AND_PERFORMANCE_BUDGET.md` |
 | Links | curl crawl of every `href` on the live page | 38 of 38 return 200. The 3 flagged items were the data-URI favicon and the font preconnect origins, not links. | Live crawl at 63e1499 |

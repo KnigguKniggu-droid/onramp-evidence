@@ -1,4 +1,4 @@
-// Rendered-style contrast audit (Claude Code). For every visible element that owns text, reads the computed
+// Rendered-style contrast audit (the team). For every visible element that owns text, reads the computed
 // text colour and the effective background (composited up the ancestor chain) and applies the WCAG 2.x formula.
 // Large text (>=24px, or >=18.66px bold) needs 3:1, everything else 4.5:1. Not a substitute for a manual audit:
 // text over images or gradients is reported as "skipped".

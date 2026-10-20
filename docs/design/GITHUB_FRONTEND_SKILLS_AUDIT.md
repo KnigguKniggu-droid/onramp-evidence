@@ -28,7 +28,7 @@ Adopt five habits immediately:
 
 ## Concrete changes applied from the audit
 
-- Added this audit and a project-level `AGENTS.md` so future Claude/Codex/Bob work inherits the design and evidence contract.
+- Added this audit and a project-level `AGENTS.md` so future work by the team, its assistants and Bob inherits the design and evidence contract.
 - Keep the current cinematic hero, but use the actual OnRamp counts instead of copied Vesper/enterprise claims.
 - Preserve the full scroll narrative and the live 360° suite map; no new framework or component dependency is added.
 - The next low-risk CSS hardening pass should enforce dark browser chrome, 44px map controls, tabular metrics, explicit touch behavior, and safe anchor offsets.

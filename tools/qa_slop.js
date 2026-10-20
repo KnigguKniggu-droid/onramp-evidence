@@ -1,4 +1,4 @@
-// Anti-slop design metrics (Claude Code). Measures a rendered page so design variants can be compared with numbers,
+// Anti-slop design metrics (the team). Measures a rendered page so design variants can be compared with numbers,
 // not impressions. Each metric maps to a common "AI slop" tell: too many ad-hoc sizes/colours/radii, decorative
 // gradients/shadows everywhere, emoji as icons, everything centred, overly long lines, CTA spam, broken heading order.
 function onrampSlopAudit(doc) {

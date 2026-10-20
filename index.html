@@ -602,6 +602,121 @@ h1{font-weight:600;letter-spacing:-.06em;max-width:10ch}
 <p class="sub">The browser classifier and the Python implementation (py/onramp_normalize.py) give identical results on every golden case, checked by CI on each push: full run (29 inherited, 0 fixed, 0 regressions), targeted run (1,761 not run, 0 fixed), synthetic regression (1), crashed run and unsupported schema (both inconclusive). IBM Bob&#x27;s own corrected classifier in the kit (gen_report.py, 2a527f8) agrees on the full, regression and crash cases; it reports the docstring-bearing targeted run as inconclusive, a known limitation listed in the corrections file.</p>
 <p class="sub">Raw logs: <a href="fixtures/baseline_run.txt">baseline</a>, <a href="fixtures/full_run_after_fix.txt">full run</a>, <a href="fixtures/targeted_run.txt">targeted run</a>, normalized <a href="data/full_run_after_fix.json">JSON</a>, <a href="classifier.js">classifier.js</a>. Local paths in the logs are replaced with &lt;repo&gt; and &lt;home&gt;.</p>
 </details>
+<!-- OnRamp: "Try it on your own test log". Requires classifier.js (window.OnRampClassifier) to be loaded first. -->
+<div class="panel" id="try" style="margin-top:18px">
+<h3 id="try-h" style="margin-top:0">Try it on your own test log</h3>
+<p class="sub">Paste the verbose output of a Django or Python unittest run (<code>manage.py test -v 2</code> or <code>python -m unittest -v</code>). The log is parsed in your browser by a JavaScript port of the team's Python normalizer (py/onramp_normalize.py) and classified by the same classifier.js used above. Nothing is uploaded. This port is checked against the five published fixtures, not by CI; the Python normalizer stays the authority.</p>
+<fieldset style="border:0;padding:0;margin:0 0 10px">
+<legend class="sub">Compare against</legend>
+<label><input type="radio" name="try-base" value="hc" checked> the Healthchecks baseline above (data/baseline_run.json)</label><br>
+<label><input type="radio" name="try-base" value="own"> my own baseline log (any project)</label>
+</fieldset>
+<div id="try-base-wrap" hidden>
+<label for="try-base-log">Baseline log (run before the change)</label>
+<textarea id="try-base-log" rows="6" spellcheck="false" style="width:100%;font:13px/1.5 'IBM Plex Mono',monospace;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px"></textarea>
+</div>
+<label for="try-log">Current log (run after the change)</label>
+<textarea id="try-log" rows="8" spellcheck="false" aria-describedby="try-h" style="width:100%;font:13px/1.5 'IBM Plex Mono',monospace;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px"></textarea>
+<p style="display:flex;flex-wrap:wrap;gap:8px;margin:10px 0">
+<button type="button" class="btn" id="try-run">Classify</button>
+<button type="button" class="btn" id="try-sample">Load the real targeted-run log</button>
+</p>
+<div id="try-out" class="verdict" role="status" aria-live="polite"></div>
+<div class="list" id="try-list" hidden></div>
+</div>
+<script>
+(function () {
+  'use strict';
+  /*NORMALIZE-START*/
+  // JavaScript port of normalize() in py/onramp_normalize.py (same regexes, same fail-closed problems; no sha256).
+  function normalizeLog(text, source) {
+    text = text.replace(/^﻿/, '').replace(/\x00/g, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const sep = /^(?:={20,}|-{20,})\s*$/m.exec(text);
+    const body = sep ? text.slice(0, sep.index) : text;
+    const HEADER = /(?:^|(?<=\.\.\.))(\w+) \(([\w.]+)\)/gm;
+    const CONT = /[^\r\n]*\)(?: \.\.\.|\r?\n[^\r\n]* \.\.\.)/y;
+    const heads = [];
+    let h;
+    while ((h = HEADER.exec(body)) !== null) {
+      CONT.lastIndex = h.index;
+      if (CONT.test(body)) heads.push(h);
+    }
+    const outcomes = {};
+    heads.forEach((hd, i) => {
+      const seg = body.slice(hd.index + hd[0].length, i + 1 < heads.length ? heads[i + 1].index : body.length);
+      const s = /(?:\.\.\. |^)(ok|FAIL|ERROR|skipped[^\r\n]*|expected failure|unexpected success)\s*$/m.exec(seg);
+      if (!s) return;
+      const raw = s[1];
+      outcomes[hd[2]] = (raw === 'ok' || raw === 'expected failure') ? 'PASS' : raw.indexOf('skipped') === 0 ? 'SKIP'
+        : raw === 'unexpected success' ? 'FAIL' : raw;
+    });
+    const ran = /^Ran (\d+) tests? in [\d.]+s\s*$/m.exec(text);
+    const term = /^(OK|FAILED)\b.*$/m.exec(text);
+    const n = Object.keys(outcomes).length, problems = [];
+    if (!text.trim()) problems.push('empty output');
+    if (!ran) problems.push('no "Ran N tests" line (crashed or aborted run?)');
+    if (!term) problems.push('no terminal OK/FAILED line');
+    if (ran && Number(ran[1]) !== n) problems.push('"Ran ' + ran[1] + '" but ' + n + ' per-test results parsed (use verbose output)');
+    if (ran && term) {
+      const anyFail = Object.keys(outcomes).some(k => outcomes[k] === 'FAIL' || outcomes[k] === 'ERROR');
+      if ((term[1] === 'OK') === anyFail) problems.push('terminal status disagrees with per-test results');
+    }
+    const sorted = {};
+    Object.keys(outcomes).sort().forEach(k => { sorted[k] = outcomes[k]; });
+    return { schema_version: 'onramp.run/1', source: source || '', valid: problems.length === 0, problems,
+      tests_run: ran ? Number(ran[1]) : null, outcomes: sorted };
+  }
+  /*NORMALIZE-END*/
+  if (typeof document === 'undefined') { module.exports = { normalizeLog }; return; }
+
+  const $ = id => document.getElementById(id);
+  const out = $('try-out'), list = $('try-list');
+  const own = () => document.querySelector('input[name="try-base"]:checked').value === 'own';
+  document.querySelectorAll('input[name="try-base"]').forEach(r => r.addEventListener('change', () => { $('try-base-wrap').hidden = !own(); }));
+  let hcBase = null;
+  const getHcBase = () => hcBase ? Promise.resolve(hcBase)
+    : fetch('data/baseline_run.json').then(r => { if (!r.ok) throw new Error('could not load data/baseline_run.json'); return r.json(); }).then(j => (hcBase = j));
+
+  $('try-sample').addEventListener('click', () => {
+    out.className = 'verdict'; out.textContent = 'Loading fixtures/targeted_run.txt…';
+    fetch('fixtures/targeted_run.txt').then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(t => { $('try-log').value = t; out.textContent = 'Loaded the real targeted-run log (fixtures/targeted_run.txt). Select Classify.'; $('try-run').focus(); })
+      .catch(e => { out.className = 'verdict v-warn'; out.textContent = 'Could not load the sample log (' + e.message + ').'; });
+  });
+
+  $('try-run').addEventListener('click', async () => {
+    list.hidden = true; list.textContent = '';
+    if (typeof OnRampClassifier === 'undefined') { out.className = 'verdict v-warn'; out.textContent = 'classifier.js did not load; nothing was classified.'; return; }
+    try {
+      out.className = 'verdict'; out.textContent = 'Parsing and classifying…';
+      const cur = normalizeLog($('try-log').value, 'pasted current log');
+      const base = own() ? normalizeLog($('try-base-log').value, 'pasted baseline log') : await getHcBase();
+      const res = OnRampClassifier.classify(base, cur);
+      if (!res.valid) {
+        out.className = 'verdict v-warn';
+        out.textContent = 'Inconclusive, no verdict: ' + res.problems.join('; ') + '. OnRamp refuses to report "fixed" or "0 regressions" from an incomplete or unparsed run.';
+        return;
+      }
+      const regs = res.regression.length + res.new_failure.length;
+      const counts = 'Parsed ' + Object.keys(cur.outcomes).length + ' test result(s). ' +
+        [['inherited', 'inherited'], ['regression', 'regression'], ['new_failure', 'new failing'], ['fixed', 'fixed'], ['not_run', 'not run'], ['skipped', 'skipped'], ['unchanged_pass', 'unchanged'], ['new_test', 'new passing']]
+          .map(([k, l]) => res[k].length + ' ' + l).join(', ') + '.';
+      if (res.scope === 'TARGETED') {
+        out.className = 'verdict ' + (regs ? 'v-bad' : 'v-warn');
+        out.textContent = 'Targeted run, not a full-suite result: ' + (regs ? regs + ' new failure(s)' : 'no failures among the tests that ran') + '. ' + counts + ' Not-run tests never count as fixed.';
+      } else {
+        out.className = 'verdict ' + (regs ? 'v-bad' : 'v-ok');
+        out.textContent = (regs ? regs + ' new failure(s) in the full run' : 'No regressions in the full run') + '. ' + counts;
+      }
+      const bad = res.regression.map(i => 'regression: ' + i).concat(res.new_failure.map(i => 'new failing: ' + i), res.fixed.map(i => 'fixed: ' + i));
+      if (bad.length) { list.hidden = false; bad.slice(0, 400).forEach(t => { const d = document.createElement('div'); d.textContent = t; list.appendChild(d); }); }
+    } catch (e) {
+      out.className = 'verdict v-warn'; out.textContent = 'Nothing was classified (' + e.message + ').';
+    }
+  });
+})();
+</script>
+
 </div></section>
 
 <section id="baseline"><div class="wrap">
@@ -678,7 +793,7 @@ Expected: a 2xx response such as 205 means the notification was delivered; it sh
 <li><a href="https://github.com/KnigguKniggu-droid/onramp"><b>The kit</b><span>OnRamp applied to Healthchecks, with every Bob commit</span></a></li>
 <li><a href="https://github.com/KnigguKniggu-droid/onramp/actions/runs/38460743005"><b>Linux CI run 38460743005</b><span>The upstream suite passing after the fix</span></a></li>
 <li><a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/CORRECTIONS_2026-10-11.md"><b>Corrections and limitations</b><span>What did not work, stated plainly</span></a></li>
-<li><a href="https://github.com/KnigguKniggu-droid/onramp-evidence"><b>This page's source</b><span>Classifier, fixtures and the parity check against Bob's Python</span></a></li>
+<li><a href="https://github.com/KnigguKniggu-droid/onramp-evidence"><b>This page's source</b><span>Classifier, fixtures and the parity check against the team's Python normalizer</span></a></li>
 </ol>
 </div></section>
 </main>

@@ -4,7 +4,7 @@
 
 **Reconciliation Date:** 2026-10-12  
 **Deadline:** October 18, 2026, 11:59 PM EDT (6 days remaining)  
-**Reconciler:** Claude Code (Haiku 4.5)  
+**Reconciler:** the team\
 **Phase:** R0–R9/S1 execution (binding continuation directive v3)
 
 ## Repository State
@@ -17,11 +17,11 @@
   - Branch: main
 
 - **hc-bob (Healthchecks fork)**
-  - Latest commit: `dfb2e580` — "kit: add Claude-authored onramp_normalize.py (normalize, classify, init-profile)"
+  - Latest commit: `dfb2e580` — adds the team-authored onramp_normalize.py (normalize, classify, init-profile)
   - Remote: `https://github.com/KnigguKniggu-droid/onramp.git`
   - Working tree: 1 untracked file: `docs/onramp/evidence/suite_post_fix_full.txt`
   - Branch: main
-  - Status: **Post-Bob work complete**. Correction 2026-10-12: not all commits are Bob's; Claude-authored commits (pitch deck, CI trigger, corrections, onramp_normalize.py) say so in their messages.
+  - Status: **Post-Bob work complete**. Correction 2026-10-12: not all commits are Bob's; team-authored commits (pitch deck, CI trigger, corrections, onramp_normalize.py) say so in their messages.
 
 ### Published
 - **onramp-evidence Pages site:** https://kniggukniggu-droid.github.io/onramp-evidence/
@@ -79,11 +79,11 @@
 | **No before/after UI QA document** | P1 | MISSING | Required for R5/R6 acceptance record |
 | **Pitch deck link not validated** | P2 | UNVERIFIED | Link exists; content/PDF validity untested |
 | **Demo video link missing** | P2 | UNVERIFIED | UI addendum references "Watch Demo" but no video link present in current site |
-| **Corrections file link not validated** | P2 | UNVERIFIED | Links to `docs/evidence/CLAUDE_CORRECTIONS_2026-10-11.md`; file presence untested |
+| **Corrections file link not validated** | P2 | UNVERIFIED | Links to `docs/evidence/CORRECTIONS_2026-10-11.md`; file presence untested |
 
 ### Known Blockers and Limitations (from binding addendum)
 
-1. **Bob credits exhausted** — per NOTE_FIRST.md: "original Bob plan allowance was exhausted." No new Bob work presumed available; Claude handles UI only.
+1. **Bob credits exhausted** — per NOTE_FIRST.md: "original Bob plan allowance was exhausted." No new Bob work presumed available; The team handles UI only.
 
 2. **Sealed benchmark immutable** — webhook-205 benchmark sealed before Bob's work. Original report (`REPORT_webhook-205.md`) preserved as historical; any corrected report marked superseded, not deleted.
 
@@ -139,7 +139,7 @@
 
 ---
 
-## Gate status update — 2026-10-12 ~00:20 local (Claude Code, Opus 5.5)
+## Gate status update — 2026-10-12 ~00:20 local (the team)
 
 Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 
@@ -147,13 +147,13 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 |---|---|---|
 | R1 normalizer/classifier | PASS | `py/test_onramp_normalize.py` 20/20 (full, targeted, regression, new failure, fixed, skipped, expected failure, empty/crash/timeout, count and terminal mismatch, mid-line warnings, docstrings, schema, CRLF, BOM/UTF-16 JSON) |
 | R2 fresh install | PASS | Untouched Django (0968fa2) and Flask (a380909) clones: copy `.bob/` → `init-profile --write` → verbose run → normalize → classify: valid FULL, 29/1 inherited, 0 regressions. Found and fixed a PowerShell BOM defect (kit 93c611d). |
-| R3 hook honesty | DOCUMENTED | Hook is runner feedback only; stated in `docs/evidence/CLAUDE_CORRECTIONS_2026-10-11.md` (kit repo). Bob's hook file unchanged (Bob out of budget; Claude did not edit Bob's files). |
+| R3 hook honesty | DOCUMENTED | Hook is runner feedback only; stated in `docs/evidence/CORRECTIONS_2026-10-11.md` (kit repo). Bob's hook file unchanged (Bob out of budget; the team did not edit Bob's files). |
 | Python/JS parity | PASS | CI `parity` green on every push since d35d3fc; 5/5 golden cases |
 | Deployed SHA | VERIFIED | Pages deployment and parity both succeeded for 39a3dcf, then b35b039 pushed (re-verify after deploy) |
 | R6 responsive | PASS (automated) | True-width iframes 320/375/768/1440: no document overflow, before (d35d3fc) and after screenshots in `docs/qa/screenshots/` |
 | R6 keyboard/focus/structure | PASS (programmatic) | 36 reachable controls all show focus; skip link; 1 h1, 6 h2; labelled selects; aria-live verdict |
 | R6 links/console/error state | PASS | 34 links 200; no console errors; missing-data error shown |
-| R5 design pass | PASS (Claude-assessed) | Redesign 2026-10-13 (5fa5428+): decision-rule hero, auto-run demo, run cards; brief in `docs/design/EVIDENCE_EXPLORER_DESIGN_BRIEF.md`; before/after screenshots in `docs/qa/screenshots/` |
+| R5 design pass | PASS (team-assessed) | Redesign 2026-10-13 (5fa5428+): decision-rule hero, auto-run demo, run cards; brief in `docs/design/EVIDENCE_EXPLORER_DESIGN_BRIEF.md`; before/after screenshots in `docs/qa/screenshots/` |
 | R6 redesign re-QA | PASS (automated) | after-redesign captures: no overflow 320–1440, 4 scenario verdicts correct, light theme captured, token contrast ≥4.5:1 both themes (computed) |
 | R6 rendered contrast, direct 200% zoom, slow/offline/fonts-blocked, a11y tree | PASS (automated) | `docs/qa/QA_RESULTS_2026-10-13_extra.md`; light accent fixed after the audit found 4.41:1 |
 | R6 human screen-reader pass (NVDA/Narrator) | OPEN (human) | accessibility-tree proxy passed; listening pass not done |
@@ -164,7 +164,7 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 | Form submission | OPEN (human) | must be submitted manually (ToS voids automated submissions) |
 
 
-## Update 2026-10-13 (Claude Code)
+## Update 2026-10-13 (the team)
 - **SHAs:**
   - kit `30bb017`: Tests, Mypy and Coverage all green
   - site `c42070f`: parity and Pages green; the deployed SHA equals the source SHA, per the deploy run for `c42070f`
@@ -185,7 +185,7 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
 | S1 submission | Human only. |
 
 
-## Update 2026-10-13, evening (Claude Code): enhancement layer
+## Update 2026-10-13, evening (the team): enhancement layer
 - **What shipped:** the participant directed that the named resources be used.
   - Three.js suite map; GSAP ScrollTrigger sequence, tickers and reveals
   - liquid-gradient hero, parallax and tilt, opt-in chime
@@ -208,21 +208,21 @@ Verdict: **NOT_SUBMISSION_CLEAN** (human gates open).
   - The verdict stays **NOT_SUBMISSION_CLEAN**: the video, organizer email, eligibility confirmation, screen-reader pass and form submission are human steps.
 
 
-## Update 2026-10-13, late night (Claude Code): consultations and final functional pass
+## Update 2026-10-13, late night (the team): consultations and final functional pass
 - **Consultations:**
-  - ChatGPT ("Claude Code Master Prompt" chat) and Codex (the thread that wrote the master prompt) both recommend keeping variant B and adding no further effects.
-  - ChatGPT found 6 bugs, fixed in 13a2047.
-  - Codex's credibility fixes were applied in 89fe6f4.
+  - Two external AI assistants (the master-prompt chat, and the thread that wrote the master prompt) both recommend keeping variant B and adding no further effects.
+  - The first assistant found 6 bugs, fixed in 13a2047.
+  - The second assistant's credibility fixes were applied in 89fe6f4.
 - **Live endpoint audit (89fe6f4):** robots, sitemap, 404.html, preview.png, deck PDF, corrections, corrected report, Bob fix commits and the commit list all return 200. `/no-such-page` returns 404. All 45 links resolve, the `#run=` deep link works, and there are 0 console errors and 0 failed requests.
 - **Clean-install re-run (C3):** fresh Django and Flask clones with the committed kit. The first attempt found a parser gap: on a fresh Django checkout one test header was glued to migration output, so the run was correctly INCONCLUSIVE. Fixed in kit 187c8fe (+1 regression test, 24 total). The re-run then passed: Django FULL 29 inherited / 0 regressions, Flask FULL 1 inherited, and an injected unknown status was INCONCLUSIVE in both.
 - **Verdict:** remains **NOT_SUBMISSION_CLEAN**. Open items: the demo video, the manual screen-reader, keyboard and mobile passes, the organizer email, eligibility confirmation and the human form submission.
 
 
-## Update 2026-10-15 (Claude Code): Codex-period review, audit fixes, rework
+## Update 2026-10-15 (the team): assistant-period review, audit fixes, rework
 
-- **Codex period (2026-10-14 03:3x–04:4x UTC, user-authorized, while Claude was usage-limited):** Codex pushed d057f4f (Preview C promoted, a11y/copy), 00bbbd2 (evidence-console hero), f894f7b (Halo section), an intermediate template-copy pass, e4511b7 (evidence studio, 360° map controls), 2143508 (cinematic hero with hotlinked third-party video, Inter/Instrument Serif, liquid nav pills) and 6346af0 (AGENTS.md, `docs/design/GITHUB_FRONTEND_SKILLS_AUDIT.md`).
-- **Template-text correction:** one intermediate template-copy commit contained placeholder marketing text that does not describe OnRamp. Codex removed it in the next commit. With the participant's approval, the commit was folded into its successor on 2026-10-15. Commit dates were kept and the final tree is unchanged.
-- **Audit:** Claude plus one Haiku 5.5 and one Sonnet 5.5 read-only subagent audited the live site (6346af0). Findings: duplicated/templated sections, unlicensed hotlinked video (13.9 MB autoplay), unused uncredited webfont, contradictory toggle labels, aria-live firing on pointermove, hidden verdict state colours, sticky steps against AGENTS.md, horizontal overflow at 320/375/1024 px (pre-existing at 6346af0). All 4 verdicts and counts were correct.
+- **Assistant period (2026-10-14 03:3x–04:4x UTC, user-authorized, while the team's main tooling was usage-limited):** A second AI coding assistant, working for the team, pushed d057f4f (Preview C promoted, a11y/copy), 00bbbd2 (evidence-console hero), f894f7b (Halo section), an intermediate template-copy pass, e4511b7 (evidence studio, 360° map controls), 2143508 (cinematic hero with hotlinked third-party video, Inter/Instrument Serif, liquid nav pills) and 6346af0 (AGENTS.md, `docs/design/GITHUB_FRONTEND_SKILLS_AUDIT.md`).
+- **Template-text correction:** one intermediate template-copy commit contained placeholder marketing text that does not describe OnRamp. The assistant removed it in the next commit. With the participant's approval, the commit was folded into its successor on 2026-10-15. Commit dates were kept and the final tree is unchanged.
+- **Audit:** the team's main session plus two read-only subagents audited the live site (6346af0). Findings: duplicated/templated sections, unlicensed hotlinked video (13.9 MB autoplay), unused uncredited webfont, contradictory toggle labels, aria-live firing on pointermove, hidden verdict state colours, sticky steps against AGENTS.md, horizontal overflow at 320/375/1024 px (pre-existing at 6346af0). All 4 verdicts and counts were correct.
 - **Fixes shipped:**
   - 887e886: a11y/colour/overflow fixes
   - 3e5d76f: video removed

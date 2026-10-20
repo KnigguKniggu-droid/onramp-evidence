@@ -1,4 +1,4 @@
-# Evidence Explorer QA results: observed, 2026-10-12 (Claude Code)
+# Evidence Explorer QA results: observed, 2026-10-12 (the team)
 
 This file records results that were actually observed. `EVIDENCE_EXPLORER_UI_QA_2026-10.md` is the checklist; anything not listed here is still **open**. Release verdict: **NOT_SUBMISSION_CLEAN**.
 
@@ -24,7 +24,7 @@ Observed issues:
 - There is no skip link.
 - The reduced-motion rule (b281b15) existed only in the generated `index.html`, so the next rebuild would have removed it.
 
-## Changes made (template.html, Claude Code)
+## Changes made (template.html, the team)
 - Stats and result-card grids use `minmax(min(100%,132px|118px),1fr)`, giving two columns at 320px.
 - Navigation links get padding and a 32px minimum height.
 - A skip link to the classifier demo.
@@ -72,7 +72,7 @@ Procedure: copy only `.bob/` into an untouched clone, run `init-profile --write`
 **Defect found and fixed:** the first R2 attempt failed. PowerShell's `>` writes JSON with a UTF-8 BOM, and `classify` could not read it. Kit commit 93c611d adds `load_run()` and a test for this.
 
 ## Deployed AFTER: commit 39a3dcf (Pages deployment and parity CI both success for this SHA)
-Checked in Chrome through the Claude in Chrome extension against https://kniggukniggu-droid.github.io/onramp-evidence/, plus curl.
+Checked in Chrome through a browser-automation extension against https://kniggukniggu-droid.github.io/onramp-evidence/, plus curl.
 
 | Check | Result |
 |---|---|

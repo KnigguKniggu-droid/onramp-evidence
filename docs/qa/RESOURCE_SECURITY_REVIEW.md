@@ -1,4 +1,4 @@
-# Resource security review (Claude Code, 2026-10-13)
+# Resource security review (the team, 2026-10-13)
 
 ## What the shipped site actually loads
 These are the observed live requests at 9121f3d:

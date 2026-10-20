@@ -1,8 +1,8 @@
-# Orchestration contract (Claude Code, 2026-10-13)
+# Orchestration contract (the team, 2026-10-13)
 
 ## Actors
-- **IBM Bob:** the original kit, the Healthchecks fix and feature, and the kit iterations. Every Bob commit ends with `Generated-by: IBM Bob`. Bob's 180-Bobcoin allowance ran out on 2026-10-11, so Bob has done no work since. No Claude change is routed through Bob attribution.
-- **Claude Code:** orchestrated Bob, verified independently, wrote the separately attributed normalizer/bootstrap module, the Evidence Explorer, the QA tooling and these records. Its commits say "Written by Claude Code".
+- **IBM Bob:** the original kit, the Healthchecks fix and feature, and the kit iterations. Every Bob commit ends with `Generated-by: IBM Bob`. Bob's 180-Bobcoin allowance ran out on 2026-10-11, so Bob has done no work since. No team change is routed through Bob attribution.
+- **The team:** orchestrated Bob, verified independently, wrote the separately attributed normalizer/bootstrap module, the Evidence Explorer, the QA tooling and these records. Its commits carry a separate team attribution line.
 - **Human participant:** chooses goals, records the video, contacts the organizers, confirms eligibility, does the screen-reader pass and submits the form.
 
 ## Decision on parallel workers
@@ -11,10 +11,10 @@ The 2026-10-13 directive proposed 8–10 parallel workers. Three things argued a
 - the participant's standing preference is to keep usage low
 - the remaining work had shared writable files (`template.html`, the evidence docs)
 
-So the R0–R9 work ran **sequentially in the single main Claude Code session, with no subagents**. `WORKER_RUN_LEDGER.jsonl` records only those real stages. No worker events were invented.
+So the R0–R9 work ran **sequentially in the team's single main session, with no subagents**. `WORKER_RUN_LEDGER.jsonl` records only those real stages. No worker events were invented.
 
 ## Revision, 2026-10-13 (evening)
-The participant then explicitly directed full use of the orchestration plan. The final audit therefore ran as **8 parallel read-only worker agents** in Claude Code workflow run `wf_d17b0a12-827`:
+The participant then explicitly directed full use of the orchestration plan. The final audit therefore ran as **8 parallel read-only worker agents** in the team's workflow run `wf_d17b0a12-827`:
 - repo/release
 - evidence/classifier/parity
 - taste

@@ -1,4 +1,4 @@
-﻿# R6 browser evidence collector (Claude Code). Renders a site copy inside true-width iframes in headless Edge,
+﻿# R6 browser evidence collector (the team). Renders a site copy inside true-width iframes in headless Edge,
 # screenshots each width, and measures document overflow, focusable targets and the classifier result.
 # Headless Edge cannot shrink its own viewport below ~492px, so phone widths use same-origin iframes
 # (file:// with --allow-file-access-from-files). Not a WCAG certification; a repeatable evidence capture.

@@ -1,4 +1,4 @@
-# Resource site visits and the guidance applied (Claude Code, 2026-10-13)
+# Resource site visits and the guidance applied (the team, 2026-10-13)
 
 Each official site was opened in Chrome and read. Where a site offers free prompts, guides or open-source code, the guidance was used. Where content is paywalled or behind sign-in, only the public description was used. No accounts were created, nothing was bought, cookie banners were declined, and no paid prompt or template was copied.
 

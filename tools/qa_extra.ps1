@@ -1,4 +1,4 @@
-﻿# R6 extra checks (Claude Code): rendered contrast in both colour schemes, and a direct 200% zoom render
+﻿# R6 extra checks (the team): rendered contrast in both colour schemes, and a direct 200% zoom render
 # (a 640px CSS viewport at device scale factor 2 is what a 1280px window at 200% browser zoom lays out).
 param([Parameter(Mandatory)][string]$SiteDir, [string]$OutDir = "$PSScriptRoot\..\docs\qa\screenshots", [string]$Label = 'extra')
 $ErrorActionPreference = 'Continue'  # Edge writes harmless sync errors to stderr

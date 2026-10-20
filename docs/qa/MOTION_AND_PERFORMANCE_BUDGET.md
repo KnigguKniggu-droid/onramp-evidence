@@ -1,4 +1,4 @@
-# Motion and performance budget: measured (Claude Code, 2026-10-13)
+# Motion and performance budget: measured (the team, 2026-10-13)
 
 **Measurement conditions:**
 - live site https://kniggukniggu-droid.github.io/onramp-evidence/

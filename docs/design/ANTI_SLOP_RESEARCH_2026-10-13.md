@@ -5,8 +5,8 @@ Two research agents ran in parallel, both read-only, with no accounts, purchases
 2. **Handoff-package sweep:** every resource named in the private handoff package (50 items) was resolved and visited. That full report stays in the private workspace, because it cites private saved-reel material.
 
 ## Prompts found and used
-- **Used for the experiment:** Anthropic `frontend-design` SKILL.md, https://github.com/anthropics/skills/blob/main/skills/frontend-design/SKILL.md (Apache-2.0). The process and results are in `EXPERIMENT_B_FRONTEND_DESIGN_SKILL.md`.
-- **Also read:** the Anthropic cookbook "Prompting for frontend aesthetics", https://platform.claude.com/cookbook/coding-prompting-for-frontend-aesthetics (MIT). Its "layer gradients / atmosphere" advice is superseded by the skill above.
+- **Used for the experiment:** the open-source `frontend-design` SKILL.md, (external skills repository) (Apache-2.0). The process and results are in `EXPERIMENT_B_FRONTEND_DESIGN_SKILL.md`.
+- **Also read:** a vendor cookbook, "Prompting for frontend aesthetics", (external platform docs) (MIT). Its "layer gradients / atmosphere" advice is superseded by the skill above.
 - **From the package sweep:** the Open Design `craft/anti-ai-slop.md` rules (Apache-2.0; repo matched by name only). Its easing curve, 150 ms timings and loading-state fallback were applied.
 
 ## Rule sources (GitHub)

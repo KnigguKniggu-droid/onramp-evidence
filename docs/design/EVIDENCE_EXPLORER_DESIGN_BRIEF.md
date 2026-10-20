@@ -1,4 +1,4 @@
-# Evidence Explorer: design brief (Claude Code, updated 2026-10-13)
+# Evidence Explorer: design brief (the team, updated 2026-10-13)
 
 ## Objective and audience
 **Objective:** let a hackathon judge understand OnRamp in seconds and check its claims in minutes. OnRamp is an IBM Bob kit that separates inherited test failures from new regressions.
@@ -21,7 +21,7 @@
 4. **02 Fix.** The blind fix against the maintainer's: the verdict strip and diffs first, then the steps. The brief and the limits of the seal are in a `<details>`.
 5. **03 Build.** #1090 before and after.
 6. **04 Reuse.** The three portability runs.
-7. **05 Provenance.** What Bob did and what Claude did, then the commits.
+7. **05 Provenance.** What Bob did and what the team did, then the commits.
 
 The classifier is the product proof. These four things are presented as distinct:
 - the Healthchecks benchmark

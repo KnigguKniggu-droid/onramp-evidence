@@ -1,4 +1,4 @@
-"""Local test server for slow/offline QA of the Evidence Explorer (Claude Code).
+"""Local test server for slow/offline QA of the Evidence Explorer (the team).
 
   /slow/...     serves the site, delaying every data/*.json response by DELAY seconds
   /offline/...  serves the page but drops the connection for data/*.json (simulates losing the network)
