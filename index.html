@@ -538,6 +538,46 @@ h1{font-weight:600;letter-spacing:-.06em;max-width:10ch}
 .vlist a:hover,.vlist a:focus-visible{background:#151d19}
 .vlist b{font-weight:600}.vlist span{color:#93a199;font-size:14px;margin-top:4px}
 @media (max-width:700px){.vlist{grid-template-columns:minmax(0,1fr)}}
+
+/* ===== judge entry points: proof strip, judge path, mode limits ===== */
+.pstrip{list-style:none;margin:0 0 4px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;max-width:720px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.pstrip li{background:#0e1311}
+.pstrip a{display:flex;flex-direction:column;gap:6px;min-height:44px;height:100%;padding:14px 16px;color:var(--text);text-decoration:none;transition:background-color .15s ease}
+.pstrip a:hover,.pstrip a:focus-visible{background:#151d19;text-decoration:none}
+.pstrip b{font-weight:600;font-size:15px;line-height:1.3}
+.pstrip .pn{font-variant-numeric:tabular-nums;color:var(--text)}
+.pstrip .pn.t-inh{color:var(--warn)}.pstrip .pn.t-bad{color:var(--bad)}
+.pstrip .ps{color:#93a199;font-size:12.5px;line-height:1.4}
+.pstrip code{font-size:.95em}
+.jpath{padding-top:36px;margin-bottom:40px}
+.jpath h2{margin:0 0 14px;color:var(--accent);font:600 13px/1.3 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:0}
+.jp{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;counter-reset:jp}
+.jp li{counter-increment:jp;background:#0e1311}
+.jp a{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:12px;row-gap:4px;min-height:44px;height:100%;padding:16px 18px;color:var(--text);text-decoration:none;transition:background-color .15s ease}
+.jp a::before{content:counter(jp);grid-row:span 2;display:inline-grid;place-items:center;width:26px;height:26px;border:1px solid var(--accent);border-radius:50%;color:var(--accent);font:600 13px/1 "IBM Plex Mono",ui-monospace,monospace}
+.jp a:hover,.jp a:focus-visible{background:#151d19;text-decoration:none}
+.jp b{font-weight:600}.jp span{color:#93a199;font-size:13.5px;line-height:1.45}
+.modes{margin:0 0 28px;padding:20px;border:1px solid var(--line);border-radius:12px;background:#0e1311}
+.modes h3{margin:0 0 14px;font-size:17px}
+.modes ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.modes li{position:relative;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:#0a0d0c}
+.modes li+li::before{content:"\2192";position:absolute;left:-22px;top:14px;color:var(--accent);font:600 16px/1 "IBM Plex Mono",ui-monospace,monospace}
+.modes li>b{display:block;color:var(--accent);font:600 14px/1.3 "IBM Plex Mono",ui-monospace,monospace}
+.modes li>p{margin:6px 0 10px;color:var(--text);font-size:14px;line-height:1.45}
+.modes dl{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;font-size:13px;line-height:1.45}
+.modes dt{color:#93a199;font-weight:600}.modes dd{margin:0;color:#c9d1cb}
+.modes figcaption{margin-top:14px;color:#93a199;font-size:13px;line-height:1.5}
+.modes figcaption a{min-height:0}
+@media (max-width:900px){.jp{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .pstrip{grid-template-columns:minmax(0,1fr)}
+  .jp{grid-template-columns:minmax(0,1fr)}
+  .modes{padding:16px}
+  .modes ol{grid-template-columns:minmax(0,1fr);gap:26px}
+  .modes li+li::before{content:"\2193";left:16px;top:-21px}
+}
+@media (min-width:901px){.hero{padding-top:clamp(48px,5vw,80px)}h1{font-size:clamp(58px,7.4vw,108px)}}
+.pstrip a:focus-visible,.jp a:focus-visible{outline-offset:-3px}
 </style></head><body>
 <a class="skip" href="#demo">Skip to the classifier demo</a>
 <nav aria-label="Sections" style="position:sticky"><div class="sprog" aria-hidden="true"></div><div class="wrap"><b><span class="brand-mark" aria-hidden="true"></span>OnRamp <span class="nav-kicker">/ Evidence Explorer</span></b><a href="#demo">Try it</a><a href="#baseline">Baseline</a><a href="#blind">Blind fix</a><a href="#feature">Feature</a><a href="#portability">Portability</a><a href="#provenance">Provenance</a><a href="#verify">Verify</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
@@ -547,8 +587,14 @@ h1{font-weight:600;letter-spacing:-.06em;max-width:10ch}
 <p class="hero-kicker">IBM Bob kit · Theme 1: Explore, Fix, and Build</p>
 <h1><span class="hero-headline-line">Know what's broken <span class="hl">before</span></span><span class="hero-headline-line">you fix it.</span></h1>
 <p class="lede">OnRamp is an IBM Bob kit for joining an unfamiliar codebase. It records which tests already fail, reproduces a bug with a failing test first, and verifies the fix without ever mistaking an old failure for a new one.</p>
+<ul class="pstrip" id="proof" aria-label="Three verified numbers, each linked to its evidence">
+<li><a href="#baseline"><b><span class="pn">1,761</span> tests · <span class="pn t-inh">29</span> already failing</b><span class="ps">on Windows, recorded before Bob changed a line</span></a></li>
+<li><a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/BOB_SESSION_webhook-205.md"><b>Bob's first fix broke <span class="pn t-bad">22</span> tests</b><span class="ps">caught in Verifier mode · recorded session, search "22 ERRORs"</span></a></li>
+<li><a href="#provenance"><b><span class="pn">2,452</span> of 2,834 kit lines <span class="pn">(86.5%)</span></b><span class="ps">from Bob's commits, by <code>git blame</code> of <code>.bob/</code></span></a></li>
+</ul>
 <div class="cta">
 <a class="btn primary" href="#demo"><svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Run the classifier</a>
+<a class="btn" href="#try">Try it: paste your own test log</a>
 <a class="btn" href="https://github.com/KnigguKniggu-droid/onramp">Read the kit on GitHub</a>
 <a class="textlink" href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/BOB_SESSION_webhook-205.md">Bob's recorded session</a>
 
@@ -567,6 +613,16 @@ h1{font-weight:600;letter-spacing:-.06em;max-width:10ch}
 </div>
 </aside>
 </div></header>
+
+<div class="wrap jpath" id="judge-path">
+<h2 id="jp-h">Judge path: four links, in order</h2>
+<ol class="jp" aria-labelledby="jp-h">
+<li><a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/benchmark_webhook-205.json"><b>Sealed brief</b><span>The symptom report, hashed at 21:05:38 UTC before the fix work</span></a></li>
+<li><a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/onramp/evidence/pre_fix_webhook-205.txt"><b>Bob's failing test</b><span><code>AssertionError: 3 != 1</code> on the unfixed code</span></a></li>
+<li><a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/BOB_SESSION_webhook-205.md"><b>Bob catches its own regression</b><span>The first fix broke 22 tests; search the session for "22 ERRORs"</span></a></li>
+<li><a href="#demo"><b>Full-suite verdict</b><span>1,767 tests: 29 inherited, 0 regressions, in the classifier below</span></a></li>
+</ol>
+</div>
 
 <div class="wrap"><table class="summary"><caption>What the evidence shows</caption>
 <tr><th scope="row">Baseline</th><td class="n">1,761</td><td>Healthchecks application at upstream <code>0968fa2</code>; the kit recorded it at <code>e10db36</code>. <b class="t-inh">29</b> already fail on Windows (AF_UNIX sockets, a Linux-only strftime format, a DST switch)</td></tr>
@@ -738,6 +794,15 @@ h1{font-weight:600;letter-spacing:-.06em;max-width:10ch}
 <section id="blind" class="band"><div class="wrap">
 <div class="sh"><h2>Bob vs the maintainer, blind</h2>
 <p class="take">Healthchecks was pinned one commit before its maintainer fixed a real webhook bug. The issue-specific brief was sealed before the fix work; after Bob's fix was committed, we revealed the maintainer's.</p></div>
+<figure class="modes" aria-labelledby="modes-h">
+<h3 id="modes-h">Three Bob custom modes, each with limits</h3>
+<ol>
+<li><b>Explorer</b><p>Maps the codebase and cites a path and line for every claim.</p><dl><dt>Allowed</dt><dd>read files, skills, switch mode</dd><dt>Never</dt><dd>writes, edits or runs anything</dd></dl></li>
+<li><b>Reproducer</b><p>Writes a failing test first and saves its output before any fix.</p><dl><dt>Allowed</dt><dd>read, edit <code>*.py</code> files only, run tests, skills</dd><dt>Never</dt><dd>stashes, checks out, resets or commits</dd></dl></li>
+<li><b>Verifier</b><p>Re-runs the suite and compares failing tests with the baseline.</p><dl><dt>Allowed</dt><dd>read, run tests, write only <code>docs/onramp/evidence/</code></dd><dt>Never</dt><dd>edits production code</dd></dl></li>
+</ol>
+<figcaption>Allowed: the tool groups and file patterns in <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/.bob/custom_modes.yaml"><code>.bob/custom_modes.yaml</code></a>. Never: each mode's role text. In the <a href="https://github.com/KnigguKniggu-droid/onramp/blob/main/docs/evidence/BOB_SESSION_webhook-205.md">recorded session</a>, Verifier's wider run caught the 22 errors (steps 27 to 40) and refused a production edit (step 45); Bob then switched to Agent mode to make the edit.</figcaption>
+</figure>
 <div class="strip"><span class="same">Same affected behaviour</span><span class="same">Same source line</span><span class="diffr">Different accepted-status policy</span></div>
 <div class="two"><div class="diff"><h3>Fig. 2, IBM Bob, commit 5f16187</h3><div class="ln hunk">@@ -158,7 +158,7 @@ class HttpTransport(Transport):</div><div class="ln ">                 auth=auth,</div><div class="ln ">                 timeout=30,</div><div class="ln ">             )</div><div class="ln del">-            if r.status_code not in (200, 201, 202, 204):</div><div class="ln add">+            if r.status_code not in range(200, 300):</div><div class="ln ">                 cls.raise_for_response(r)</div><div class="ln ">         except curl.CurlError as e:</div><div class="ln ">             raise TransportError(e.message)</div></div>
 <div class="diff"><h3>Fig. 3, maintainer, upstream 0a9bff9, revealed afterwards</h3><div class="ln hunk">@@ -158,7 +158,7 @@ class HttpTransport(Transport):</div><div class="ln ">                 auth=auth,</div><div class="ln ">                 timeout=30,</div><div class="ln ">             )</div><div class="ln del">-            if r.status_code not in (200, 201, 202, 204):</div><div class="ln add">+            if r.status_code not in (200, 201, 202, 204, 205):</div><div class="ln ">                 cls.raise_for_response(r)</div><div class="ln ">         except curl.CurlError as e:</div><div class="ln ">             raise TransportError(e.message)</div></div></div>
