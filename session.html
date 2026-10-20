@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
 <style>
-:root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
+:root{--btn:#0f62fe;--bg:#161616;--band:#161616;--panel:#1e1e1e;--panel2:#1e1e1e;--line:#262626;--text:#e0e0e0;--muted:#a8a8a8;--accent:#4589ff;--ok:#42be65;--bad:#fa4d56;--warn:#f1c21b;--info:#be95ff;
  --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent);--info-bg:color-mix(in srgb,var(--info) 14%,transparent);
  --m-agent:var(--accent);--m-reproducer:var(--warn);--m-verifier:var(--info)}
-@media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f6f7f9;--band:#eef1f5;--panel:#fff;--panel2:#f7f8fa;--line:#dfe3ea;--text:#161a22;--muted:#525c6e;--accent:#0050e6;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
+@media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f4f4f4;--band:#f4f4f4;--panel:#fff;--panel2:#f4f4f4;--line:#e0e0e0;--text:#1e1e1e;--muted:#525252;--accent:#0050e6;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:16px}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
@@ -79,23 +79,23 @@ footer{color:var(--muted);font-size:.85rem;margin-top:24px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
 
 /* ===== site chrome: shared tokens and top nav, matches index.html ===== */
-:root{color-scheme:dark;--btn:#d9f05b;--bg:#0a0d0c;--band:#111815;--panel:#111917;--panel2:#18231f;--line:#2a3932;--text:#f4f2e9;--muted:#a3b0a8;--accent:#d9f05b;--ok:#7ee28f;--bad:#ff777c;--warn:#f5c451;--info:#a9a0ff}
+:root{color-scheme:dark;--btn:#4589ff;--bg:#0f0f0f;--band:#161616;--panel:#161616;--panel2:#1e1e1e;--line:#393939;--text:#f4f4f4;--muted:#a8a8a8;--accent:#4589ff;--ok:#42be65;--bad:#fa4d56;--warn:#f1c21b;--info:#be95ff}
 html{background:var(--bg)}
 html,body{overflow-x:clip}
 body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans",system-ui,sans-serif}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.skip{color:#111810}
-.btn.primary,button.primary{background:var(--accent);border-color:var(--accent);color:#111810}
-.btn.primary:hover,.btn.primary:focus-visible,button.primary:hover,button.primary:focus-visible{background:#ecff82;border-color:#ecff82;color:#111810}
-nav.sitenav{position:sticky;top:0;z-index:5;background:rgba(10,13,12,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(18px)}
+.skip{color:#8d8d8d}
+.btn.primary,button.primary{background:var(--accent);border-color:var(--accent);color:#8d8d8d}
+.btn.primary:hover,.btn.primary:focus-visible,button.primary:hover,button.primary:focus-visible{background:#78a9ff;border-color:#78a9ff;color:#8d8d8d}
+nav.sitenav{position:sticky;top:0;z-index:5;background:rgba(22,22,22,.92);border-bottom:1px solid var(--line);backdrop-filter:blur(18px)}
 nav.sitenav .wrap{max-width:1320px;margin:0 auto;min-height:64px;padding:10px 32px;display:flex;align-items:center;gap:6px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 nav.sitenav b{display:flex;align-items:center;gap:9px;margin-right:auto;padding-right:12px;color:var(--text);font:600 15px/1 "IBM Plex Sans",system-ui,sans-serif;letter-spacing:-.03em}
 nav.sitenav .brand-mark{display:inline-block;flex:none;width:22px;height:22px;border-radius:50%;background:#fff;position:relative}
 nav.sitenav .brand-mark::after{content:"";position:absolute;inset:5px;border-radius:50%;background:#000}
-nav.sitenav .nav-kicker{color:#8f9391;font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase}
-nav.sitenav a{flex:0 0 auto;display:inline-flex;align-items:center;min-height:38px;padding:8px 10px;border-radius:8px;color:#b9c2bc;font:500 13px/1 "IBM Plex Sans",system-ui,sans-serif;text-decoration:none;transition:color .15s ease,background-color .15s ease}
+nav.sitenav .nav-kicker{color:#8d8d8d;font:500 10px "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.13em;text-transform:uppercase}
+nav.sitenav a{flex:0 0 auto;display:inline-flex;align-items:center;min-height:38px;padding:8px 10px;border-radius:8px;color:#c6c6c6;font:500 13px/1 "IBM Plex Sans",system-ui,sans-serif;text-decoration:none;transition:color .15s ease,background-color .15s ease}
 nav.sitenav a:hover,nav.sitenav a:focus-visible{background:rgba(255,255,255,.06);color:#fff;text-decoration:none}
-nav.sitenav a[aria-current="page"]{color:var(--accent);background:rgba(217,240,91,.08)}
+nav.sitenav a[aria-current="page"]{color:var(--accent);background:rgba(69,137,255,.08)}
 @media (max-width:640px){nav.sitenav .wrap{padding:8px 16px;min-height:56px}nav.sitenav .nav-kicker{display:none}nav.sitenav a{padding-inline:8px}}
 @media (prefers-reduced-motion:reduce){nav.sitenav a,.btn{transition:none}}
 </style><link rel="stylesheet" href="theme.css">

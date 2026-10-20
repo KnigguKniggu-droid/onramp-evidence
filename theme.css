@@ -1,46 +1,71 @@
-/* OnRamp theme layer.
+/* OnRamp theme layer — IBM Carbon-inspired dark UI (Gray 100).
    Additive. Load after every other stylesheet.
-   Style derived from the Impeccable anti-slop principles (Apache-2.0,
-   github.com/pbakaus/impeccable): tinted neutrals, hierarchy before effects,
-   flat panels, purposeful motion only. No code copied.
-   Rules: does not hide, move or reorder content. Transitions name explicit properties only. */
+   Rules: does not hide, move or reorder evidence. Transitions name explicit properties only.
+   Motion runs only under prefers-reduced-motion: no-preference and stops under the global .still control. */
 
 :root{
-  /* tinted neutrals (no pure black or gray) */
-  --bg:#0b0e0d;
-  --band:#101614;
-  --panel:#111816;
-  --panel2:#16201d;
-  --line:#26332e;
-  --line-strong:#3a4a43;
-  --text:#f2f1ea;
-  --muted:#aab5ae;         /* 8.9:1 on --bg, 8.3:1 on --panel */
-  --accent:#d9f05b;        /* 15:1 on --bg */
-  --on-accent:#111810;
+  /* Carbon Gray 100 neutrals */
+  --bg:#161616;
+  --bg-deep:#0f0f10;
+  --band:#121212;
+  --panel:#1e1e1e;
+  --panel2:#262626;
+  --panel-hover:#2a2a2a;
+  --line:#393939;
+  --line-soft:#2b2b2b;
+  --line-strong:#525252;
+  --text:#f4f4f4;
+  --text-2:#c6c6c6;
+  --muted:#a8a8a8;          /* 7.6:1 on --bg, 6.4:1 on --panel2 */
+  /* one accent: IBM Blue */
+  --accent:#4589ff;         /* 5.4:1 on --bg */
+  --accent-hover:#78a9ff;
+  --btn:#0f62fe;            /* white text 5.7:1 */
+  --btn-hover:#0353e9;
+  --on-accent:#ffffff;
+  --cyan:#78a9ff;--violet:#4589ff;
+  /* status */
+  --ok:#42be65;--bad:#fa4d56;--warn:#f1c21b;--info:#be95ff;
+  --ok-bg:rgba(66,190,101,.12);--bad-bg:rgba(250,77,86,.12);--warn-bg:rgba(241,194,27,.12);--info-bg:rgba(190,149,255,.12);
   /* scale */
   --t-xs:.8125rem; --t-sm:.875rem; --t-md:1rem; --t-lg:1.1875rem; --t-xl:1.5rem;
-  --t-2xl:clamp(1.75rem,1.2rem + 2.2vw,2.5rem);
+  --t-2xl:clamp(2rem,1.3rem + 2.6vw,3rem);
   --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px;
-  --r-sm:6px; --r-md:10px;
-  --ease:cubic-bezier(.2,.7,.2,1);
+  --r-xs:4px; --r-sm:6px; --r-md:8px;
+  --ease:cubic-bezier(.2,0,.38,.9);          /* Carbon productive */
+  --ease-out:cubic-bezier(0,0,.38,.9);       /* Carbon entrance */
+  --elev-1:0 1px 0 rgba(255,255,255,.04) inset,0 1px 2px rgba(0,0,0,.4);
+  --elev-2:0 1px 0 rgba(255,255,255,.05) inset,0 12px 32px -12px rgba(0,0,0,.7);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
 }
 
 /* ---------- base ---------- */
 html,body{overflow-x:clip}
+html{background:var(--bg)}
 body{
   background:var(--bg);
   color:var(--text);
+  font-family:var(--sans);
   text-rendering:optimizeLegibility;
   font-feature-settings:"kern" 1;
+  -webkit-font-smoothing:antialiased;
 }
-::selection{background:color-mix(in srgb,var(--accent) 32%,transparent);color:var(--text)}
+/* quiet engineering grid, neutral only */
+body::before{
+  background-image:linear-gradient(to right,rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:64px 64px;opacity:1;
+  mask-image:linear-gradient(to bottom,#000 0,transparent 720px);
+  -webkit-mask-image:linear-gradient(to bottom,#000 0,transparent 720px);
+}
+::selection{background:rgba(69,137,255,.4);color:#fff}
 img,svg,video,canvas{max-width:100%}
 pre{max-width:100%;overflow-x:auto}
 
 /* ---------- typography (low specificity: page rules still win) ---------- */
 :where(h1,h2,h3,h4){letter-spacing:-.015em;text-wrap:balance}
-:where(.wrap) > :where(header) :where(h1){font-size:var(--t-2xl);line-height:1.12;letter-spacing:-.025em}
+:where(.wrap) > :where(header) :where(h1){font-size:var(--t-2xl);line-height:1.1;letter-spacing:-.03em;font-weight:600}
 :where(.wrap) :where(h2){font-size:var(--t-xl);line-height:1.25}
 :where(.panel,.card) :where(h2){font-size:var(--t-lg);line-height:1.3}
 :where(.panel,.card) :where(h3){font-size:var(--t-md)}
@@ -50,89 +75,158 @@ pre{max-width:100%;overflow-x:auto}
 :where(.hint){font-size:var(--t-sm)}
 :where(code,kbd,samp,.mono){font-family:var(--mono)}
 :where(:not(pre)) > :where(code){
-  padding:.08em .32em;border-radius:4px;
-  background:color-mix(in srgb,var(--text) 7%,transparent);
+  padding:.08em .34em;border-radius:var(--r-xs);
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.06);
   overflow-wrap:anywhere;
 }
-/* comparable numbers line up */
 :where(table,td,th,.n,.ts,.status,.meta,.v,output,.count,.num){font-variant-numeric:tabular-nums}
 
 /* ---------- links ---------- */
+a{color:var(--accent)}
 :where(main,.wrap,footer) :where(a:not(.btn)){
   text-decoration-thickness:1px;
   text-underline-offset:.2em;
   text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);
 }
-:where(main,.wrap,footer) :where(a:not(.btn)):hover{text-decoration-color:currentColor}
+:where(main,.wrap,footer) :where(a:not(.btn)):hover{color:var(--accent-hover);text-decoration-color:currentColor}
 
-/* ---------- panels: flat surfaces, hairline borders, no glow ---------- */
-.panel{
-  border-color:var(--line);
-  border-radius:var(--r-md);
-  box-shadow:none;
+/* ---------- nav: one bar on every page ---------- */
+nav.sitenav{
+  background:rgba(22,22,22,.82);
+  -webkit-backdrop-filter:saturate(140%) blur(16px);backdrop-filter:saturate(140%) blur(16px);
+  border-bottom:1px solid var(--line);
 }
-/* a panel inside a panel reads as a section, not a nested card */
-.panel .panel,.panel .card{background:transparent;border-radius:var(--r-sm)}
+nav.sitenav .wrap{min-height:64px}
+nav.sitenav b,nav.sitenav b a{color:var(--text)}
+nav.sitenav a{
+  color:var(--text-2);border-radius:var(--r-xs);
+  font-family:var(--sans);font-weight:500;letter-spacing:0;text-transform:none;
+}
+nav.sitenav a:hover{color:var(--text);background:rgba(255,255,255,.06);text-decoration:none}
+nav.sitenav a[aria-current="page"]{
+  color:var(--text);background:rgba(69,137,255,.12);
+  box-shadow:inset 0 -2px 0 var(--accent);border-color:transparent;
+}
+.brand-mark{background:var(--accent);box-shadow:none;border-radius:3px}
+.nav-kicker{color:var(--muted)}
+
+/* ---------- hero (index) ---------- */
+.hero{background:radial-gradient(1200px 520px at 78% 0%,rgba(69,137,255,.07),transparent 60%),var(--bg-deep)}
+.hero .wrap{align-items:center}
+.hero::after{color:#8d8d8d}
+.liquid{opacity:.05}
+h1{line-height:.98;letter-spacing:-.045em;font-weight:600}
+@media (min-width:901px){h1{font-size:clamp(56px,6.6vw,100px)}}
+.hero-headline-line{padding:.04em .06em .1em}
+.hl{color:var(--accent);text-decoration:none;
+  background:linear-gradient(var(--accent),var(--accent)) 0 92%/100% .06em no-repeat;padding-bottom:.02em}
+.lede{color:var(--text-2)}
+.kicker,.num{color:var(--accent)}
+.context,.textlink{color:var(--muted)}
+.context a{color:var(--accent)}
+
+/* ---------- surfaces: flat panels, hairline borders, subtle elevation ---------- */
+.panel,.rules,.card,.scen label,.stat,.scope div,.tgrid li,.run{border-color:var(--line)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--elev-1)}
+.rules{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--elev-2)}
+.rules::before{color:var(--accent)}
+.card{background:var(--panel2);border-radius:var(--r-md)}
+.panel .panel,.panel .card{background:var(--panel2);border-radius:var(--r-sm);box-shadow:none}
 .note,.notice{border-radius:var(--r-sm)}
+section.band{background:var(--band)}
+section{border-top-color:var(--line-soft)}
+.scope,.stats,.tgrid{border-radius:var(--r-md);border-color:var(--line);background:var(--line)}
+.scope div,.stat{background:var(--panel)}
+.tgrid li{background:var(--panel)}
+.tgrid a:hover,.tgrid a:focus-visible{background:var(--panel2)}
+.tgrid span{color:var(--muted)}
+.tools h2{color:var(--muted)}
+.scen label{background:var(--panel);border-radius:var(--r-md)}
+.scen label:hover{border-color:var(--line-strong)}
+.scen label:has(input:checked){background:rgba(69,137,255,.08);border-color:var(--accent)}
+.c-ok{background:var(--panel2);color:var(--text-2)}
+.cell{border-radius:var(--r-sm)}
 
 /* ---------- buttons ---------- */
 .btn,button.primary{
-  min-height:40px;
+  min-height:44px;
   border-radius:var(--r-sm);
+  font-family:var(--sans);
   font-weight:500;
+  letter-spacing:0;
   line-height:1.25;
   touch-action:manipulation;
 }
-.btn{border-color:var(--line-strong)}
-.btn:hover{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,var(--panel2))}
-.btn.primary,button.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
-.btn:disabled,button:disabled{cursor:not-allowed;opacity:.6}
+.btn{border:1px solid var(--line-strong);background:transparent;color:var(--text)}
+.btn:hover{border-color:var(--text-2);background:rgba(255,255,255,.06);color:var(--text);text-decoration:none}
+.btn.primary,button.primary{background:var(--btn);border-color:var(--btn);color:var(--on-accent)}
+.btn.primary:hover,button.primary:hover{background:var(--btn-hover);border-color:var(--btn-hover);color:#fff}
+.btn:disabled,button:disabled{cursor:not-allowed;opacity:.55}
 :where(input[type=file])::file-selector-button{
   font:inherit;font-size:var(--t-sm);color:var(--text);
   background:var(--panel2);border:1px solid var(--line-strong);
-  border-radius:var(--r-sm);padding:4px 10px;margin-right:8px;cursor:pointer;
+  border-radius:var(--r-xs);padding:6px 12px;margin-right:10px;cursor:pointer;
 }
 
 /* ---------- form fields ---------- */
 :where(textarea,input[type=text],input[type=search],input:not([type]),select){
-  border-color:var(--line-strong);
-  border-radius:var(--r-sm);
+  background:var(--panel2);color:var(--text);
+  border:1px solid var(--line-strong);
+  border-radius:var(--r-xs);
 }
-:where(textarea,input,select)::placeholder{color:color-mix(in srgb,var(--muted) 85%,transparent)}
-
-/* ---------- nav ---------- */
-nav.sitenav{border-bottom-color:var(--line)}
-nav.sitenav a[aria-current="page"]{box-shadow:inset 0 -2px 0 var(--accent)}
+:where(textarea,input,select)::placeholder{color:#8d8d8d}
 
 /* ---------- tables and details ---------- */
 :where(table){border-collapse:collapse}
 :where(th){text-align:left;font-weight:600;color:var(--muted);font-size:var(--t-sm)}
 :where(th,td){border-bottom:1px solid var(--line)}
 :where(details) > :where(summary){cursor:pointer}
+summary{color:var(--accent)}
 
-/* ---------- focus: one visible ring everywhere ---------- */
-:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
-}
+/* ---------- focus: one visible blue ring everywhere ---------- */
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 :where(.btn,button,a,summary,input,textarea,select):focus-visible{
   outline:2px solid var(--accent);
   outline-offset:2px;
-  box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent);
+  box-shadow:0 0 0 4px rgba(69,137,255,.25);
 }
+.scen label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
 
 /* ---------- motion: only when the user allows it, explicit properties ---------- */
 @media (prefers-reduced-motion: no-preference){
-  .btn,button.primary,nav.sitenav a,.panel,:where(main,.wrap,footer) :where(a:not(.btn)){
+  .btn,button.primary,nav.sitenav a,.panel,.card,.rules,.scen label,.tgrid a,.stat,
+  :where(main,.wrap,footer) :where(a:not(.btn)){
     transition:
-      background-color .16s var(--ease),
-      border-color .16s var(--ease),
-      color .16s var(--ease),
-      text-decoration-color .16s var(--ease),
-      box-shadow .16s var(--ease),
-      transform .16s var(--ease);
+      background-color .18s var(--ease),
+      border-color .18s var(--ease),
+      color .18s var(--ease),
+      text-decoration-color .18s var(--ease),
+      box-shadow .24s var(--ease),
+      transform .24s var(--ease);
   }
-  .btn:active,button.primary:active{transform:translateY(1px)}
+  /* hover lift on cards: pointer devices only */
+  @media (hover:hover){
+    .card:hover,.scen label:hover,.panel:not(:has(.panel,.card,table,canvas)):hover{
+      transform:translateY(-2px);border-color:var(--line-strong);box-shadow:var(--elev-2);
+    }
+    .btn:hover{transform:translateY(-1px)}
+  }
+  .btn:active,button.primary:active{transform:translateY(0)}
+
+  /* scroll-in: CSS scroll-driven fade/translate; never pins or hijacks scroll.
+     Without support, content is static and fully visible. */
+  @supports (animation-timeline: view()){
+    html:not(.still) :is(section .sh,.panel,.card,.stat,.tgrid li,.scope div){
+      animation:onramp-rise linear both;
+      animation-timeline:view();
+      animation-range:entry 0% entry 55%;
+    }
+  }
+}
+@keyframes onramp-rise{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:none}
 }
 @media (prefers-reduced-motion: reduce){
   .btn:active,button.primary:active{transform:none}
@@ -140,6 +234,16 @@ nav.sitenav a[aria-current="page"]{box-shadow:inset 0 -2px 0 var(--accent)}
 
 /* ---------- small screens ---------- */
 @media (max-width:640px){
-  .panel{padding:var(--s-3)}
+  .panel{padding:var(--s-4)}
   .btn,button.primary{min-height:44px}
+  h1{letter-spacing:-.04em}
 }
+
+/* ---------- consistency fixes (higher specificity than page layers) ---------- */
+nav.sitenav .brand-mark{display:inline-block;flex:none;position:relative;width:20px;height:20px;border-radius:5px;background:var(--accent);box-shadow:none}
+nav.sitenav .brand-mark::after{content:"";position:absolute;inset:6px;border-radius:2px;background:var(--bg)}
+nav.sitenav .nav-kicker{color:#8d8d8d}
+body .hero .wrap{align-items:center}
+.sprog,.sprog::before,.sprog::after{background:var(--accent)}
+section{padding-block:clamp(72px,8vw,120px)}
+section .sh h2{font-size:clamp(32px,4.4vw,60px);line-height:1.02;letter-spacing:-.04em;font-weight:500}
