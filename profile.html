@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OnRamp · Set up OnRamp for your repo</title>
+<meta name="description" content="Generate docs/onramp/profile.json for the OnRamp IBM Bob kit, plus the exact copy and setup commands for bash and PowerShell.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232563eb'/><path d='M8 22 L15 10 L18 15 L21 11 L25 22 Z' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
+<style>
+:root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
+ --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent);--info-bg:color-mix(in srgb,var(--info) 14%,transparent)}
+@media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f6f7f9;--band:#eef1f5;--panel:#fff;--panel2:#f7f8fa;--line:#dfe3ea;--text:#161a22;--muted:#525c6e;--accent:#0050e6;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:8px;top:-60px;z-index:10;background:var(--btn);color:#fff;padding:10px 14px;border-radius:8px;font-weight:600}.skip:focus{top:8px}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:18px;align-items:center;overflow-x:auto;white-space:nowrap;padding-top:8px;padding-bottom:8px}
+nav b{margin-right:auto;font-size:16px}nav a{color:var(--muted);font-size:14px;display:inline-block;padding:6px 2px;min-height:32px}nav a:hover{color:var(--text);text-decoration:none}
+.kicker{color:var(--accent);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:12px;margin:0}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;letter-spacing:-.02em;margin:8px 0 12px}
+h2{font-size:20px;margin:0 0 12px}
+.lede{color:var(--muted);max-width:68ch;margin:0}
+header{padding:40px 0 24px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start;padding-bottom:56px}
+@media (max-width:860px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}
+.notice{border-radius:10px;padding:12px 14px;margin:0 0 16px;font-size:14px;border:1px solid}
+.notice.warn{background:var(--warn-bg);border-color:color-mix(in srgb,var(--warn) 45%,transparent)}
+.notice.bad{background:var(--bad-bg);border-color:color-mix(in srgb,var(--bad) 45%,transparent)}
+.notice.info{background:var(--info-bg);border-color:color-mix(in srgb,var(--info) 45%,transparent)}
+.notice strong{display:block}
+fieldset{border:0;margin:0 0 14px;padding:0}
+legend{font-weight:600;font-size:14px;margin-bottom:6px;padding:0}
+.radios{display:flex;flex-wrap:wrap;gap:8px}
+.radios label{display:flex;align-items:center;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;cursor:pointer;min-height:44px}
+.radios label.dis{opacity:.6;cursor:not-allowed}
+.field{margin:0 0 14px}
+.field label{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
+.hint{display:block;color:var(--muted);font-size:13px;margin-top:4px}
+.err{display:block;color:var(--bad);font-size:13px;margin-top:4px;font-weight:600}
+.wflag{display:block;color:var(--warn);font-size:13px;margin-top:4px;font-weight:600}
+input[type=text],textarea{width:100%;max-width:100%;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:14px/1.4 "IBM Plex Mono",ui-monospace,Consolas,monospace;min-height:44px}
+textarea{resize:vertical;min-height:96px}
+input[aria-invalid=true],textarea[aria-invalid=true]{border-color:var(--bad)}
+.dj-only[hidden]{display:none}
+details{margin:0 0 14px}summary{cursor:pointer;font-weight:600;font-size:14px;min-height:32px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+button{font:600 14px/1 "IBM Plex Sans",system-ui,sans-serif;border-radius:8px;padding:12px 14px;min-height:44px;cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text)}
+button.primary{background:var(--btn);border-color:var(--btn);color:#fff}
+button:hover{border-color:var(--accent)}
+pre{margin:0 0 10px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto;max-width:100%;font:13px/1.5 "IBM Plex Mono",ui-monospace,Consolas,monospace;white-space:pre}
+.out h3{font-size:15px;margin:18px 0 8px}
+.out h3:first-of-type{margin-top:0}
+.status{min-height:1.4em;font-size:13px;color:var(--ok);margin:0 0 6px}
+ol.steps{padding-left:20px;margin:0 0 10px;font-size:14px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:20px 0 40px;color:var(--muted);font-size:13px}
+@media (max-width:420px){.wrap{padding:0 16px}.card{padding:16px}}
+</style></head><body>
+<a class="skip" href="#main">Skip to content</a>
+<nav aria-label="Site"><div class="wrap"><b>OnRamp</b><a href="index.html">Home</a><a href="verdict.html">Verdict</a><a href="profile.html" aria-current="page">Set up</a></div></nav>
+<main id="main">
+<header><div class="wrap">
+<p class="kicker">IBM Bob kit</p>
+<h1>Set up OnRamp for your repo</h1>
+<p class="lede">Fill in the form. The page builds <code>docs/onramp/profile.json</code> and the exact commands that copy the kit into your repository. Then run <code>/onramp</code> in Bob. Nothing leaves your browser.</p>
+</div></header>
+<div class="wrap grid">
+<section class="card" aria-labelledby="form-h">
+<h2 id="form-h">Your repository</h2>
+<div class="notice warn" role="note"><strong>pytest not supported yet</strong>The post-edit hook and the skills read only <code>OK</code> / <code>FAILED</code> result lines from Django and plain <code>unittest</code>. A pytest suite will not be parsed correctly.</div>
+<div class="btns"><button type="button" id="load-hc">Load Healthchecks example</button><button type="button" id="load-ut">Load plain unittest example</button></div>
+<form id="f" novalidate>
+<fieldset><legend>Framework</legend>
+<div class="radios">
+<label><input type="radio" name="framework" value="django" checked> Django</label>
+<label><input type="radio" name="framework" value="unittest"> Plain unittest</label>
+<label class="dis" title="Not supported yet"><input type="radio" name="framework" value="pytest" disabled> pytest (not supported yet)</label>
+</div></fieldset>
+<div class="field"><label for="repo_dir">Path to your repository</label><input type="text" id="repo_dir" autocomplete="off" spellcheck="false"><span class="hint">Used only in the commands. Run the commands from the folder that contains the kit's <code>.bob</code> folder.</span><span class="err" id="repo_dir-err" aria-live="polite"></span></div>
+<div class="field"><label for="repo_name">Repository name</label><input type="text" id="repo_name" autocomplete="off" spellcheck="false"></div>
+<div class="field"><label for="test_runner">Test command <span aria-hidden="true">*</span></label><input type="text" id="test_runner" required aria-required="true" aria-describedby="test_runner-hint test_runner-err" autocomplete="off" spellcheck="false"><span class="hint" id="test_runner-hint">The hook appends an app label (Django) and <code>--verbosity=2</code> (Django only) to this command.</span><span class="err" id="test_runner-err" aria-live="polite"></span></div>
+<div class="field"><label for="app_root">App root</label><input type="text" id="app_root" aria-describedby="app_root-warn" autocomplete="off" spellcheck="false"><span class="hint">Top-level package. The hook uses it as the default source root.</span><span class="wflag" id="app_root-warn" aria-live="polite"></span></div>
+<div class="field"><label for="source_roots">Source roots (one per line)</label><textarea id="source_roots" aria-describedby="source_roots-hint source_roots-warn" spellcheck="false"></textarea><span class="hint" id="source_roots-hint">The post-edit hook runs tests only for <code>.py</code> files under these folders.</span><span class="wflag" id="source_roots-warn" aria-live="polite"></span></div>
+<div class="field dj-only"><label for="settings_module">Settings module</label><input type="text" id="settings_module" autocomplete="off" spellcheck="false"><span class="hint">Dotted path, for example <code>hc.settings</code>.</span></div>
+<div class="field"><label for="apps">Apps (one per line)</label><textarea id="apps" spellcheck="false"></textarea><span class="hint"><code>/onramp</code> checks that this key is present. The map-codebase skill lists each app.</span></div>
+<div class="field"><label for="venv_activate">Virtual environment activate script</label><input type="text" id="venv_activate" autocomplete="off" spellcheck="false"><span class="hint"><code>/onramp</code> checks that this key is present.</span></div>
+<div class="field"><label for="evidence_dir">Evidence folder</label><input type="text" id="evidence_dir" autocomplete="off" spellcheck="false"><span class="err" id="evidence_dir-err" aria-live="polite"></span></div>
+<details><summary>More keys the skills read</summary>
+<div class="field"><label for="test_file_pattern">Test file pattern</label><input type="text" id="test_file_pattern" autocomplete="off" spellcheck="false"></div>
+<div class="field"><label for="base_test_class">Base test class file</label><input type="text" id="base_test_class" autocomplete="off" spellcheck="false"><span class="hint">Leave empty to omit.</span></div>
+<div class="field dj-only"><label for="manage_py">manage.py path</label><input type="text" id="manage_py" autocomplete="off" spellcheck="false"></div>
+<div class="field"><label for="targeted_test">Example targeted test</label><input type="text" id="targeted_test" autocomplete="off" spellcheck="false"><span class="hint">Leave empty to omit.</span></div>
+</details>
+<button type="submit" class="primary">Build profile</button>
+</form>
+</section>
+<section class="card out" aria-labelledby="out-h">
+<h2 id="out-h">Output</h2>
+<p class="status" id="status" role="status" aria-live="polite"></p>
+<div id="out-err" class="notice bad" hidden role="alert"></div>
+<h3 id="pj-h">docs/onramp/profile.json</h3>
+<pre id="pj" tabindex="0" aria-labelledby="pj-h"></pre>
+<div class="btns"><button type="button" data-copy="pj">Copy profile.json</button><button type="button" id="dl">Download profile.json</button></div>
+<h3 id="sh-h">bash (macOS, Linux, Git Bash)</h3>
+<pre id="sh" tabindex="0" aria-labelledby="sh-h"></pre>
+<div class="btns"><button type="button" data-copy="sh">Copy bash commands</button></div>
+<h3 id="ps-h">PowerShell (Windows)</h3>
+<pre id="ps" tabindex="0" aria-labelledby="ps-h"></pre>
+<div class="btns"><button type="button" data-copy="ps">Copy PowerShell commands</button></div>
+<h3>Then, in Bob</h3>
+<ol class="steps">
+<li>Open your repository in Bob.</li>
+<li>Run <code>/onramp</code>. It reads the profile, records the baseline and maps the codebase.</li>
+<li>Review the generated <code>docs/onramp/CODEBASE_MAP.md</code> before you change code.</li>
+</ol>
+<div class="notice info" role="note"><strong>Known kit defect</strong>A source root of <code>.</code> disables the post-edit hook. The hook compares repo-relative paths such as <code>app/models.py</code> with <code>./</code>, and they never match. Name each package folder instead.</div>
+</section>
+</div>
+</main>
+<footer><div class="wrap">The OnRamp kit runs in IBM Bob. The team built this page. The PowerShell commands write the file without a byte-order mark, because the hook cannot parse JSON that starts with one.</div></footer>
+
+<script id="onramp-gen">
+/* BEGIN GENERATOR */
+function splitLines(s) {
+  return String(s || "").split(/[\r\n,]+/).map(function (x) { return x.trim(); }).filter(Boolean);
+}
+function buildProfile(input) {
+  var fw = input.framework === "unittest" ? "unittest" : "django";
+  var errors = [], warnings = [];
+  var t = function (k) { return String(input[k] == null ? "" : input[k]).trim(); };
+  if (input.framework === "pytest") errors.push("pytest is not supported yet. Choose Django or plain unittest.");
+  if (!t("test_runner")) errors.push("Enter a test command.");
+  if (!t("evidence_dir")) errors.push("Enter an evidence folder.");
+  var roots = splitLines(input.source_roots);
+  var appRoot = t("app_root");
+  if (!roots.length && appRoot) roots = [appRoot];
+  if (roots.some(function (r) { return r === "." || r === "./"; }) || (!roots.length && (appRoot === "." || !appRoot)))
+    warnings.push('Source root "." disables the post-edit hook (known kit defect). Name each package folder instead.');
+  var p = {};
+  var name = t("repo_name") || "your repo";
+  p._comment = "OnRamp profile for " + name + ". Change only this file when dropping the kit into another repo.";
+  p.repo_name = t("repo_name");
+  p.framework = fw;
+  p.venv_activate = t("venv_activate");
+  p.test_runner = t("test_runner");
+  if (fw === "django") p.settings_module = t("settings_module");
+  p.app_root = appRoot;
+  p.source_roots = roots;
+  p.apps = splitLines(input.apps);
+  p.test_file_pattern = t("test_file_pattern");
+  if (t("base_test_class")) p.base_test_class = t("base_test_class");
+  if (fw === "django") p.manage_py = t("manage_py") || "manage.py";
+  p.evidence_dir = t("evidence_dir").replace(/\\/g, "/").replace(/\/+$/, "");
+  if (t("targeted_test")) p.targeted_test = t("targeted_test");
+  return { profile: p, json: JSON.stringify(p, null, 2) + "\n", errors: errors, warnings: warnings };
+}
+function buildCommands(json, repoDir) {
+  var repo = String(repoDir || "").trim() || "../your-repo";
+  var shRepo = repo.replace(/\\/g, "/").replace(/\/+$/, "");
+  var psRepo = repo.replace(/\//g, "\\").replace(/\\+$/, "");
+  var q = function (s) { return "'" + s.replace(/'/g, "'\\''") + "'"; };
+  var pq = function (s) { return "'" + s.replace(/'/g, "''") + "'"; };
+  var body = json.replace(/\n$/, "");
+  var sh = [
+    "# Run from the folder that contains the OnRamp kit's .bob folder.",
+    "cp -R .bob " + q(shRepo) + "/",
+    "mkdir -p " + q(shRepo + "/docs/onramp"),
+    "cat > " + q(shRepo + "/docs/onramp/profile.json") + " <<'ONRAMP_EOF'",
+    body,
+    "ONRAMP_EOF"
+  ].join("\n");
+  var ps = [
+    "# Run from the folder that contains the OnRamp kit's .bob folder.",
+    "Copy-Item -Recurse .bob " + pq(psRepo + "\\"),
+    "New-Item -ItemType Directory -Force " + pq(psRepo + "\\docs\\onramp") + " | Out-Null",
+    "$profilePath = Join-Path (Resolve-Path " + pq(psRepo) + ").Path 'docs\\onramp\\profile.json'",
+    "[IO.File]::WriteAllText($profilePath, @'",
+    body,
+    "'@)"
+  ].join("\n");
+  return { bash: sh, powershell: ps };
+}
+var EXAMPLES = {
+  healthchecks: {
+    framework: "django", repo_dir: "../healthchecks", repo_name: "Healthchecks",
+    test_runner: ".venv\\Scripts\\python.exe manage.py test", app_root: "hc", source_roots: "hc",
+    settings_module: "hc.settings", apps: "hc.accounts\nhc.api\nhc.front\nhc.logs\nhc.payments\nhc.integrations",
+    venv_activate: ".venv\\Scripts\\activate", evidence_dir: "docs/onramp/evidence",
+    test_file_pattern: "hc/**/tests/test_*.py", base_test_class: "hc/test.py", manage_py: "manage.py",
+    targeted_test: "python manage.py test hc.api.tests.test_ping.PingTestCase"
+  },
+  unittest: {
+    framework: "unittest", repo_dir: "../your-repo", repo_name: "your-repo",
+    test_runner: ".venv\\Scripts\\python.exe -m unittest discover -s tests -t .", app_root: "app", source_roots: "app\ntests",
+    settings_module: "", apps: "app", venv_activate: ".venv\\Scripts\\activate", evidence_dir: "docs/onramp/evidence",
+    test_file_pattern: "tests/test_*.py", base_test_class: "", manage_py: "", targeted_test: ""
+  }
+};
+/* END GENERATOR */
+</script>
+<script>
+(function () {
+  var F = ["repo_dir","repo_name","test_runner","app_root","source_roots","settings_module","apps","venv_activate","evidence_dir","test_file_pattern","base_test_class","manage_py","targeted_test"];
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("f"), last = null;
+  function read() {
+    var o = { framework: (form.querySelector("input[name=framework]:checked") || {}).value };
+    F.forEach(function (k) { o[k] = $(k).value; });
+    return o;
+  }
+  function fill(ex) {
+    form.querySelectorAll("input[name=framework]").forEach(function (r) { r.checked = r.value === ex.framework; });
+    F.forEach(function (k) { $(k).value = ex[k] || ""; });
+    sync(); render(true);
+  }
+  function sync() {
+    var dj = read().framework === "django";
+    document.querySelectorAll(".dj-only").forEach(function (el) { el.hidden = !dj; });
+  }
+  function render(announce) {
+    var r = buildProfile(read());
+    var trErr = !String($("test_runner").value).trim(), evErr = !String($("evidence_dir").value).trim();
+    $("test_runner").setAttribute("aria-invalid", trErr); $("test_runner-err").textContent = trErr ? "Enter a test command." : "";
+    $("evidence_dir").setAttribute("aria-invalid", evErr); $("evidence_dir-err").textContent = evErr ? "Enter an evidence folder." : "";
+    var w = r.warnings[0] || "";
+    $("source_roots-warn").textContent = w; $("app_root-warn").textContent = $("app_root").value.trim() === "." ? "App root \".\" disables the post-edit hook when no other source root is set." : "";
+    var box = $("out-err");
+    if (r.errors.length) {
+      box.hidden = false; box.textContent = "Fix these first: " + r.errors.join(" ");
+      $("pj").textContent = ""; $("sh").textContent = ""; $("ps").textContent = ""; last = null;
+      $("status").textContent = "";
+      return false;
+    }
+    box.hidden = true; last = r;
+    var c = buildCommands(r.json, $("repo_dir").value);
+    $("pj").textContent = r.json; $("sh").textContent = c.bash; $("ps").textContent = c.powershell;
+    if (announce) $("status").textContent = "Profile built" + (w ? " with a warning." : ".");
+    return true;
+  }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!render(true)) { var bad = form.querySelector("[aria-invalid=true]"); if (bad) bad.focus(); }
+  });
+  form.addEventListener("input", function () { sync(); render(false); });
+  form.addEventListener("change", function () { sync(); render(false); });
+  $("load-hc").addEventListener("click", function () { fill(EXAMPLES.healthchecks); });
+  $("load-ut").addEventListener("click", function () { fill(EXAMPLES.unittest); });
+  document.querySelectorAll("[data-copy]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var txt = $(b.getAttribute("data-copy")).textContent;
+      if (!txt) { $("status").textContent = "Nothing to copy. Fix the form first."; return; }
+      var done = function () { $("status").textContent = "Copied."; };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(done, fallback); else fallback();
+      function fallback() {
+        var ta = document.createElement("textarea"); ta.value = txt; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) { $("status").textContent = "Copy failed. Select the text and copy it by hand."; }
+        document.body.removeChild(ta);
+      }
+    });
+  });
+  $("dl").addEventListener("click", function () {
+    if (!last) { $("status").textContent = "Nothing to download. Fix the form first."; return; }
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([last.json], { type: "application/json" }));
+    a.download = "profile.json"; document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+    $("status").textContent = "Downloaded profile.json.";
+  });
+  fill(EXAMPLES.healthchecks); $("status").textContent = "";
+})();
+</script>
+</body></html>
