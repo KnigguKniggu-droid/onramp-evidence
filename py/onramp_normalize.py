@@ -1,6 +1,6 @@
-"""OnRamp run normalizer and classifier (authored by Claude Code, labelled; complements Bob's gen_report.py).
+"""OnRamp run normalizer and classifier (team-authored, labelled, not Bob; complements Bob's gen_report.py).
 
-Why this file exists: IBM Bob's plan allowance ran out before it could finish two review items, so Claude Code
+Why this file exists: IBM Bob's plan allowance ran out before it could finish two review items, so the team
 added them here as a separate, clearly attributed module instead of rewriting Bob's code:
   * a normalizer that turns a verbose Django / unittest log into versioned JSON (handles docstring lines and
     warnings printed between a test's name and its result), failing closed on incomplete runs;

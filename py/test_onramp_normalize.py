@@ -1,4 +1,4 @@
-"""Tests for onramp_normalize.py (Claude Code). Baseline: executed {A,B,C,F1,F2}, failing {F1,F2}."""
+"""Tests for onramp_normalize.py (team-authored). Baseline: executed {A,B,C,F1,F2}, failing {F1,F2}."""
 import json
 import tempfile
 import unittest
@@ -103,7 +103,7 @@ class Classification(unittest.TestCase):
 
 
 class EdgeCases(unittest.TestCase):
-    """R1 edge cases from the v3 directive (Claude Code)."""
+    """R1 edge cases from the v3 directive (team-authored)."""
 
     def setUp(self):
         self.base = run(BASE)
