@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OnRamp · Reviewer verdict</title>
+<meta name="description" content="Paste a baseline and an after test log from a unittest or Django run. OnRamp separates inherited failures from new regressions in your browser and writes a pull-request comment.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232563eb'/><path d='M8 22 L15 10 L18 15 L21 11 L25 22 Z' fill='white'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=optional" rel="stylesheet">
+<style>
+:root{--btn:#2563eb;--bg:#0d0f14;--band:#11141b;--panel:#161a23;--panel2:#1d2130;--line:#272d3b;--text:#e8eaef;--muted:#a0a8ba;--accent:#5b9aff;--ok:#42be65;--bad:#ff6b74;--warn:#f1c21b;--info:#b48cff;
+ --ok-bg:color-mix(in srgb,var(--ok) 13%,transparent);--bad-bg:color-mix(in srgb,var(--bad) 13%,transparent);--warn-bg:color-mix(in srgb,var(--warn) 14%,transparent);--info-bg:color-mix(in srgb,var(--info) 14%,transparent)}
+@media (prefers-color-scheme: light){:root{--btn:#0f62fe;--bg:#f6f7f9;--band:#eef1f5;--panel:#fff;--panel2:#f7f8fa;--line:#dfe3ea;--text:#161a22;--muted:#525c6e;--accent:#0050e6;--ok:#0e6027;--bad:#a2191f;--warn:#684e00;--info:#6929c4}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}h2{scroll-margin-top:64px}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:.88em;overflow-wrap:anywhere}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:8px;top:-60px;z-index:10;background:var(--btn);color:#fff;padding:10px 14px;border-radius:8px;font-weight:600}.skip:focus{top:8px}
+nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:18px;align-items:center;overflow-x:auto;white-space:nowrap;padding-top:8px;padding-bottom:8px}
+nav b{margin-right:auto;font-size:16px;letter-spacing:-.01em}nav b span{color:var(--muted);font-weight:500}
+nav a{color:var(--muted);font-size:14px;display:inline-block;padding:6px 2px;min-height:32px}nav a:hover{color:var(--text);text-decoration:none}
+.hero{padding:48px 0 28px}
+.kicker{color:var(--accent);font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:12px;margin:0}
+h1{font-size:clamp(32px,5.4vw,52px);line-height:1.06;margin:12px 0 14px;letter-spacing:-.025em;font-weight:700}
+.lede{color:var(--muted);font-size:clamp(16px,2vw,19px);margin:0;max-width:720px}
+.proof{display:flex;flex-wrap:wrap;gap:6px 16px;margin:18px 0 0;padding:0;list-style:none;color:var(--muted);font-size:14px}
+.proof li::before{content:"\2713  ";color:var(--ok);font-weight:700}
+section{padding:40px 0;border-top:1px solid var(--line)}section.band{background:var(--band)}
+h2{font-size:clamp(22px,3vw,30px);margin:0 0 6px;letter-spacing:-.02em;line-height:1.15}
+h3{font-size:16px;margin:0 0 8px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+label.lab{display:block;font-weight:600;margin:0 0 2px}
+.hint{display:block;color:var(--muted);font-size:13px;margin:0 0 8px}
+textarea{width:100%;min-height:220px;resize:vertical;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:13px/1.5 "IBM Plex Mono",ui-monospace,Consolas,monospace}
+textarea:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+textarea.drop{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.file{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:var(--muted)}
+.file input{font:inherit;color:var(--muted);max-width:100%}
+.meta{font-size:13px;color:var(--muted);margin:6px 0 0;min-height:1.6em}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font:600 16px "IBM Plex Sans",system-ui,sans-serif;min-height:44px;cursor:pointer}
+.btn.primary{background:var(--btn);border-color:var(--btn);color:#fff}.btn:hover{border-color:var(--accent)}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.verdict{margin:0 0 14px;padding:16px 18px;border-radius:12px;border:1px solid var(--line);background:var(--panel)}
+.verdict b.v{display:block;font-size:clamp(19px,2.6vw,24px);letter-spacing:-.01em;line-height:1.25}
+.verdict p{margin:6px 0 0;font-size:15px;color:var(--text)}
+.v-ok{background:var(--ok-bg);border-color:transparent}.v-ok b.v{color:var(--ok)}
+.v-bad{background:var(--bad-bg);border-color:transparent}.v-bad b.v{color:var(--bad)}
+.v-warn{background:var(--warn-bg);border-color:transparent}.v-warn b.v{color:var(--warn)}
+.cards{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:0 0 16px;padding:0;list-style:none}
+.cards li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.cards b{display:block;font-size:24px;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.cards span{font-size:12px;color:var(--muted)}
+.k-reg b{color:var(--bad)}.k-inh b{color:var(--warn)}.k-fix b{color:var(--ok)}.k-nr b{color:var(--info)}
+.cat{margin:0 0 14px}
+.cat summary{cursor:pointer;font-weight:600;font-size:15px;padding:8px 0;min-height:44px;display:flex;align-items:center;gap:8px}
+.cat summary .n{font-family:"IBM Plex Mono",monospace;font-size:13px;border-radius:999px;padding:1px 9px;background:var(--panel2);border:1px solid var(--line)}
+.cat p{margin:0 0 8px;font-size:14px;color:var(--muted)}
+.tbl{max-height:360px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;position:sticky;top:0;background:var(--panel)}
+th.s,td.s{width:84px}td.id{font-family:"IBM Plex Mono",monospace;overflow-wrap:anywhere}
+.st-FAIL,.st-ERROR{color:var(--bad);font-weight:600}.st-PASS{color:var(--ok);font-weight:600}.st-SKIP,.st-none{color:var(--muted)}
+.more{font-size:13px;color:var(--muted);padding:8px 10px;margin:0}
+.problems{margin:8px 0 0;padding-left:20px;font-size:14px}
+.md{min-height:260px}
+.status{font-size:14px;color:var(--muted);margin:8px 0 0;min-height:1.6em}
+.rules{margin:0;padding-left:20px}.rules li{margin:0 0 8px}
+.note{border-left:3px solid var(--warn);padding:10px 14px;background:var(--warn-bg);border-radius:0 8px 8px 0;font-size:14px;margin:16px 0 0}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+footer{padding:28px 0 60px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+@media (max-width:900px){.cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:640px){.two{grid-template-columns:minmax(0,1fr)}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding-top:32px}section{padding:32px 0}.wrap{padding:0 16px}.actions .btn{flex:1 1 auto;justify-content:center}th.s,td.s{width:64px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head><body>
+<a class="skip" href="#tool">Skip to the verdict tool</a>
+<nav aria-label="Site"><div class="wrap"><b>OnRamp <span>/ Reviewer verdict</span></b><a href="index.html">Evidence Explorer</a><a href="#tool">Verdict tool</a><a href="#rules">Rules</a><a href="https://github.com/KnigguKniggu-droid/onramp">GitHub</a></div></nav>
+
+<header class="hero"><div class="wrap">
+<p class="kicker">For reviewers of any unittest or Django change</p>
+<h1>Did this change break anything that worked before?</h1>
+<p class="lede">Paste the test log from before the change (the baseline) and the log from after it. OnRamp separates failures the code already had from new regressions, and writes a verdict you can paste into the pull request.</p>
+<ul class="proof">
+<li>Runs fully in your browser. Nothing is uploaded.</li>
+<li>Reads Django <code>manage.py test -v 2</code> and <code>python -m unittest -v</code> output</li>
+<li>Fail-closed: an incomplete log gives no verdict</li>
+</ul>
+</div></header>
+
+<main id="main">
+<section class="band" id="tool" aria-labelledby="tool-h"><div class="wrap">
+<h2 id="tool-h">Compare two runs</h2>
+<p class="sub">Use verbose output (<code>-v 2</code>), so that the log has one result line per test. Paste the whole log, including the <code>Ran N tests</code> line and the final <code>OK</code> or <code>FAILED</code> line. You can also drop a .txt or .log file on a box, or choose one with the file button.</p>
+<form id="vform" novalidate>
+<div class="two">
+<div class="panel">
+<label class="lab" for="base-log">Baseline log (before the change)</label>
+<span class="hint" id="base-hint">The run on the target branch, before the change.</span>
+<textarea id="base-log" name="base" spellcheck="false" autocomplete="off" aria-describedby="base-hint base-meta" placeholder="test_something (app.tests.SomeTestCase) ... ok&#10;...&#10;Ran 120 tests in 4.2s&#10;&#10;FAILED (failures=2)"></textarea>
+<div class="file"><label for="base-file">Or load a file:</label><input type="file" id="base-file" accept=".txt,.log,text/plain"></div>
+<p class="meta" id="base-meta"></p>
+</div>
+<div class="panel">
+<label class="lab" for="after-log">After log (with the change)</label>
+<span class="hint" id="after-hint">The run on the pull-request branch.</span>
+<textarea id="after-log" name="after" spellcheck="false" autocomplete="off" aria-describedby="after-hint after-meta" placeholder="Paste the run with the change here."></textarea>
+<div class="file"><label for="after-file">Or load a file:</label><input type="file" id="after-file" accept=".txt,.log,text/plain"></div>
+<p class="meta" id="after-meta"></p>
+</div>
+</div>
+<div class="actions">
+<button type="submit" class="btn primary" id="go">Get the verdict</button>
+<button type="button" class="btn" id="example">Load the Healthchecks example</button>
+<button type="button" class="btn" id="clear">Clear</button>
+</div>
+<p class="status" id="load-status" role="status" aria-live="polite"></p>
+</form>
+</div></section>
+
+<section id="result" aria-labelledby="result-h"><div class="wrap">
+<h2 id="result-h" tabindex="-1">Verdict</h2>
+<div id="verdict" class="verdict" role="status" aria-live="polite" aria-atomic="true"><b class="v">No verdict yet</b><p>Paste both logs, then select Get the verdict.</p></div>
+<div id="details" hidden>
+<ul class="cards" id="cards" aria-label="Counts by category"></ul>
+<div id="cats"></div>
+<div class="two" style="margin-top:8px">
+<div class="panel">
+<label class="lab" for="md-out">Pull-request comment (Markdown)</label>
+<span class="hint" id="md-hint">Copy this text and paste it as a comment on the pull request.</span>
+<textarea id="md-out" class="md" readonly aria-describedby="md-hint"></textarea>
+<div class="actions"><button type="button" class="btn primary" id="copy">Copy Markdown</button></div>
+</div>
+<div class="panel">
+<h3>Verdict file (JSON)</h3>
+<p class="sub">The JSON file holds the verdict, the parse problems, the per-category test IDs and a SHA-256 of each pasted log. Attach it to the review as evidence.</p>
+<div class="actions"><button type="button" class="btn" id="dl">Download verdict.json</button></div>
+</div>
+</div>
+<p class="status" id="act-status" role="status" aria-live="polite"></p>
+</div>
+</div></section>
+
+<section class="band" id="rules" aria-labelledby="rules-h"><div class="wrap">
+<h2 id="rules-h">How the verdict is decided</h2>
+<p class="sub">Each test ID in the baseline is compared with the same ID in the after run. FAIL and ERROR count as failing. An unexpected success counts as FAIL, and an expected failure counts as PASS.</p>
+<div class="two">
+<div class="panel">
+<h3>Categories</h3>
+<ul class="rules">
+<li><b>Regression</b>: passed in the baseline, fails after the change.</li>
+<li><b>New failure</b>: a test that is not in the baseline and fails after the change.</li>
+<li><b>Fixed</b>: failed in the baseline, passes after the change.</li>
+<li><b>Inherited</b>: failed in the baseline and still fails. The change did not cause it.</li>
+<li><b>Not run</b>: in the baseline, missing from the after run. A not-run test never counts as fixed.</li>
+<li><b>Skipped</b>: in the baseline, skipped in the after run.</li>
+</ul>
+</div>
+<div class="panel">
+<h3>Fail-closed rules</h3>
+<ul class="rules">
+<li><b>Inconclusive</b> if either log has no <code>Ran N tests</code> line, no final <code>OK</code>/<code>FAILED</code> line, a test count that differs from the parsed result lines, or a final status that disagrees with the per-test results. No "fixed" and no "0 regressions" is reported then.</li>
+<li><b>Inconclusive</b> if either log has zero parsed test results.</li>
+<li><b>Targeted run only</b> if any baseline test is missing from the after run. A partial run cannot prove the full suite.</li>
+<li><b>Full run, 0 regressions</b> only if every baseline test ran and no test went from passing to failing, and no new test fails.</li>
+</ul>
+</div>
+</div>
+<p class="note">The parser is the same one the Evidence Explorer uses. It is a JavaScript port of the kit's Python normalizer, checked against the Python output on every fixture log. It does not read pytest output.</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">Built by the team as part of OnRamp, an independent hackathon entry that is not endorsed by IBM. <a href="index.html">Back to the Evidence Explorer</a>.</div></footer>
+
+<script src="classifier.js"></script>
+<script src="normalize-log.js"></script>
+<script>
+(function () {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const baseTa = $('base-log'), afterTa = $('after-log'), verdictEl = $('verdict'), details = $('details');
+  const loadStatus = $('load-status'), actStatus = $('act-status');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let last = null;
+
+  // ---- input: decode files (PowerShell redirects often write UTF-16) ----
+  function decode(buf) {
+    const b = new Uint8Array(buf);
+    if (b[0] === 0xff && b[1] === 0xfe) return new TextDecoder('utf-16le').decode(b.subarray(2));
+    if (b[0] === 0xfe && b[1] === 0xff) return new TextDecoder('utf-16be').decode(b.subarray(2));
+    return new TextDecoder('utf-8').decode(b);
+  }
+  function loadFile(file, ta, label) {
+    if (!file) return;
+    if (file.size > 50 * 1024 * 1024) { loadStatus.textContent = file.name + ' is larger than 50 MB and was not loaded.'; return; }
+    file.arrayBuffer().then(buf => {
+      ta.value = decode(buf); ta.dataset.src = file.name; meta(ta);
+      loadStatus.textContent = 'Loaded ' + file.name + ' into the ' + label + ' box. The file stays on this device.';
+    }).catch(e => { loadStatus.textContent = 'Could not read ' + file.name + ' (' + e.message + ').'; });
+  }
+  function meta(ta) {
+    const m = $(ta === baseTa ? 'base-meta' : 'after-meta');
+    const t = ta.value;
+    if (!t.trim()) { m.textContent = ''; return; }
+    const lines = t.split(/\r\n|\r|\n/).length;
+    m.textContent = (ta.dataset.src ? ta.dataset.src + ': ' : '') + lines.toLocaleString() + ' lines, ' + t.length.toLocaleString() + ' characters.';
+  }
+  [[baseTa, $('base-file'), 'baseline'], [afterTa, $('after-file'), 'after']].forEach(([ta, inp, label]) => {
+    inp.addEventListener('change', () => { loadFile(inp.files[0], ta, label); inp.value = ''; });
+    ta.addEventListener('input', () => { delete ta.dataset.src; meta(ta); });
+    ta.addEventListener('dragover', e => { e.preventDefault(); ta.classList.add('drop'); });
+    ta.addEventListener('dragleave', () => ta.classList.remove('drop'));
+    ta.addEventListener('drop', e => {
+      ta.classList.remove('drop');
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) { e.preventDefault(); loadFile(f, ta, label); }
+    });
+  });
+
+  $('example').addEventListener('click', () => {
+    loadStatus.textContent = 'Loading fixtures/baseline_run.txt and fixtures/full_run_after_fix.txt…';
+    const get = p => fetch(p).then(r => { if (!r.ok) throw new Error(p + ': HTTP ' + r.status); return r.arrayBuffer(); }).then(decode);
+    Promise.all([get('fixtures/baseline_run.txt'), get('fixtures/full_run_after_fix.txt')]).then(([b, a]) => {
+      baseTa.value = b; baseTa.dataset.src = 'baseline_run.txt'; afterTa.value = a; afterTa.dataset.src = 'full_run_after_fix.txt';
+      meta(baseTa); meta(afterTa);
+      loadStatus.textContent = 'Loaded the real Healthchecks logs: the baseline run and the full run after the fix. Select Get the verdict.';
+      $('go').focus();
+    }).catch(e => { loadStatus.textContent = 'Could not load the example logs (' + e.message + '). Open this page from the web server, not from a local file.'; });
+  });
+
+  $('clear').addEventListener('click', () => {
+    baseTa.value = ''; afterTa.value = ''; delete baseTa.dataset.src; delete afterTa.dataset.src; meta(baseTa); meta(afterTa);
+    last = null; details.hidden = true; setVerdict('', 'No verdict yet', 'Paste both logs, then select Get the verdict.');
+    loadStatus.textContent = 'Both boxes are empty.'; actStatus.textContent = ''; baseTa.focus();
+  });
+
+  function setVerdict(cls, title, text, problems) {
+    verdictEl.className = 'verdict' + (cls ? ' ' + cls : '');
+    verdictEl.textContent = '';
+    const b = document.createElement('b'); b.className = 'v'; b.textContent = title; verdictEl.appendChild(b);
+    const p = document.createElement('p'); p.textContent = text; verdictEl.appendChild(p);
+    if (problems && problems.length) {
+      const ul = document.createElement('ul'); ul.className = 'problems';
+      problems.forEach(t => { const li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+      verdictEl.appendChild(ul);
+    }
+  }
+
+  // ---- the decision (fail-closed) ----
+  function decide(base, after, res) {
+    const problems = res.problems.map(p => p.replace(/^current run: /, 'after run: '));
+    if (res.valid) {
+      if (!Object.keys(base.outcomes).length) problems.push('baseline: 0 per-test results parsed');
+      if (!Object.keys(after.outcomes).length) problems.push('after run: 0 per-test results parsed');
+    }
+    const regs = res.valid ? res.regression.length + res.new_failure.length : 0;
+    if (problems.length) return { code: 'INCONCLUSIVE', cls: 'v-warn', title: 'Inconclusive: no verdict',
+      text: 'One or both logs are incomplete or could not be parsed. OnRamp does not report "fixed" or "0 regressions" from such a run. Fix the problems below and run the comparison again.', problems };
+    const tail = ' ' + res.inherited.length + ' inherited failure(s) were already in the baseline; ' + res.fixed.length + ' test(s) were fixed.';
+    if (regs) return { code: 'REGRESSIONS', cls: 'v-bad', title: 'Regressions found: ' + regs + ' test(s) now fail' + (res.scope === 'TARGETED' ? ' (targeted run)' : ''),
+      text: res.regression.length + ' regression(s) and ' + res.new_failure.length + ' new failing test(s).' + tail + (res.scope === 'TARGETED' ? ' ' + res.not_run.length + ' baseline test(s) did not run, so more problems can exist.' : ''), problems: [] };
+    if (res.scope === 'TARGETED') return { code: 'TARGETED', cls: 'v-warn', title: 'Targeted run only: not a full-suite result',
+      text: 'No test that ran fails newly, but ' + res.not_run.length + ' of ' + Object.keys(base.outcomes).length + ' baseline test(s) did not run. Run the full suite to get a full verdict. Not-run tests never count as fixed.', problems: [] };
+    return { code: 'FULL_PASS', cls: 'v-ok', title: 'Full run, 0 regressions',
+      text: 'All ' + Object.keys(base.outcomes).length + ' baseline test(s) ran. No test went from passing to failing, and no new test fails.' + tail, problems: [] };
+  }
+
+  const CATS = [
+    ['regression', 'Regressions', 'k-reg', 'Passed in the baseline, fail after the change.'],
+    ['new_failure', 'New failures', 'k-reg', 'Not in the baseline, fail after the change.'],
+    ['fixed', 'Fixed', 'k-fix', 'Failed in the baseline, pass after the change.'],
+    ['inherited', 'Inherited', 'k-inh', 'Failed in the baseline and still fail. Not caused by the change.'],
+    ['not_run', 'Not run', 'k-nr', 'In the baseline, missing from the after run.'],
+    ['skipped', 'Skipped', '', 'In the baseline, skipped in the after run.'],
+    ['new_test', 'New passing', '', 'Not in the baseline, pass after the change.']
+  ];
+  const ROW_CAP = 500;
+
+  function renderDetails(base, after, res) {
+    const cards = $('cards'), cats = $('cats');
+    cards.textContent = ''; cats.textContent = '';
+    CATS.forEach(([k, label, kc]) => {
+      const li = document.createElement('li'); if (kc) li.className = kc;
+      const b = document.createElement('b'); b.textContent = res[k].length.toLocaleString();
+      const s = document.createElement('span'); s.textContent = label;
+      li.append(b, s); cards.appendChild(li);
+    });
+    CATS.forEach(([k, label, , desc]) => {
+      const ids = res[k];
+      if (!ids.length && k !== 'regression' && k !== 'new_failure') return;
+      const d = document.createElement('details'); d.className = 'cat';
+      d.open = ids.length > 0 && (k === 'regression' || k === 'new_failure' || k === 'fixed');
+      const sm = document.createElement('summary');
+      const n = document.createElement('span'); n.className = 'n'; n.textContent = ids.length.toLocaleString();
+      sm.append(label + ' ', n); d.appendChild(sm);
+      const p = document.createElement('p'); p.textContent = desc; d.appendChild(p);
+      if (ids.length) {
+        const box = document.createElement('div'); box.className = 'tbl'; box.tabIndex = 0;
+        box.setAttribute('role', 'region'); box.setAttribute('aria-label', label + ' table');
+        const t = document.createElement('table');
+        const cap = document.createElement('caption'); cap.className = 'vh'; cap.textContent = label; t.appendChild(cap);
+        const th = document.createElement('thead'); th.innerHTML = '<tr><th scope="col">Test ID</th><th scope="col" class="s">Baseline</th><th scope="col" class="s">After</th></tr>';
+        const tb = document.createElement('tbody');
+        ids.slice(0, ROW_CAP).forEach(id => {
+          const tr = document.createElement('tr');
+          const c0 = document.createElement('td'); c0.className = 'id'; c0.textContent = id;
+          tr.appendChild(c0);
+          [base.outcomes[id], after.outcomes[id]].forEach(v => {
+            const c = document.createElement('td'); c.className = 's st-' + (v || 'none'); c.textContent = v || 'not run'; tr.appendChild(c);
+          });
+          tb.appendChild(tr);
+        });
+        t.append(th, tb); box.appendChild(t);
+        if (ids.length > ROW_CAP) { const m = document.createElement('p'); m.className = 'more'; m.textContent = 'Showing the first ' + ROW_CAP + ' of ' + ids.length.toLocaleString() + '. The JSON file has all of them.'; box.appendChild(m); }
+        d.appendChild(box);
+      }
+      cats.appendChild(d);
+    });
+  }
+
+  function markdown(v, base, after, res) {
+    const L = [];
+    const label = { FULL_PASS: 'PASS', REGRESSIONS: 'FAIL', TARGETED: 'PARTIAL', INCONCLUSIVE: 'INCONCLUSIVE' }[v.code];
+    L.push('### OnRamp verdict: ' + label + ' - ' + v.title, '', v.text, '');
+    if (v.code === 'INCONCLUSIVE') { v.problems.forEach(p => L.push('- ' + p)); L.push(''); }
+    else {
+      L.push('| Category | Count |', '| --- | ---: |');
+      CATS.forEach(([k, l]) => L.push('| ' + l + ' | ' + res[k].length + ' |'));
+      L.push('');
+      const list = (k, title, cap, open) => {
+        const ids = res[k]; if (!ids.length) return;
+        L.push('<details' + (open ? ' open' : '') + '><summary>' + title + ' (' + ids.length + ')</summary>', '');
+        ids.slice(0, cap).forEach(id => L.push('- `' + id + '` (' + (base.outcomes[id] || 'new') + ' -> ' + (after.outcomes[id] || 'not run') + ')'));
+        if (ids.length > cap) L.push('- ... and ' + (ids.length - cap) + ' more (see verdict.json)');
+        L.push('', '</details>', '');
+      };
+      list('regression', 'Regressions', 100, true);
+      list('new_failure', 'New failures', 100, true);
+      list('fixed', 'Fixed', 100, false);
+      list('inherited', 'Inherited failures (already failing in the baseline)', 100, false);
+      list('not_run', 'Not run in the after log', 30, false);
+    }
+    L.push('<sub>Baseline: ' + Object.keys(base.outcomes).length + ' parsed result(s), Ran ' + (base.tests_run === null ? 'UNKNOWN' : base.tests_run) +
+      '. After: ' + Object.keys(after.outcomes).length + ' parsed result(s), Ran ' + (after.tests_run === null ? 'UNKNOWN' : after.tests_run) +
+      '. Baseline-aware and fail-closed; classified in the browser by OnRamp.</sub>');
+    return L.join('\n');
+  }
+
+  async function sha256(text) {
+    try {
+      const d = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+      return Array.from(new Uint8Array(d)).map(x => x.toString(16).padStart(2, '0')).join('');
+    } catch (e) { return null; }
+  }
+
+  $('vform').addEventListener('submit', async e => {
+    e.preventDefault(); actStatus.textContent = '';
+    if (typeof OnRampClassifier === 'undefined' || typeof OnRampNormalize === 'undefined') {
+      details.hidden = true; setVerdict('v-warn', 'Inconclusive: no verdict', 'classifier.js or normalize-log.js did not load. Nothing was classified.'); return;
+    }
+    if (!baseTa.value.trim() || !afterTa.value.trim()) {
+      details.hidden = true;
+      setVerdict('v-warn', 'Inconclusive: no verdict', 'Both logs are needed.', [!baseTa.value.trim() ? 'The baseline box is empty.' : null, !afterTa.value.trim() ? 'The after box is empty.' : null].filter(Boolean));
+      (!baseTa.value.trim() ? baseTa : afterTa).focus(); return;
+    }
+    try {
+      setVerdict('', 'Working…', 'Parsing and classifying both logs in this browser.');
+      const base = OnRampNormalize.normalizeLog(baseTa.value, baseTa.dataset.src || 'pasted baseline log');
+      const after = OnRampNormalize.normalizeLog(afterTa.value, afterTa.dataset.src || 'pasted after log');
+      const res = OnRampClassifier.classify(base, after);
+      const v = decide(base, after, res);
+      setVerdict(v.cls, v.title, v.text, v.problems);
+      if (baseTa.value === afterTa.value) actStatus.textContent = 'Note: the baseline and after logs are identical.';
+      const md = markdown(v, base, after, res);
+      $('md-out').value = md;
+      if (v.code !== 'INCONCLUSIVE') renderDetails(base, after, res); else { $('cards').textContent = ''; $('cats').textContent = ''; }
+      details.hidden = false;
+      const [hb, ha] = await Promise.all([sha256(baseTa.value), sha256(afterTa.value)]);
+      const side = (r, h) => ({ source: r.source, input_sha256_utf8: h, valid: r.valid, problems: r.problems, tests_run: r.tests_run, parsed_results: Object.keys(r.outcomes).length });
+      last = { schema_version: 'onramp.verdict/1', generated_at: new Date().toISOString(), verdict: v.code, title: v.title, summary: v.text,
+        problems: v.problems, baseline: side(base, hb), after: side(after, ha), classification: res, markdown: md };
+      const h = $('result-h'); h.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); h.focus({ preventScroll: true });
+    } catch (err) {
+      details.hidden = true; setVerdict('v-warn', 'Inconclusive: no verdict', 'Nothing was classified (' + err.message + ').');
+    }
+  });
+
+  $('copy').addEventListener('click', () => {
+    const ta = $('md-out'), txt = ta.value;
+    const fallback = () => { ta.focus(); ta.select(); let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} actStatus.textContent = ok ? 'Copied the Markdown comment.' : 'Copy is blocked here. The text is selected: press Ctrl+C (or Cmd+C).'; };
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt).then(() => { actStatus.textContent = 'Copied the Markdown comment.'; }, fallback);
+    else fallback();
+  });
+
+  $('dl').addEventListener('click', () => {
+    if (!last) return;
+    const url = URL.createObjectURL(new Blob([JSON.stringify(last, null, 1)], { type: 'application/json' }));
+    const a = document.createElement('a'); a.href = url; a.download = 'verdict.json'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    actStatus.textContent = 'Downloaded verdict.json.';
+  });
+})();
+</script>
+</body></html>
